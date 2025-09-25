@@ -56,7 +56,7 @@ class LinearRegNumpy:
       dj_db (scalar): The gradient of the cost w.r.t. the parameter b     
      """
     def compute_gradient(self):
-        return 0, 0
+        return np.gradient(self.x)
     
     
     """
@@ -83,6 +83,7 @@ class LinearRegNumpy:
         w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
         b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
         #TODO: gradient descent iteration by m examples.
+        
         return self.w, self.b, J_history, w_initial, b_initial
 
 
