@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from csv import reader
 
 
 def cleanData(data):

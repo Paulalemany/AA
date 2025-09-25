@@ -1,13 +1,13 @@
 from public_tests import *
 from utils import *
 from LinearRegression import LinearReg
+from LinearRegressionNumpy import LinearRegNumpy
 from LinearRegression import cost_test_obj
 from LinearRegression import compute_gradient_obj
 
 from LinearRegressionMulti import LinearRegMulti
 from LinearRegressionMulti import cost_test_multi_obj
 from LinearRegressionMulti import compute_gradient_multi_obj
-import pandas as pd
 import numpy as np
 
 
@@ -126,6 +126,8 @@ def test_gradient_descent_multi(x_train, y_train):
 
 
 #First Part, Linear Regression
+csv = load_data_csv("U:\hlocal\TPV Lin DV grupo V\AA\Practica01 (1)\Enunciado\data\games-data.csv", "score", "user score")
+LinearRegNumpy(csv)
 print("First Part, Linear Regression")
 #TO-DO the main program.
 #test_cost_one(x_train, y_train)
