@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from csv import reader
 
 
@@ -11,18 +12,15 @@ def load_csv(filename):
     
     # Converting into a list 
     data = list(lines)
+
     return data
 
 def cleanData(data):
-    print(data)
     data["score"] = data["score"].apply(lambda x:  str(x).replace(",","."))
     data = data.drop(data[data["user score"] == "tbd"].index)
     data["user score"] = data["user score"].apply(lambda x:  str(x).replace(",","."))
     data["score"] = data["score"].astype(np.float64)
-    data["user score"] = data["user score"].astype(np.float64)
-
-    if data % 100 <= 1:
-        data * 10
+    data["user score"] = data["user score"].astype(np.float64) * 10
 
     return data
 
@@ -33,8 +31,7 @@ def cleanDataMulti(data):
     return data
 
 def load_data_csv(path,x_colum,y_colum):
-    data = load_csv(path)
-    print(data)
+    data = pd.read_csv(path)
     data = cleanData(data)
     X = data[x_colum].to_numpy()
     y = data[y_colum].to_numpy()
