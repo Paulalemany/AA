@@ -126,8 +126,9 @@ def test_gradient_descent_multi(x_train, y_train):
 
 
 #First Part, Linear Regression
-csv = load_data_csv("U:\hlocal\TPV Lin DV grupo V\AA\Practica01 (1)\Enunciado\data\games-data.csv", "score", "user score")
-LinearRegNumpy(csv)
+csv = load_data_csv('./data/games-data.csv', 'score', 'user score')
+csv
+#LinearRegNumpy(csv)
 print("First Part, Linear Regression")
 #TO-DO the main program.
 #test_cost_one(x_train, y_train)
