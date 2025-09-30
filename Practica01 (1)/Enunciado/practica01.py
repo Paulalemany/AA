@@ -129,6 +129,7 @@ def test_gradient_descent_multi(x_train, y_train):
 print ("SE VAN A CARGAR LOS DATOS")
 csv = load_data_csv('./data/games-data.csv', 'score', 'user score')
 print("SE HAN CARGADO LOS DATOS")
+#holaaaa a mi también me compila ya :·3
 csv
 #LinearRegNumpy(csv)
 print("First Part, Linear Regression")
