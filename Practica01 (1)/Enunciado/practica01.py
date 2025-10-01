@@ -126,11 +126,14 @@ def test_gradient_descent_multi(x_train, y_train):
 
 
 #First Part, Linear Regression
-print ("SE VAN A CARGAR LOS DATOS")
-csv = load_data_csv('./data/games-data.csv', 'score', 'user score')
-print("SE HAN CARGADO LOS DATOS")
+csv = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'user score')
+      # Historial de rutas relativas utiles
+      #./Practica01 (1)/Enunciado/data/games-data.csv
+      #./data/games-data.csv
+
 #holaaaa a mi también me compila ya :·3
-csv
+#print(csv)
+
 #LinearRegNumpy(csv)
 print("First Part, Linear Regression")
 #TO-DO the main program.
