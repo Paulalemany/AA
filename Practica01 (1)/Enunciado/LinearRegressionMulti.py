@@ -16,7 +16,7 @@ class LinearRegMulti(LinearReg):
         lambda: Regularization parameter. Most be between 0..1. 
         Determinate the weight of the regularization.
     """
-    def __init__(self, x, y,w,b, lambda_):
+    def __init__(self, x, y, w, b, lambda_):
         return
 
     def f_w_b(self, x):

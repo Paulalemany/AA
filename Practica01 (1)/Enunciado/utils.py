@@ -64,9 +64,9 @@ def zscore_normalize_features(X):
     sigma = np.std(X, axis=0, ddof=0) 
     # element-wise, subtract mu for that column from each example,
     # divide by std for that column (cyntrist: <-- sigma entiendo (standard deviation))
-    X_normalized = (X - mu) / sigma
+    X_norm = (X - mu) / sigma
 
-    return X_normalized, mu, sigma
+    return X_norm, mu, sigma
 
 def load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum):
     data = load_csv(path)
