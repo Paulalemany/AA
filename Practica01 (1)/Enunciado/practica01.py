@@ -1,7 +1,6 @@
 from public_tests import *
 from utils import *
 from LinearRegression import LinearReg
-from LinearRegressionNumpy import LinearRegNumpy
 from LinearRegression import cost_test_obj
 from LinearRegression import compute_gradient_obj
 

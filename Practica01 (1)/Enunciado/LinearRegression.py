@@ -95,10 +95,6 @@ class LinearReg:
         b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
         #TODO: gradient descent iteration by m examples.
 
-       
-
-        #Aunque no estemos haciendo las cosas de forma iterativa las Epocs deben hacerse iterativamente
-        #No estoy segura de si debe ser self.w = w_initial o deben ser w_initial = w_initial
         for i in range(num_iters):
             w,b = self.compute_gradient()
 
