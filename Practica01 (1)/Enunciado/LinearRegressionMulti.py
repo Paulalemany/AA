@@ -37,8 +37,10 @@ class LinearRegMulti(LinearReg):
     Returns
         _regularizationL2Cost (float): the regularization value of the current model
     """
+    # TO-DO:
+    #https://developers.google.com/machine-learning/crash-course/overfitting/regularization?hl=es-419
     def _regularizationL2Cost(self):
-        reg_cost_final = 0
+        reg_cost_final = (self.lambda_ / 2 * self.m) * np.sum(self.w**2)
         return reg_cost_final
     
     """
@@ -48,19 +50,14 @@ class LinearRegMulti(LinearReg):
     Returns
         _regularizationL2Gradient (vector size n): the regularization gradient of the current model
     """ 
+    # TO-DO:
     def _regularizationL2Gradient(self):
         reg_gradient_final = 0
         return reg_gradient_final
 
 
     ################# Herencia
-    """
-    Computes the cost function for linear regression.
 
-    Returns
-        total_cost (float): The cost of using w,b as the parameters for linear regression
-               to fit the data points in x and y
-    """
     # https://medium.com/data-science/applied-multivariate-regression-faef8ddbf807
     def compute_cost(self):
         y_prima = self.f_w_b(self.x) # y predicha
@@ -70,15 +67,7 @@ class LinearRegMulti(LinearReg):
             cost += self._regularizationL2Cost()
         return  cost
     
-
-    """
-    Computes the gradient for linear regression 
-    Args:
-
-    Returns
-      dj_dw (scalar): The gradient of the cost w.r.t. the parameters w
-      dj_db (scalar): The gradient of the cost w.r.t. the parameter b     
-     """
+    # TO-DO:
     def compute_gradient(self):
         y_prima = self.f_w_b(self.x)
         error = y_prima - self.y
@@ -90,26 +79,9 @@ class LinearRegMulti(LinearReg):
         if self.lambda_ > 0: # esto vendrá después para el ej 3
             dj_dw  += self._regularizationL2Gradient()
         
-        return 0, 0 
+        return 0, 0
     
-    
-    """
-    Performs batch gradient descent to learn theta. Updates theta by taking 
-    num_iters gradient steps with learning rate alpha
-
-    Args:
-      alpha : (float) Learning rate
-      num_iters : (int) number of iterations to run gradient descent
-    Returns
-      w : (ndarray): Shape (1,) Updated values of parameters of the model after
-          running gradient descent
-      b : (scalar) Updated value of parameter of the model after
-          running gradient descent
-      J_history : (ndarray): Shape (num_iters,) J at each iteration,
-          primarily for graphing later
-      w_initial : (ndarray): Shape (1,) initial w value before running gradient descent
-      b_initial : (scalar) initial b value before running gradient descent
-    """
+    # TO-DO:
     # https://medium.com/@IwriteDSblog/gradient-descent-for-multivariable-regression-in-python-d430eb5d2cd8
     def gradient_descent(self, alpha, num_iters):
         # An array to store cost J and w's at each iteration — primarily for graphing later
