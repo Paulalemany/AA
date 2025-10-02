@@ -37,7 +37,6 @@ class LinearRegMulti(LinearReg):
     Returns
         _regularizationL2Cost (float): the regularization value of the current model
     """
-    # TO-DO:
     #https://developers.google.com/machine-learning/crash-course/overfitting/regularization?hl=es-419
     def _regularizationL2Cost(self):
         reg_cost_final = (self.lambda_ / 2 * self.m) * np.sum(self.w**2)
@@ -50,13 +49,10 @@ class LinearRegMulti(LinearReg):
     Returns
         _regularizationL2Gradient (vector size n): the regularization gradient of the current model
     """ 
-    # TO-DO:
     def _regularizationL2Gradient(self):
         reg_gradient_final = self.lambda_ / self.m * self.w 
         return reg_gradient_final
 
-
-    ################# Herencia
 
     # https://medium.com/data-science/applied-multivariate-regression-faef8ddbf807
     def compute_cost(self):
@@ -99,7 +95,7 @@ class LinearRegMulti(LinearReg):
             J_history.append(self.compute_cost())
         
         return self.w, self.b, J_history, w_initial, b_initial
-    #################
+
     
 def cost_test_multi_obj(x,y,w_init,b_init):
     lr = LinearRegMulti(x,y,w_init,b_init,0)
