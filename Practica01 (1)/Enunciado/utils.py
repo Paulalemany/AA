@@ -42,7 +42,7 @@ def load_data_csv(path,x_colum,y_colum):
 
 
 # Cynthia dice: holaaa he visto que esto está en
-# la diapo 13 del tema 2 reg multivariable y he mirado más en internet
+# la diapo 13 del tema 2 reg multivariable y en wikipedia (standard score)
 def zscore_normalize_features(X):
     """
     computes  X, zcore normalized by column
