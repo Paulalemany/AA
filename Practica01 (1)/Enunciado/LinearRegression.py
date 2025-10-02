@@ -95,11 +95,15 @@ class LinearReg:
         b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
         #TODO: gradient descent iteration by m examples.
 
+       
+
         #Aunque no estemos haciendo las cosas de forma iterativa las Epocs deben hacerse iterativamente
         #No estoy segura de si debe ser self.w = w_initial o deben ser w_initial = w_initial
         for i in range(num_iters):
-            self.w = w_initial - alpha * (self.compute_gradient().index(0))
-            self.b = b_initial - alpha * (self.compute_gradient().index(1))
+            w,b = self.compute_gradient()
+
+            self.w = self.w - alpha * w
+            self.b = self.b - alpha * b
 
             #J_history = self.compute_cost()
             J_history.append(self.compute_cost())

@@ -135,7 +135,8 @@ print("First Part, Linear Regression")
 #TO-DO the main program.
 test_cost_one(x_train, y_train)
 test_gradient_one(x_train, y_train)
-#test_gradient_descent_one(x_train, y_train,w,b)
+w,b = run_gradient_descent_one(x_train, y_train)
+test_gradient_descent_one(x_train, y_train,w,b)
 
 
 #Second Part, Linear Regression Multivariable
