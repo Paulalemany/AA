@@ -93,7 +93,6 @@ class LinearReg:
         w_history = []
         w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
         b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
-        #TODO: gradient descent iteration by m examples.
 
         for i in range(num_iters):
             w,b = self.compute_gradient()
@@ -101,7 +100,6 @@ class LinearReg:
             self.w = self.w - alpha * w
             self.b = self.b - alpha * b
 
-            #J_history = self.compute_cost()
             J_history.append(self.compute_cost())
         
         return self.w, self.b, J_history, w_initial, b_initial
