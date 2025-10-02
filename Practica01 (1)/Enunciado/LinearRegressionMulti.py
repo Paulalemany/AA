@@ -52,7 +52,7 @@ class LinearRegMulti(LinearReg):
     """ 
     # TO-DO:
     def _regularizationL2Gradient(self):
-        reg_gradient_final = 0
+        reg_gradient_final = self.lambda_ / self.m * self.w 
         return reg_gradient_final
 
 
