@@ -63,8 +63,10 @@ class LinearReg:
      """
     def compute_gradient(self):
 
-        dj_dw = np.gradient(self.w)
-        dj_db = np.gradient(self.b)
+        y_prima = self.f_w_b(self.x)
+                #           m
+        dj_dw =  ((1/ np.size(self.y)) * (np.sum((y_prima - self.y) * self.x)))
+        dj_db = ((1/ np.size(self.y)) * (np.sum(y_prima - self.y)))
         return dj_dw, dj_db
     
     
@@ -95,7 +97,7 @@ class LinearReg:
 
         #Aunque no estemos haciendo las cosas de forma iterativa las Epocs deben hacerse iterativamente
         #No estoy segura de si debe ser self.w = w_initial o deben ser w_initial = w_initial
-        for i in num_iters:
+        for i in range(num_iters):
             self.w = w_initial - alpha * (self.compute_gradient().index(0))
             self.b = b_initial - alpha * (self.compute_gradient().index(1))
 
