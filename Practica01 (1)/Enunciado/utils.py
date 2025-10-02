@@ -41,7 +41,8 @@ def load_data_csv(path,x_colum,y_colum):
     return X, y
 
 
-
+# Cynthia dice: holaaa he visto que esto está en
+# la diapo 13 del tema 2 reg multivariable y he mirado más en internet
 def zscore_normalize_features(X):
     """
     computes  X, zcore normalized by column
@@ -54,13 +55,18 @@ def zscore_normalize_features(X):
       mu (ndarray (n,))     : mean of each feature
       sigma (ndarray (n,))  : standard deviation of each feature
     """
+    
     # find the mean of each column/feature
     # mu will have shape (n,)
+    mu = np.mean(X, axis=0)
     # find the standard deviation of each column/feature
     # sigma will have shape (n,)
+    sigma = np.std(X, axis=0, ddof=0) 
     # element-wise, subtract mu for that column from each example,
-    # divide by std for that column
-    return 0, 0, 0
+    # divide by std for that column (cyntrist: <-- sigma entiendo (standard deviation))
+    X_normalized = (X - mu) / sigma
+
+    return X_normalized, mu, sigma
 
 def load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum):
     data = load_csv(path)
