@@ -50,8 +50,13 @@ class LinearRegMulti(LinearReg):
     """ 
     
     def _regularizationL2Gradient(self):
+    #################
+    def compute_cost(self):
         return 0
 
+    def compute_gradient(self):
+        return 0
+    #################
     
 def cost_test_multi_obj(x,y,w_init,b_init):
     lr = LinearRegMulti(x,y,w_init,b_init,0)
