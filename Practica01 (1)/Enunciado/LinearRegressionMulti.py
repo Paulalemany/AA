@@ -17,6 +17,12 @@ class LinearRegMulti(LinearReg):
         Determinate the weight of the regularization.
     """
     def __init__(self, x, y, w, b, lambda_):
+        super().__init__(x, y, w, b)
+        self.x = x
+        self.y = y
+        self.w = w
+        self.b = b
+        self.lambda_ = lambda_
         return
 
     def f_w_b(self, x):
