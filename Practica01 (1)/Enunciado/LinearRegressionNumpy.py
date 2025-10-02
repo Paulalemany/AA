@@ -16,11 +16,10 @@ class LinearRegNumpy:
         #(scalar): Parameters of the model
         #d = [w,b]
         #da = np.array(d)
-        self.x = x  #Arrays
-        self.y = y  #Arrays
+        self.x = x  #Datos de referencia (Los datos reales) 'score'
+        self.y = y  #Datos que queremos predecir 'user Score'
         self.w = w
         self.b = b
-        #self.datos = da.reshape(x, y)
         
 
     """
@@ -44,7 +43,10 @@ class LinearRegNumpy:
                to fit the data points in x and y
     """
     def compute_cost(self):
-        return (1 / 2 * len(self.x)) * np.sum(np.square(self.x - self.y))
+
+        y = self.f_w_b(self.x)
+        #                   m                             y      y'
+        return (1 / 2 * len(self.x)) * np.sum(np.square(self.x - y))
     
 
     """
@@ -56,7 +58,10 @@ class LinearRegNumpy:
       dj_db (scalar): The gradient of the cost w.r.t. the parameter b     
      """
     def compute_gradient(self):
-        return np.gradient(self.x)
+
+        dj_dw = np.gradient(self.w)
+        dj_db = np.gradient(self.b)
+        return dj_dw, dj_db
     
     
     """
@@ -83,6 +88,15 @@ class LinearRegNumpy:
         w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
         b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
         #TODO: gradient descent iteration by m examples.
+
+        #Aunque no estemos haciendo las cosas de forma iterativa las Epocs deben hacerse iterativamente
+        #No estoy segura de si debe ser self.w = w_initial o deben ser w_initial = w_initial
+        for i in num_iters:
+            self.w = w_initial - alpha * (self.compute_gradient().index(0))
+            self.b = b_initial - alpha * (self.compute_gradient().index(1))
+
+            #J_history = self.compute_cost()
+            J_history.append(self.compute_cost())
         
         return self.w, self.b, J_history, w_initial, b_initial
 
