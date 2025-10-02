@@ -38,7 +38,6 @@ def test_cost_one(x_train, y_train):
       initial_w = 2
       initial_b = 1
 
-
       lr = LinearReg(x_train,y_train,initial_w,initial_b)
       lrcost = lr.compute_cost()
       print(type(lrcost))
@@ -126,18 +125,15 @@ def test_gradient_descent_multi(x_train, y_train):
 
 
 #First Part, Linear Regression
-csv = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'user score')
+x_train, y_train = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'user score')
       # Historial de rutas relativas utiles
       #./Practica01 (1)/Enunciado/data/games-data.csv
       #./data/games-data.csv
 
 #holaaaa a mi también me compila ya :·3
-#print(csv)
-
-#LinearRegNumpy(csv)
 print("First Part, Linear Regression")
 #TO-DO the main program.
-#test_cost_one(x_train, y_train)
+test_cost_one(x_train, y_train)
 #test_gradient_one(x_train, y_train)
 #test_gradient_descent_one(x_train, y_train,w,b)
 

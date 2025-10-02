@@ -32,7 +32,9 @@ class LinearRegNumpy:
         the linear regression value
     """
     def f_w_b(self, x):
-        return self.w * x + self.b
+        
+        mul = np.multiply(self.w, x)
+        return mul + self.b
 
 
     """

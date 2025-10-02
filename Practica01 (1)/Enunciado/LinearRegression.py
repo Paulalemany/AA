@@ -1,6 +1,7 @@
 import numpy as np
 import copy
 import math
+from utils import *
 
 class LinearReg:
     """
@@ -13,7 +14,13 @@ class LinearReg:
     """
     def __init__(self, x, y,w,b):
         #(scalar): Parameters of the model
-        return #delete this return
+        #d = [w,b]
+        #da = np.array(d)
+        self.x = x  #Datos de referencia (Los datos reales) 'score'
+        self.y = y  #Datos que queremos predecir 'user Score'
+        self.w = w
+        self.b = b
+        
 
     """
     Computes the linear regression function.
@@ -25,7 +32,9 @@ class LinearReg:
         the linear regression value
     """
     def f_w_b(self, x):
-        return self.w * x + self.b
+        
+        mul = np.multiply(self.w, x)
+        return mul + self.b
 
 
     """
@@ -36,7 +45,12 @@ class LinearReg:
                to fit the data points in x and y
     """
     def compute_cost(self):
-        return 0
+
+        y_prima = self.f_w_b(self.x)
+        cost = np.sum(np.square(self.y - y_prima))/(np.size(self.y) * 2)
+        #                   m                             y      y'
+        #return (1 / 2 * np.size(self.y)) * np.sum(np.square(self.y - y_prima))
+        return  cost
     
 
     """
@@ -48,7 +62,10 @@ class LinearReg:
       dj_db (scalar): The gradient of the cost w.r.t. the parameter b     
      """
     def compute_gradient(self):
-        return 0, 0
+
+        dj_dw = np.gradient(self.w)
+        dj_db = np.gradient(self.b)
+        return dj_dw, dj_db
     
     
     """
@@ -75,6 +92,16 @@ class LinearReg:
         w_initial = copy.deepcopy(self.w)  # avoid modifying global w within function
         b_initial = copy.deepcopy(self.b)  # avoid modifying global w within function
         #TODO: gradient descent iteration by m examples.
+
+        #Aunque no estemos haciendo las cosas de forma iterativa las Epocs deben hacerse iterativamente
+        #No estoy segura de si debe ser self.w = w_initial o deben ser w_initial = w_initial
+        for i in num_iters:
+            self.w = w_initial - alpha * (self.compute_gradient().index(0))
+            self.b = b_initial - alpha * (self.compute_gradient().index(1))
+
+            #J_history = self.compute_cost()
+            J_history.append(self.compute_cost())
+        
         return self.w, self.b, J_history, w_initial, b_initial
 
 
