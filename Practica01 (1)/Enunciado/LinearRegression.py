@@ -13,13 +13,10 @@ class LinearReg:
         w, b (scalar): Parameters of the model
     """
     def __init__(self, x, y,w,b):
-        #(scalar): Parameters of the model
-        #d = [w,b]
-        #da = np.array(d)
-        self.x = x  #Datos de referencia (Los datos reales) 'score'
-        self.y = y  #Datos que queremos predecir 'user Score'
-        self.w = w
-        self.b = b
+        self.x = x      #   Datos de referencia (Los datos reales) 'score'
+        self.y = y      #   Datos que queremos predecir 'user Score'
+        self.w = w      #   Peso del dato
+        self.b = b      #   Bias de la función, necesario para que el error sea mínimo
         
 
     """
@@ -31,6 +28,7 @@ class LinearReg:
     Returns:
         the linear regression value
     """
+    # Calcula la y_prima del modelo (Los datos que estamos adivinando)
     def f_w_b(self, x):
         
         mul = np.multiply(self.w, x)
@@ -44,6 +42,8 @@ class LinearReg:
         total_cost (float): The cost of using w,b as the parameters for linear regression
                to fit the data points in x and y
     """
+    # Analiza como de bien se ajusta el modelo a los datos del entrenamiento,
+    # representa la desviación del modelo con respecto a los datos reales
     def compute_cost(self):
 
         y_prima = self.f_w_b(self.x)
@@ -61,6 +61,8 @@ class LinearReg:
       dj_dw (scalar): The gradient of the cost w.r.t. the parameters w
       dj_db (scalar): The gradient of the cost w.r.t. the parameter b     
      """
+    # El gradiente es la derivada parcial de los datos
+    # Se utiliza en el descenso de gradiente para ver la derivada de la función en un punto
     def compute_gradient(self):
 
         y_prima = self.f_w_b(self.x)
@@ -87,6 +89,11 @@ class LinearReg:
       w_initial : (ndarray): Shape (1,) initial w value before running gradient descent
       b_initial : (scalar) initial b value before running gradient descent
     """
+    # Trata de minimizar J(w,b), cambia w y b hasta conseguir el valor más cercano al mínimo posible
+    # Para ello se utiliza la función de coste
+    # Este algoritmo es el que va viendo la derivada para ver si se ha quedado corto para llegar al objetivo
+    # (Derivada decreciente) o se ha pasado (Derivada creciente) acercandose cada vez más al vértice de la función
+    # Nuestra respuesta correcta
     def gradient_descent(self, alpha, num_iters):
         # An array to store cost J and w's at each iteration — primarily for graphing later
         J_history = []

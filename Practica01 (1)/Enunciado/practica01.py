@@ -56,7 +56,6 @@ def run_gradient_descent_one(x_train, y_train,alpha = 0.01,iterations=1500):
 
       return w, b
 
-
 def test_gradient_descent_one(x_train, y_train, w, b):
       predict1 = 3.5 * w + b
       print('for score 3.5, we predict user score of (3.97) %.2f' %
@@ -79,16 +78,13 @@ def test_gradient_descent_one(x_train, y_train, w, b):
 
 # Functions to testing multi variable.
 
-
 def test_gradient_multi(x_train, y_train):
       print("------------test_gradient-----------")
       compute_gradient_test_multi(compute_gradient_multi_obj)
 
-
 def test_cost_multi(x_train, y_train):
       print("------------test_cost-----------")
       compute_cost_test_multi(cost_test_multi_obj)
-
 
 def run_gradient_descent_multi(x_train, y_train,alpha = 0.01,iterations=1500,lambda_=0):
       # initialize fitting parameters. Recall that the shape of w is (n,)
@@ -100,8 +96,6 @@ def run_gradient_descent_multi(x_train, y_train,alpha = 0.01,iterations=1500,lam
       w,b,h,w_init,b_init = lr.gradient_descent(alpha,iterations)
 
       return w, b
-
-
 
 def test_gradient_descent_multi(x_train, y_train):
       w1, b1 = run_gradient_descent_multi(x_train, y_train,0.01,1500,0)
@@ -131,11 +125,10 @@ x_train, y_train = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv
 
 #holaaaa a mi también me compila ya :·3
 print("First Part, Linear Regression")
-#TO-DO the main program.
-test_cost_one(x_train, y_train)
-test_gradient_one(x_train, y_train)
-w,b = run_gradient_descent_one(x_train, y_train)
-test_gradient_descent_one(x_train, y_train,w,b)
+test_cost_one(x_train, y_train)                       # Test para la función de coste
+test_gradient_one(x_train, y_train)                   # Test de la función de gradiente
+w,b = run_gradient_descent_one(x_train, y_train)      # Para sacar la w y b necesaria para el test de descenso de gradiente primero hay que hacer este
+test_gradient_descent_one(x_train, y_train,w,b)       # Función de descenso gradiente
 
 
 #Second Part, Linear Regression Multivariable
