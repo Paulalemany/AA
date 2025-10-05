@@ -18,13 +18,18 @@ class LinearRegMulti(LinearReg):
     """
     def __init__(self, x, y, w, b, lambda_):
         super().__init__(x, y, w, b)
-        self.x = x
-        self.y = y
+
+        #TODO: ¿Hace falta esto si es justo lo que hace el súper? ¿no valdría solo con el lamda?
+        self.x = x      #   Datos reales del modelo
+        self.y = y      #   Datos que queremos predecir (Pero los valores reales para poder comparar)
         self.w = w
-        self.b = b
-        self.lambda_ = lambda_
+        self.b = b      #   Bias de la función, necesario para que el error sea mínimo
+        self.lambda_ = lambda_      #   Determina el peso de cada argumento de la función
         return
 
+
+    # Cálculo de la y_prima del modelo (De forma matricial)
+    # Luego se compaparán con los datos reales (y) para ver como de lejos ha estado el modelo de la realidad
     def f_w_b(self, x):
         ret = x @ self.w + self.b
         return ret

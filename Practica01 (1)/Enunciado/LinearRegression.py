@@ -15,7 +15,7 @@ class LinearReg:
     def __init__(self, x, y,w,b):
         self.x = x      #   Datos de referencia (Los datos reales) 'score'
         self.y = y      #   Datos que queremos predecir 'user Score'
-        self.w = w      #   Peso del dato
+        self.w = w      #   
         self.b = b      #   Bias de la función, necesario para que el error sea mínimo
         
 
