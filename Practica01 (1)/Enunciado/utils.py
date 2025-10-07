@@ -5,15 +5,16 @@ from csv import reader
 
 # read the CSV file
 def load_csv(filename):
-    # Open file in read mode
-    file = open(filename,"r")
-    # Reading file 
-    lines = reader(file)
+    # # Open file in read mode
+    # file = open(filename,"r")
+    # # Reading file 
+    # lines = reader(file)
     
-    # Converting into a list 
-    data = list(lines)
+    # # Converting into a list 
+    # data = list(lines)
 
-    return data
+    # return data
+    return pd.read_csv(filename)
 
 def cleanData(data):
     data["score"] = data["score"].apply(lambda x:  str(x).replace(",","."))
