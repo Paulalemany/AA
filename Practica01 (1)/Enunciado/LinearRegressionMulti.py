@@ -66,19 +66,19 @@ class LinearRegMulti(LinearReg):
             cost += self._regularizationL2Cost()
         return  cost
     
-    # TODO: holaaa
+    # El gradiente es equivalente a la derivada de una variable, aplicada múltiples variables. Se resuelve produciendo un vector con tantas dimensiones como variables haya. En cada dimensión se calculará la derivada parcial con respecto a una de las variables. Indica la dirección de máximo cambio de la función. La magnitud del gradiente es la pendiente de la gráfica en esa dirección. El gradiente se representa con el operador diferencial nabla
     def compute_gradient(self):
         y_prima = self.f_w_b(self.x)
         error = y_prima - self.y
-        
-        #gradiente w y b
-        # dj_dw =  ((1/ np.size(self.y)) * (np.sum((error) * self.x)))
-        # dj_db = ((1/ np.size(self.y)) * (np.sum(error)))
+        m = self.m;
+                
+        dj_dw = (1/m) * (self.x.T @ error)   # la traspuesta por el error
+        dj_db = (1/m) * np.sum(error)  #     
 
-        if self.lambda_ > 0: # esto vendrá después para el ej 3
-            dj_dw  += self._regularizationL2Gradient()
+        #if self.lambda_ > 0: # esto vendrá después para el ej 3
+        dj_dw  += self._regularizationL2Gradient()
         
-        return 0, 0
+        return dj_dw, dj_db
     
     # TODO: holaaa
     # https://medium.com/@IwriteDSblog/gradient-descent-for-multivariable-regression-in-python-d430eb5d2cd8
@@ -95,8 +95,9 @@ class LinearRegMulti(LinearReg):
             self.w = self.w - alpha * w
             self.b = self.b - alpha * b
 
-            J_history.append(self.compute_cost())
-        
+            cost = self.compute_cost()
+            J_history.append(cost)
+
         return self.w, self.b, J_history, w_initial, b_initial
 
     
