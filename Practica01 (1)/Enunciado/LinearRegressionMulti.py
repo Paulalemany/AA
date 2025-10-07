@@ -18,6 +18,7 @@ class LinearRegMulti(LinearReg):
     """
     def __init__(self, x, y, w, b, lambda_):
         super().__init__(x, y, w, b)
+        self.m = x.size;
         self.lambda_ = lambda_   #   Determina el peso de cada argumento de la función
         return
 
@@ -56,6 +57,9 @@ class LinearRegMulti(LinearReg):
     # https://medium.com/data-science/applied-multivariate-regression-faef8ddbf807
     def compute_cost(self):
         y_prima = self.f_w_b(self.x) # y predicha
+        # m = self.m
+        # m, c = np.polyfit(self.x, self.y, 1)
+        # m = np.gradient(self.x);
         m = self.m
         cost = (1/2*m) * np.sum((y_prima - self.y)**2)
         if self.lambda_ > 0: # esto vendrá después para el ej 3
