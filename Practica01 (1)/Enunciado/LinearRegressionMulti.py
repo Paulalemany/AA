@@ -62,8 +62,8 @@ class LinearRegMulti(LinearReg):
         # m = np.gradient(self.x);
         m = self.m
         cost = (1/2*m) * np.sum((y_prima - self.y)**2)
-        if self.lambda_ > 0: # esto vendrá después para el ej 3
-            cost += self._regularizationL2Cost()
+        # esto vendrá después para el ej 3
+        cost += self._regularizationL2Cost()
         return  cost
     
     # El gradiente es equivalente a la derivada de una variable, aplicada múltiples variables. Se resuelve produciendo un vector con tantas dimensiones como variables haya. En cada dimensión se calculará la derivada parcial con respecto a una de las variables. Indica la dirección de máximo cambio de la función. La magnitud del gradiente es la pendiente de la gráfica en esa dirección. El gradiente se representa con el operador diferencial nabla
@@ -71,11 +71,11 @@ class LinearRegMulti(LinearReg):
         y_prima = self.f_w_b(self.x)
         error = y_prima - self.y
         m = self.m
-                
+
         dj_dw = (1/m) * (self.x.T @ error)   # la traspuesta por el error
         dj_db = (1/m) * np.sum(error)  #     
 
-        #if self.lambda_ > 0: # esto vendrá después para el ej 3
+        # esto vendrá después para el ej 3
         dj_dw  += self._regularizationL2Gradient()
         
         return dj_dw, dj_db

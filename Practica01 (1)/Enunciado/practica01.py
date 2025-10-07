@@ -122,18 +122,15 @@ x_train, y_train = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv
       # Historial de rutas relativas utiles
       #./Practica01 (1)/Enunciado/data/games-data.csv
       #./data/games-data.csv
+print("First Part, Linear Regression")
+test_cost_one(x_train, y_train)                       # Test para la función de coste
+test_gradient_one(x_train, y_train)                   # Test de la función de gradiente
+w,b = run_gradient_descent_one(x_train, y_train)      # Para sacar la w y b necesaria para el test de descenso de gradiente primero hay que hacer este
+test_gradient_descent_one(x_train, y_train,w,b)       # Función de descenso gradiente
 
-#holaaaa a mi también me compila ya :·3
-#print("First Part, Linear Regression")
-#test_cost_one(x_train, y_train)                       # Test para la función de coste
-#test_gradient_one(x_train, y_train)                   # Test de la función de gradiente
-#w,b = run_gradient_descent_one(x_train, y_train)      # Para sacar la w y b necesaria para el test de descenso de gradiente primero hay que hacer este
-#test_gradient_descent_one(x_train, y_train,w,b)       # Función de descenso gradiente
-
-x_train, y_train = load_data_csv_multi('./data/games-data.csv', 'score', 'critics', 'users', 'user score')
 #Second Part, Linear Regression Multivariable
+x_train, y_train = load_data_csv_multi('./data/games-data.csv', 'score', 'critics', 'users', 'user score')
 print("\n\nSecond Part, Linear Regression Multivariable")
-#TO-DO the main program.
 test_cost_multi(x_train, y_train)
 test_gradient_multi(x_train, y_train)
 test_gradient_descent_multi(x_train, y_train)
