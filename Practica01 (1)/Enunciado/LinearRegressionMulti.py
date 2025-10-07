@@ -18,7 +18,7 @@ class LinearRegMulti(LinearReg):
     """
     def __init__(self, x, y, w, b, lambda_):
         super().__init__(x, y, w, b)
-        self.lambda_ = lambda_ # determina el peso 
+        self.lambda_ = lambda_   #   Determina el peso de cada argumento de la función
         return
 
 
@@ -62,7 +62,7 @@ class LinearRegMulti(LinearReg):
             cost += self._regularizationL2Cost()
         return  cost
     
-    # TO-DO:
+    # TODO: holaaa
     def compute_gradient(self):
         y_prima = self.f_w_b(self.x)
         error = y_prima - self.y
@@ -76,7 +76,7 @@ class LinearRegMulti(LinearReg):
         
         return 0, 0
     
-    # TO-DO:
+    # TODO: holaaa
     # https://medium.com/@IwriteDSblog/gradient-descent-for-multivariable-regression-in-python-d430eb5d2cd8
     def gradient_descent(self, alpha, num_iters):
         # An array to store cost J and w's at each iteration — primarily for graphing later
