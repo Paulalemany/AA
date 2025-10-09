@@ -9,6 +9,8 @@ from LinearRegressionMulti import cost_test_multi_obj
 from LinearRegressionMulti import compute_gradient_multi_obj
 import numpy as np
 
+from LinearRegressionIt import LinearRegIt
+
 
 # Functions to testing linear regression
 
@@ -32,12 +34,44 @@ def test_gradient_one(x_train, y_train):
       print("----Compute gradient-------")
       compute_gradient_test_one(compute_gradient_obj)
 
+def test_gradient_oneIt(x_train, y_train):
+      initial_w = 0
+      initial_b = 0
+
+      lr = LinearRegIt(x_train,y_train,initial_w,initial_b)
+      lr_tmp_dj_dw, lr_tmp_dj_db = lr.compute_gradient()
+      print('Gradient at initial w, b (similar to)(-50.49855985112268 -6.988606075159124):',
+            lr_tmp_dj_dw, lr_tmp_dj_db)
+
+      test_w = 0.2
+      test_b = 0.2
+
+      lr = LinearRegIt(x_train,y_train,test_w,test_b)
+      lr_tmp_dj_dw, lr_tmp_dj_db = lr.compute_gradient()
+      print('Gradient at initial w, b (similar to)(-38.700526233641476 -5.369312042261991):',
+            lr_tmp_dj_dw, lr_tmp_dj_db)
+
+      print("----Compute gradient-------")
+      compute_gradient_test_one(compute_gradient_obj)
+
 def test_cost_one(x_train, y_train):
 
       initial_w = 2
       initial_b = 1
 
       lr = LinearReg(x_train,y_train,initial_w,initial_b)
+      lrcost = lr.compute_cost()
+      print(type(lrcost))
+      print(f'Cost at initial w (35.841): {lrcost:.3f}')
+      print("----Compute cost-------")
+      compute_cost_test_one(cost_test_obj)
+
+def test_cost_oneIt(x_train, y_train):
+
+      initial_w = 2
+      initial_b = 1
+
+      lr = LinearRegIt(x_train,y_train,initial_w,initial_b)
       lrcost = lr.compute_cost()
       print(type(lrcost))
       print(f'Cost at initial w (35.841): {lrcost:.3f}')
@@ -56,7 +90,37 @@ def run_gradient_descent_one(x_train, y_train,alpha = 0.01,iterations=1500):
 
       return w, b
 
+def run_gradient_descent_oneIt(x_train, y_train,alpha = 0.01,iterations=1500):
+      # initialize fitting parameters. Recall that the shape of w is (n,)
+      initial_w = 0.
+      initial_b = 0.
+
+      print("---- Gradient descent--")
+      lr = LinearRegIt(x_train,y_train,initial_w,initial_b)
+      w,b,h,w_init,b_init = lr.gradient_descent(alpha,iterations)
+      print("w,b found by gradient descent (0.8262848855238131 1.0746825556592443):", w, b)
+
+      return w, b
+
 def test_gradient_descent_one(x_train, y_train, w, b):
+      predict1 = 3.5 * w + b
+      print('for score 3.5, we predict user score of (3.97) %.2f' %
+            predict1)
+      print(predict1)
+      print("Case 1")
+      assert np.allclose(predict1, 3.96667965 )
+      print("Case 1 passed!")
+
+      predict2 = 7.0 * w + b
+      print('for score 7.9, we predict user score of (6.86) %.2f' %
+            predict2)
+      print("Case 2")
+      print(predict2)
+      assert np.allclose(predict2, 6.85867675)
+      print("Case 2 passed!")
+      print("\033[92mAll tests passed!")
+      
+def test_gradient_descent_oneIt(x_train, y_train, w, b):
       predict1 = 3.5 * w + b
       print('for score 3.5, we predict user score of (3.97) %.2f' %
             predict1)
@@ -117,7 +181,7 @@ def test_gradient_descent_multi(x_train, y_train):
       print("\033[92mAll tests passed!")
 
 
-#First Part, Linear Regression
+
 x_train, y_train = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'user score')
       # Historial de rutas relativas utiles
       #./Practica01 (1)/Enunciado/data/games-data.csv
@@ -128,9 +192,30 @@ test_gradient_one(x_train, y_train)                   # Test de la función de g
 w,b = run_gradient_descent_one(x_train, y_train)      # Para sacar la w y b necesaria para el test de descenso de gradiente primero hay que hacer este
 test_gradient_descent_one(x_train, y_train,w,b)       # Función de descenso gradiente
 
+
+#Opcional, Versión iterativa
+x_train, y_train = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'user score')
+      # Historial de rutas relativas utiles
+      #./Practica01 (1)/Enunciado/data/games-data.csv
+      #./data/games-data.csv
+print("First Part, Linear RegressionIt")
+test_cost_oneIt(x_train, y_train)                       # Test para la función de coste
+test_gradient_oneIt(x_train, y_train)                   # Test de la función de gradiente
+w,b = run_gradient_descent_oneIt(x_train, y_train)      # Para sacar la w y b necesaria para el test de descenso de gradiente primero hay que hacer este
+test_gradient_descent_oneIt(x_train, y_train,w,b)       # Función de descenso gradiente
+
+#First Part, Linear Regression
+
+"""
+
+
 #Second Part, Linear Regression Multivariable
-x_train, y_train = load_data_csv_multi('./data/games-data.csv', 'score', 'critics', 'users', 'user score')
+x_train, y_train = load_data_csv_multi('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'critics', 'users', 'user score')
 print("\n\nSecond Part, Linear Regression Multivariable")
 test_cost_multi(x_train, y_train)
 test_gradient_multi(x_train, y_train)
 test_gradient_descent_multi(x_train, y_train)
+"""
+
+
+

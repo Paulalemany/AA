@@ -3,7 +3,13 @@ import copy
 import math
 from utils import *
 
-class LinearReg:
+    
+class LinearRegIt:
+
+    """
+    Linear regresion en su versión iterativa
+    """
+
     """
     Computes the cost function for linear regression.
 
@@ -15,7 +21,7 @@ class LinearReg:
     def __init__(self, x, y,w,b):
         self.x = x      #   Datos de referencia (Los datos reales) 'score'
         self.y = y      #   Datos que queremos predecir 'user Score'
-        self.w = w      #   
+        self.w = w      #   Pendiente de la recta
         self.b = b      #   Bias de la función, necesario para que el error sea mínimo
         
 
@@ -31,7 +37,10 @@ class LinearReg:
     # Calcula la y_prima del modelo (Los datos que estamos adivinando)
     def f_w_b(self, x):
         
-        mul = np.multiply(self.w, x)
+        mul = x.copy()
+        for i in range(len(x)):
+            mul[i] = mul[i] * self.w
+
         return mul + self.b
 
 
@@ -47,9 +56,13 @@ class LinearReg:
     def compute_cost(self):
 
         y_prima = self.f_w_b(self.x)
-        cost = np.sum(np.square(self.y - y_prima))/(np.size(self.y) * 2)
-        #                   m                             y      y'
-        #return (1 / 2 * np.size(self.y)) * np.sum(np.square(self.y - y_prima))
+
+        m = self.x.shape[0]
+        sumatorio = 0
+        for i in range(m):
+            sumatorio += (self.y[i] - y_prima[i]) ** 2
+        
+        cost = sumatorio / (m * 2)
         return  cost
     
 
@@ -66,9 +79,18 @@ class LinearReg:
     def compute_gradient(self):
 
         y_prima = self.f_w_b(self.x)
-                #           m
-        dj_dw =  ((1/ np.size(self.y)) * (np.sum((y_prima - self.y) * self.x)))
-        dj_db = ((1/ np.size(self.y)) * (np.sum(y_prima - self.y)))
+        m = self.x.shape[0]
+        
+        sumw = 0
+        for i in range(m):
+            sumw += (y_prima[i] - self.y[i]) * self.x[i]
+        dj_dw = sumw / m
+
+        sumb = 0
+        for i in range(m):
+            sumb += (y_prima[i] - self.y[i])
+        dj_db = sumb / m
+
         return dj_dw, dj_db
     
     
@@ -113,11 +135,11 @@ class LinearReg:
 
 
 def cost_test_obj(x,y,w_init,b_init):
-    lr = LinearReg(x,y,w_init,b_init)
+    lr = LinearRegIt(x,y,w_init,b_init)
     cost = lr.compute_cost()
     return cost
 
 def compute_gradient_obj(x,y,w_init,b_init):
-    lr = LinearReg(x,y,w_init,b_init)
+    lr = LinearRegIt(x,y,w_init,b_init)
     dw,db = lr.compute_gradient()
     return dw,db
