@@ -184,12 +184,6 @@ def test_gradient_descent_multi(x_train, y_train):
 
 
 #First Part, Linear Regression
-# Iterativa
-
-
-# Vectorial
-
-
 print("First Part, Linear Regression")
 start = time.time()
 x_train, y_train = load_data_csv('./data/games-data.csv', 'score', 'user score')
@@ -222,7 +216,3 @@ print("Second Part, Linear Regression Multivariable")
 test_cost_multi(x_train, y_train)
 test_gradient_multi(x_train, y_train)
 test_gradient_descent_multi(x_train, y_train)
-
-
-
-
