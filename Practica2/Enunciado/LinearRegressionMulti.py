@@ -73,9 +73,6 @@ class LinearRegMulti(LinearReg):
     # https://medium.com/data-science/applied-multivariate-regression-faef8ddbf807
     def compute_cost(self):
         y_prima = self.f_w_b(self.x) # y predicha
-        # m = self.m
-        # m, c = np.polyfit(self.x, self.y, 1)
-        # m = np.gradient(self.x);
         m = self.m
         cost = (1/2*m) * np.sum((y_prima - self.y)**2)
         # esto vendrá después para el ej 3
