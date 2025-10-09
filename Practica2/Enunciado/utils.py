@@ -20,19 +20,16 @@ def load_data_csv(path,x_colum,y_colum):
     return X, y
 
 def zscore_normalize_features(X):
-    """
-    computes  X, zcore normalized by column
+    # find the mean of each column/feature
+    # mu will have shape (n,)
+    mu = np.mean(X, axis=0)
+    # find the standard deviation of each column/feature
+    # sigma will have shape (n,)
+    sigma = np.std(X, axis=0, ddof=0) 
+    # element-wise, subtract mu for that column from each example,
+    # divide by std for that column (cyntrist: <-- sigma entiendo (standard deviation))
 
-    Args:
-      X (ndarray (m,n))     : input data, m examples, n features
-
-    Returns:
-      X_norm (ndarray (m,n)): input normalized by column
-      mu (ndarray (n,))     : mean of each feature
-      sigma (ndarray (n,))  : standard deviation of each feature
-    """
-    X_norm, mu, sigma = 0
-
+    X_norm = (X - mu) / sigma
 
     return X_norm, mu, sigma
 
@@ -53,6 +50,7 @@ def load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum):
 def load_data_csv_multi_logistic(path,x1_colum,x2_colum,x3_colum,y_colum):
     X,y = load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum)
     #TODO convertir la a clases 0,1.
+    
     return X,y
         
     

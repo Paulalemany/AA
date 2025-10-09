@@ -7,9 +7,11 @@ from LinearRegression import compute_gradient_obj
 from LinearRegressionMulti import LinearRegMulti
 from LinearRegressionMulti import cost_test_multi_obj
 from LinearRegressionMulti import compute_gradient_multi_obj
-import numpy as np
 
 from LinearRegressionIt import LinearRegIt
+
+import numpy as np
+import time
 
 
 # Functions to testing linear regression
@@ -182,35 +184,41 @@ def test_gradient_descent_multi(x_train, y_train):
 
 
 #First Part, Linear Regression
-x_train, y_train = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'user score')
+# Iterativa
+
+
+# Vectorial
+
+
+print("First Part, Linear Regression")
+start = time.time()
+x_train, y_train = load_data_csv('./data/games-data.csv', 'score', 'user score')
       # Historial de rutas relativas utiles
       #./Practica01 (1)/Enunciado/data/games-data.csv
       #./data/games-data.csv
-print("First Part, Linear Regression")
 test_cost_one(x_train, y_train)                       # Test para la función de coste
 test_gradient_one(x_train, y_train)                   # Test de la función de gradiente
 w,b = run_gradient_descent_one(x_train, y_train)      # Para sacar la w y b necesaria para el test de descenso de gradiente primero hay que hacer este
 test_gradient_descent_one(x_train, y_train,w,b)       # Función de descenso gradiente
+end = time.time()
+print('\n>>>>>>> VECTORIAL VERSION TIME:   ', end - start, '\n')
 
-"""
-      VisualStudio Code lo pasa tan mal que nos ha demostrado que la iterativa es menos eficiente
-"""
 
 #Opcional, Versión iterativa
-x_train, y_train = load_data_csv('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'user score')
-      # Historial de rutas relativas utiles
-      #./Practica01 (1)/Enunciado/data/games-data.csv
-      #./data/games-data.csv
-print("First Part, Linear RegressionIt")
+print("Optional Part, Linear Regression Iterative")
+start = time.time()
+x_train, y_train = load_data_csv('./data/games-data.csv', 'score', 'user score')
 test_cost_oneIt(x_train, y_train)                       # Test para la función de coste
 test_gradient_oneIt(x_train, y_train)                   # Test de la función de gradiente
 w,b = run_gradient_descent_oneIt(x_train, y_train)      # Para sacar la w y b necesaria para el test de descenso de gradiente primero hay que hacer este
 test_gradient_descent_oneIt(x_train, y_train,w,b)       # Función de descenso gradiente
+end = time.time()
+print('\n>>>>>>> ITERATIVE VERSION TIME:   ', end - start, '\n')
 
 
 #Second Part, Linear Regression Multivariable
-x_train, y_train = load_data_csv_multi('./Practica01 (1)/Enunciado/data/games-data.csv', 'score', 'critics', 'users', 'user score')
-print("\n\nSecond Part, Linear Regression Multivariable")
+x_train, y_train = load_data_csv_multi('./data/games-data.csv', 'score', 'critics', 'users', 'user score')
+print("Second Part, Linear Regression Multivariable")
 test_cost_multi(x_train, y_train)
 test_gradient_multi(x_train, y_train)
 test_gradient_descent_multi(x_train, y_train)
