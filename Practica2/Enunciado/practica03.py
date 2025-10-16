@@ -18,6 +18,13 @@ def test_cost(x_train, y_train):
      compute_cost_test(cost_test_multi_obj)
 
 
+def test_sigmoidal(x_train, w_train):
+    print("------------test_sigmoidal-----------")
+    rl = LogisticRegMulti(x_train, w_train, 0, 0, 0)
+    rl.sigmoidal(w_train)
+    x = 0
+    print ('Solución sigmoidal de % da %.1f' % (x, rl.sigmoidal(x)))
+
 def run_gradient_descent(x_train, y_train,alpha = 0.01,iterations=1500,lambda_=0):
     # initialize fitting parameters. Recall that the shape of w is (n,)
     initial_w = np.zeros(x_train.shape[1])
@@ -40,12 +47,14 @@ def test_gradient_descent(x_train, y_train):
     print("w,b found by gradient descent with labmda 1 ([ 0.93278101  0.18900175 -0.12080013] 0.46905464164492655):", w2, b2)
 
 
-
-x_train, y_train = load_data_csv_multi_logistic("./Practica2/Enunciado/data/games-data.csv","score","critics","users","user score")
+# w_train son los datos según el ejercicio opcional
+x_train, y_train, w_train = load_data_csv_multi_logistic("./Practica2/Enunciado/data/games-data.csv","score","critics","users","user score")
 # Historial de rutas relativas que funcionan
 #./Practica2/Enunciado/data/games-data.csv
 #./data/games-data.csv
 x_train, mu, sigma = zscore_normalize_features(x_train)
 test_cost(x_train, y_train)
+#Opcional
+
 test_gradient(x_train, y_train)
 test_gradient_descent(x_train, y_train)
