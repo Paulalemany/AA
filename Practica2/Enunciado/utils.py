@@ -46,10 +46,11 @@ def load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum):
 
     
 ## 0 Malo, 1 Regular, 2 Notable, 3 Sobresaliente, 4 Must Play.
-## 0 Malo, 1 Bueno
 def load_data_csv_multi_logistic(path,x1_colum,x2_colum,x3_colum,y_colum):
     X, y = load_data_csv_multi(path,x1_colum,x2_colum,x3_colum,y_colum)
-    y = np.where(y < 7.0, 0, 1) # funcion chula es como el operador ternario pero para un array entero (crea un array del mismo tamaño que y, si y[i] < 7 lo rellena con 0 y si no con 1)
+    # funcion chula es como el operador ternario pero para un array entero 
+    # (crea un array del mismo tamaño que y, si y[i] < 7 lo rellena con 0 y si no con 1)
+    y = np.where(y < 7.0, 0, 1) 
     return X, y
         
     
