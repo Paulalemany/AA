@@ -38,9 +38,29 @@ class LogisticRegMulti(LinearRegMulti):
     def compute_cost(self):
         y_prima = self.f_w_b(self.x) # y predicha
         m = self.m
+        y = self.y
         
-        #cost = -1/m * np.sum(self.y * np.log(y_prima) + (1 - self.y * np.log(1 - y_prima))) #lo que leo en el enunciado
-        cost = self.y * np.log(y_prima) + (1 - self.y) * np.log(1 - y_prima) # lo de la url y la correcta
+        # PROBLEMA!!! 
+        # posibilidad de logaritmo  de 0 o negativo
+        # lo importante de la función de coste es:
+        # y * np.log(y_prima) + (1 - y * np.log(1 - y_prima))
+        # en la versión logística binaria hacíamos:
+        # si y = 0 e y' = 0 -> 0 * log(0) + 1 * log(1)
+        # si y = 0 e y' = 1 -> 0 * log(1) + 1 * log(0) # esto debería haber dado error de por si en la versión binaria... creo
+        # si y = 1 e y' = 0 -> 1 * log(0) + 0 * log(1)
+        # si y = 1 e y' = 1 -> 1 * log(1) + 0 * log(0)
+        # imagino que numpy hace algún tipo de omisión a log(0) pero con las variables no binarias está dando logaritmo negativo
+        
+        # lo único que se me ocurre es clampear
+        # al parecer los float64 de numpy tienen una precisión de -15 a +16
+        # https://www.pythoninformer.com/python-libraries/numpy/data-types/#floats
+        # si uso exponente 16 funciona pero voy a usar 15 por si acaso XD 
+        #clip es el equivalente a clamp en numpy
+        clamp = 1e-15
+        y_prima = np.clip(y_prima, clamp, 1 - clamp) #es o 0.0x o 0.9x
+        
+        #cost = -1/m * np.sum(y * np.log(y_prima) + (1 - y * np.log(1 - y_prima))) #lo que leo en el enunciado
+        cost = y * np.log(y_prima) + (1 - y) * np.log(1 - y_prima) # lo de la url y la correcta
         loss = np.sum(cost)
         total_loss = (-1 / m * loss)
         
