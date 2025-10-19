@@ -48,7 +48,7 @@ def test_gradient_descent(x_train, y_train):
 
 
 # w_train son los datos según el ejercicio opcional
-x_train, y_train, w_train = load_data_csv_multi_logistic("./data/games-data.csv","score","critics","users","user score")
+x_train, y_train, w_train = load_data_csv_multi_logistic("./Practica2/Enunciado/data/games-data.csv","score","critics","users","user score")
 x_train, mu, sigma = zscore_normalize_features(x_train)
 test_cost(x_train, y_train)
 test_gradient(x_train, y_train)
@@ -56,9 +56,31 @@ test_gradient_descent(x_train, y_train)
 
 # Ejercicio opcional
 print(">>>>>>>>>>>>>>>>opcional<<<<<<<<<<<<<<<<<")
-test_cost(x_train, w_train)
-test_gradient(x_train, w_train)
-test_gradient_descent(x_train, w_train)
+clases = []
+num_clases = 5
+test_w = np.array([1, 0.5, -0.35])
+b = 1
+
+# Regresión logistica de cada clase
+for k in range(num_clases):
+    # Si es el número que estamos buscando lo pone a 0 y si no a 1
+    w_k = (w_train == k).astype(int) # Hacemos el vector binario para cada clase
+    clase_k = LogisticRegMulti(x_train, w_k, test_w, b, 0)
+    # hacemos el gradient descent (Entrenamos los modelos)
+    clase_k.gradient_descent(alpha = 0.01,num_iters=1500)
+    clases.append(clase_k)
+
+# Probamos el resultado
+probs = []
+for clase in clases:
+    prob = clase.f_w_b(x_train[1]) #Le pedimos que prediga la puntuación de un juego concreto
+    probs.append(prob)
+
+prediccion = np.argmax(probs) #Nos da la clase que tiene la probabilidad más alta de ser
+
+#Predice regular pero diría que es porque está muy desvalanceado tanto los números que entran en cada nota como los resultados de las notas de los juegos
+print("Predicción:", prediccion, " | Clase real:", w_train)
+
 
 # Historial de rutas relativas que funcionan
 #./Practica2/Enunciado/data/games-data.csv
