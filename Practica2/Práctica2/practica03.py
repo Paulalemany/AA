@@ -73,7 +73,7 @@ for k in range(num_clases):
 # Probamos el resultado
 probs = []
 for clase in clases:
-    prob = clase.f_w_b(x_train[1]) #Le pedimos que prediga la puntuación de un juego concreto
+    prob = clase.f_w_b(x_train[0]) #Le pedimos que prediga la puntuación de un juego concreto
     probs.append(prob)
 
 prediccion = np.argmax(probs) #Nos da la clase que tiene la probabilidad más alta de ser

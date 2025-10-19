@@ -56,8 +56,8 @@ class LogisticRegMulti(LinearRegMulti):
         # https://www.pythoninformer.com/python-libraries/numpy/data-types/#floats
         # si uso exponente 16 funciona pero voy a usar 15 por si acaso XD 
         #clip es el equivalente a clamp en numpy
-        clamp = 1e-15
-        y_prima = np.clip(y_prima, clamp, 1 - clamp) #es o 0.0x o 0.9x
+        #clamp = 1e-15
+        #y_prima = np.clip(y_prima, clamp, 1 - clamp) #es o 0.0x o 0.9x
         
         #cost = -1/m * np.sum(y * np.log(y_prima) + (1 - y * np.log(1 - y_prima))) #lo que leo en el enunciado
         cost = y * np.log(y_prima) + (1 - y) * np.log(1 - y_prima) # lo de la url y la correcta
