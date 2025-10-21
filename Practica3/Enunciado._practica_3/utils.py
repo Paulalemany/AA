@@ -61,7 +61,7 @@ Probably need to use reshape(-1, 1) to change size of the data
 def one_hot_encoding(Y):
     YEnc = 0
     #TO-DO: implements
-	return YEnc
+    return YEnc
 
 """
 Implementation of the accuracy metrics function

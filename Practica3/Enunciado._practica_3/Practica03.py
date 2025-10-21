@@ -6,7 +6,7 @@ from public_test import compute_cost_test, predict_test
 
 
 x,y = load_data('data/ex3data1.mat')
-theta1, theta2 = load_weights('data/ex3weights.mat')
+theta1,theta2 = load_weights('data/ex3weights.mat')
 
 #TO-DO: calculate a testing a prediction and cost.
 

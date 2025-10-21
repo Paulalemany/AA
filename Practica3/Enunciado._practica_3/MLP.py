@@ -10,8 +10,8 @@ class MLP:
         theta2 (array_like): Weights for the second layer in the neural network.
     """
     def __init__(self,theta1,theta2):
-        self.theta1 = theta1
-        self.theta2 = theta2
+        self.theta1 = theta1        #Pesos de la primera capa
+        self.theta2 = theta2        #Pesos de la segunda capa
         
     """
     Num elements in the training data. (private)
@@ -29,7 +29,8 @@ class MLP:
         z (array_like): activation signal received by the layer.
     """
     def _sigmoid(self,z):
-        return 0
+        sig = 1 / (1 + np.exp(-z))
+        return sig
 
     """
     Run the feedwordwar neural network step
@@ -44,7 +45,43 @@ class MLP:
     """
     def feedforward(self,x):
         a1,a2,a3,z2,z3 = 0
+
+        #Esta es la implementación iterativa, habría que hacer la vectorial
+
+        # W weights, X input, A! activation of Hidden layer, G function for j in range(len(A1))  
+        # for i in range(len(X))    
+        # A1[j] = W[j,i]*X[i]  
+        # A1[j]=g(A1[j]) 
+        # #Same for A2, A3.... An
+
+        # a0 no se calcula porque se predupone que es 1
+        #Llamamos a las funciones de activación
+        # ___Recordatorio de que g es la función de activación, en nuestro caso la sigmoidal___
+        # ay ->siendo y la capa en la que estamos y [j] la neurona de la capa
+        # Este es el rango de las neuronas de la capa 1
+        for j in range(len(a1)):
+            for i in range(len(x)):
+                a1[j] = self.theta1[i,j] * x[i]
+                a1[j] = self._sigmoid(a1[j])
+        
+        for j in range(len(a2)):
+            for i in range(len(x)):
+                a2[j] = self.theta1[i,j] * x[i]
+                a2[j] = self._sigmoid(a2[j])
+
+        for j in range(len(a3)):
+            for i in range(len(x)):
+                a3[j] = self.theta1[i,j] * x[i]
+                a3[j] = self._sigmoid(a3[j])
+
+
+        a2 = self._sigmoid(z2)
+        a3 = self._sigmoid(z2)
+        m = self._size(x)
+        X1s = np.hstack([np.ones((m, 1)), x])
         return a1,a2,a3,z2,z3 # devolvemos a parte de las activaciones, los valores sin ejecutar la función de activación
+        #Aquí es donde debemos poner el X1?
+        #Se hace antes de la propagación y esto se hace antes de la propagacion
 
 
     """
