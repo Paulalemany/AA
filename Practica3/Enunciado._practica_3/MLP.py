@@ -74,12 +74,10 @@ class MLP:
                 a3[j] = self.theta1[i,j] * x[i]
                 a3[j] = self._sigmoid(a3[j])
 
-
-        a2 = self._sigmoid(z2)
-        a3 = self._sigmoid(z2)
         m = self._size(x)
         X1s = np.hstack([np.ones((m, 1)), x])
         return a1,a2,a3,z2,z3 # devolvemos a parte de las activaciones, los valores sin ejecutar la función de activación
+        #Eso significa que hay que hacer una copia?
         #Aquí es donde debemos poner el X1?
         #Se hace antes de la propagación y esto se hace antes de la propagacion
 
@@ -111,6 +109,9 @@ class MLP:
 	p (scalar): the class index with the highest activation value.
     """
     def predict(self,a3):
+
+        #Hay que coger el valor máximo de a3
+        p = np.argmax(a3)
         p = -1
         return p
 
