@@ -9,7 +9,9 @@ x,y = load_data('data/ex3data1.mat')
 theta1,theta2 = load_weights('data/ex3weights.mat')
 
 #TO-DO: calculate a testing a prediction and cost.
-
-#predict_test()
+Pinkypie = MLP(theta1, theta2)
+a1,a2,a3,z2,z3 = Pinkypie.feedforward(x)
+p = Pinkypie.predict(a3)
+predict_test(p, y, accuracy)
 
 #compute_cost_test()

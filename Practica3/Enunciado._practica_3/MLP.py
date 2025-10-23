@@ -36,15 +36,15 @@ class MLP:
     Run the feedwordwar neural network step
 
     Args:
-        z (array_like): activation signal received by the layer.
+        x (array_like): activation signal received by the layer.
 
 	Return 
 	------
 	a1,a2,a3 (array_like): activation functions of each layers
     z2,z3 (array_like): signal fuction of two last layers
     """
+    #Nuevo f_w_b
     def feedforward(self,x):
-        a1,a2,a3,z2,z3 = 0
 
         #Esta es la implementación iterativa, habría que hacer la vectorial
 
@@ -59,27 +59,35 @@ class MLP:
         # ___Recordatorio de que g es la función de activación, en nuestro caso la sigmoidal___
         # ay ->siendo y la capa en la que estamos y [j] la neurona de la capa
         # Este es el rango de las neuronas de la capa 1
-        for j in range(len(a1)):
-            for i in range(len(x)):
-                a1[j] = self.theta1[i,j] * x[i]
-                a1[j] = self._sigmoid(a1[j])
+        #for j in range(len(a1)):
+        #    for i in range(len(x)):
+        #        a1[j] = self.theta1[i,j] * x[i]
+        #        a1[j] = self._sigmoid(a1[j])
         
-        for j in range(len(a2)):
-            for i in range(len(x)):
-                a2[j] = self.theta1[i,j] * x[i]
-                a2[j] = self._sigmoid(a2[j])
+        #for j in range(len(a2)):
+        #    for i in range(len(x)):
+        #        a2[j] = self.theta1[i,j] * x[i]
+        #        a2[j] = self._sigmoid(a2[j])
 
-        for j in range(len(a3)):
-            for i in range(len(x)):
-                a3[j] = self.theta1[i,j] * x[i]
-                a3[j] = self._sigmoid(a3[j])
+        #for j in range(len(a3)):
+        #    for i in range(len(x)):
+        #        a3[j] = self.theta1[i,j] * x[i]
+        #        a3[j] = self._sigmoid(a3[j])
 
+        #Aqui se añade la X1
         m = self._size(x)
-        X1s = np.hstack([np.ones((m, 1)), x])
+        X1s = np.hstack([np.ones((m, 1)), x]) #Con los b
+
+        a1 = X1s
+        z2 = a1 @ self.theta1.T
+        a2 = self._sigmoid(z2)
+
+        m = self._size(a2)
+        X2s = np.hstack([np.ones((m, 1)), a2]) #Con los b
+        z3 = X2s @ self.theta2.T
+        a3 = self._sigmoid(z3)
+        
         return a1,a2,a3,z2,z3 # devolvemos a parte de las activaciones, los valores sin ejecutar la función de activación
-        #Eso significa que hay que hacer una copia?
-        #Aquí es donde debemos poner el X1?
-        #Se hace antes de la propagación y esto se hace antes de la propagacion
 
 
     """
@@ -106,13 +114,12 @@ class MLP:
 
 	Return 
 	------
-	p (scalar): the class index with the highest activation value.
+	p (array_like): the class index with the highest activation value.
     """
     def predict(self,a3):
 
         #Hay que coger el valor máximo de a3
-        p = np.argmax(a3)
-        p = -1
+        p = np.argmax(a3, axis=1)
         return p
 
     

@@ -2,6 +2,7 @@ import numpy as np
 from matplotlib import pyplot
 from scipy.io import loadmat
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import confusion_matrix
 
 """
 Displays 2D data stored in X in a nice grid.
@@ -67,5 +68,7 @@ def one_hot_encoding(Y):
 Implementation of the accuracy metrics function
 """
 def accuracy(P,Y):
-	#TO-DO: implements
-	return -1
+
+    TP = np.sum(P == Y)
+    totalP = len(Y)
+    return TP / totalP
