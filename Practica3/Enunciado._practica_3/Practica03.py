@@ -14,5 +14,5 @@ a1,a2,a3,z2,z3 = Pinkypie.feedforward(x)
 p = Pinkypie.predict(a3)
 predict_test(p, y, accuracy)
 
-# y_one_hot = one_hot_encoding(y)
-# compute_cost_test(Pinkypie, a3, y_one_hot)
+y_o_h = one_hot_encoding(y)
+compute_cost_test(Pinkypie, a3, y_o_h)

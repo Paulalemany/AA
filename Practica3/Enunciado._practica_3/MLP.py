@@ -101,8 +101,10 @@ class MLP:
 	------
 	J (scalar): the cost.
     """
+    #DIAPO 4  DEL TEMA 3 parte apredizaje
     def compute_cost(self, yPrime,y): # calcula solo el coste, para no ejecutar nuevamente el feedforward.
-        J = 0
+        m = y.shape[0]  
+        J = (-1 / m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
         return J
     
 

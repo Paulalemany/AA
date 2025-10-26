@@ -69,7 +69,6 @@ def one_hot_encoding(Y):
 Implementation of the accuracy metrics function
 """
 def accuracy(P,Y):
-
     TP = np.sum(P == Y)
     totalP = len(Y)
     return TP / totalP
