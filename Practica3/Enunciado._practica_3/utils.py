@@ -60,8 +60,9 @@ Implementation of the one hot encoding... You must use OneHotEncoder function of
 Probably need to use reshape(-1, 1) to change size of the data
 """
 def one_hot_encoding(Y):
-    YEnc = 0
-    #TO-DO: implements
+    Y = Y.reshape(-1, 1)
+    encoder = OneHotEncoder(sparse_output=False)
+    YEnc = encoder.fit_transform(Y)
     return YEnc
 
 """
