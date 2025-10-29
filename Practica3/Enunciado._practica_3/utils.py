@@ -72,3 +72,32 @@ def accuracy(P,Y):
     TP = np.sum(P == Y)
     totalP = len(Y)
     return TP / totalP
+
+"""
+Implementation of the precission metrics function
+"""
+def precission(TP, FP):
+    return TP / (TP + FP)
+
+"""
+Implementation of the precission metrics function
+"""
+def recall(TP, FN):
+    return TP / (TP + FN)
+
+"""
+Implementation of the F1-Score metrics function
+"""
+def F1Score(TP, FP, FN):
+    p = precission(TP, FP)
+    r = recall(TP, FN)
+    return 2 * ((p * r) / (p + r))
+
+
+"""
+Confusion matrix
+"""
+
+def confMatrix(y, p):
+    cm = confusion_matrix(y, p)
+    return cm
