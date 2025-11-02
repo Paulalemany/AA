@@ -36,7 +36,7 @@ def main():
     appleJack = MLP(400, 25, 10)
     
     #Test 1
-    #gradientTest()
+    gradientTest()
 
     ## TO-DO: descoment both test and create the needed code to execute them.
     

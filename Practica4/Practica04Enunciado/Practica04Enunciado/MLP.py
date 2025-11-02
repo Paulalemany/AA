@@ -179,9 +179,11 @@ class MLP:
 
     #En el futuro tendremos más de dos capas por lo tanto habrá que hacer un bucle para que se vaya haciendo esto por todas
     def _regularizationL2Cost(self, m, lambda_):
-        cost1 = np.sum(self.theta1**2)
-        cost2 = np.sum(self.theta2**2)
-        reg_cost_final = (lambda_ / 2 * m) * (cost1 + cost2)
+        # PARA EXCLUIR EL BIAS:
+        # diapo 13 tema 3 aprendizaje
+        cost1 = np.sum(self.theta1[:, 1:] ** 2) 
+        cost2 = np.sum(self.theta2[:, 1:] ** 2)
+        reg_cost_final = (lambda_ / (2 * m)) * (cost1 + cost2)
         return reg_cost_final
     
     
