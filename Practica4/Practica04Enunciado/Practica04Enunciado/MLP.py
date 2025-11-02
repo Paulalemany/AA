@@ -66,8 +66,7 @@ class MLP:
         a (array_like): activation received by the layer.
     """   
     def _sigmoidPrime(self,a):
-        ##TO-DO
-        return 0
+        return a * (1 - a)
 
     """
     Run the feedwordwar neural network step
@@ -144,8 +143,22 @@ class MLP:
     grad1, grad2: the gradient matrix (same shape than theta1 and theta2)
     """
     def compute_gradients(self, x, y, lambda_):
-        ##TO-DO
-        J,grad1,grad2 = 0
+        m = x.shape[0]
+        a1, a2, a3, z2, z3 = self.feedforward(x)
+        J = self.compute_cost(a3, y, lambda_)
+
+        delta3 = a3 - y  # error de salida (m, outputLayer)
+        delta2 = (delta3 @ self.theta2[:, 1:]) * self._sigmoidPrime(self._sigmoid(z2))
+
+        Delta1 = delta2.T @ a1  # (hiddenLayer, inputLayer+1)
+        Delta2 = delta3.T @ np.hstack([np.ones((a2.shape[0], 1)), a2])  # (outputLayer, hiddenLayer+1)
+
+        grad1 = Delta1 / m
+        grad2 = Delta2 / m
+
+        grad1 += self._regularizationL2Gradient(self.theta1, lambda_, m);
+        grad2 += self._regularizationL2Gradient(self.theta2, lambda_, m);
+
         return (J, grad1, grad2)
     
     """
@@ -161,8 +174,9 @@ class MLP:
 	L2 Gradient value
     """
     def _regularizationL2Gradient(self, theta, lambda_, m):
-        ##TO-DO
-        return 0
+        reg = (lambda_ / m) * np.copy(theta)
+        reg[:, 0] = 0  # no regularizar bias
+        return reg
     
     
     """
@@ -190,12 +204,14 @@ class MLP:
     def backpropagation(self, x, y, alpha, lambda_, numIte, verbose=0):
         Jhistory = []
         for i in range(numIte):
-            J = 0
             ##TO-DO: calculate gradients and update both theta matrix
+            J, grad1, grad2 = self.compute_gradients(x, y, lambda_)
+            self.theta1 -= alpha * grad1
+            self.theta2 -= alpha * grad2
+            Jhistory.append(J)
             if verbose > 0 :
                 if i % verbose == 0 or i == (numIte-1):
                     print(f"Iteration {(i+1):6}: Cost {float(J):8.4f}   ")
-        
         return Jhistory
     
 

@@ -41,7 +41,7 @@ def main():
     ## TO-DO: descoment both test and create the needed code to execute them.
     
     #Test 2
-    #MLP_test()
+    MLP_test()
 
     
 
