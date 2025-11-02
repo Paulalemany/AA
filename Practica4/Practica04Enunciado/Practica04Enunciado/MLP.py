@@ -124,8 +124,7 @@ class MLP:
 	p (scalar): the class index with the highest activation value.
     """
     def predict(self,a3):
-        ##TO-DO
-        p = 0
+        p = np.argmax(a3, axis=1)
         return p
     
 
