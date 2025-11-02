@@ -22,9 +22,10 @@ class MLP:
         self.outputLayer = outputLayer
         self.epsilon = epislom
         
-        #Inicializamos los theta aleatoriamente
-        theta1 = np.random.uniform(-epislom,epislom, theta1.shape())     
-        theta2 = np.random.uniform(-epislom,epislom, theta2.shape()) 
+        #Inicializamos los theta aleatoriamente e
+        #con tamaño en función a lo que sabemos que debería tener por enunciado
+        theta1 = np.random.uniform(-epislom,epislom, (hidenLayer, inputLayer + 1))     
+        theta2 = np.random.uniform(-epislom,epislom, (outputLayer, hidenLayer + 1)) 
 
         self.new_trained(theta1, theta2)
 
