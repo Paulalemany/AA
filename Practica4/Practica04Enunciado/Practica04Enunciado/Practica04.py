@@ -39,19 +39,19 @@ def main():
     #Test 1
     gradientTest()
 
-    #Hay que pasarle la x
+    # Cargamos los datos reales
     X, Y = load_data('Practica04Enunciado/Practica04Enunciado/data/ex3data1.mat')
 
-    #Hay que coger una parte aleatoria de los datos, preferiblemente aleatorio a una sección para evitar sesgos
-
+    # Hay que coger una parte aleatoria de los datos, preferiblemente aleatorio a una sección para evitar sesgos
+    # Cogemos una muestra aleatoria de los datos para entrenamiento y para los test
     X_train, X_test, Y_train, Y_test = train_test_split(
     X, Y, test_size=0.2, shuffle=True, random_state=42
 )
-    
+    # Pasamos SOLO LOS DATOS DE ENTRENAMIENTO por el one_hot_encoding (la salida) para que la codificación coincida
     y_train_encoded = one_hot_encoding(Y_train)
-    #y_test_encoded = one_hot_encoding(Y_test)
     
     #Test 2
+    # Pasamos el test
     MLP_test(X_train, y_train_encoded, X_test, Y_test)
 
     
