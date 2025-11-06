@@ -155,8 +155,8 @@ class MLP:
         grad1 = Delta1 / m
         grad2 = Delta2 / m
 
-        grad1 += self._regularizationL2Gradient(self.theta1, lambda_, m);
-        grad2 += self._regularizationL2Gradient(self.theta2, lambda_, m);
+        grad1 += self._regularizationL2Gradient(self.theta1, lambda_, m)
+        grad2 += self._regularizationL2Gradient(self.theta2, lambda_, m)
 
         return (J, grad1, grad2)
     

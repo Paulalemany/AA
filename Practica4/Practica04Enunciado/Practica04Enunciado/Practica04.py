@@ -2,6 +2,7 @@ from MLP import MLP, target_gradient, costNN, MLP_backprop_predict
 from utils import load_data, load_weights,one_hot_encoding, accuracy
 from public_test import checkNNGradients,MLP_test_step
 from sklearn.model_selection import train_test_split
+import random
 
 
 
@@ -38,10 +39,20 @@ def main():
     #Test 1
     gradientTest()
 
-    ## TO-DO: descoment both test and create the needed code to execute them.
+    #Hay que pasarle la x
+    X, Y = load_data('Practica04Enunciado/Practica04Enunciado/data/ex3data1.mat')
+
+    #Hay que coger una parte aleatoria de los datos, preferiblemente aleatorio a una sección para evitar sesgos
+
+    X_train, X_test, Y_train, Y_test = train_test_split(
+    X, Y, test_size=0.2, shuffle=True, random_state=42
+)
+    
+    y_train_encoded = one_hot_encoding(Y_train)
+    #y_test_encoded = one_hot_encoding(Y_test)
     
     #Test 2
-    #MLP_test()
+    MLP_test(X_train, y_train_encoded, X_test, Y_test)
 
     
 
