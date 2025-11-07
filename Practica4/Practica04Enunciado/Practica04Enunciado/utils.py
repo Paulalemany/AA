@@ -51,9 +51,12 @@ def one_hot_encoding(Y):
     return YEnc
 
 def accuracy(P,Y):
-    TP = np.sum(P == Y)
-    totalP = len(Y)
-    return TP / totalP
+    # TP = np.sum(P == Y)
+    # totalP = len(Y)
+    # return TP / totalP
+    P = np.array(P).flatten()
+    Y = np.array(Y).flatten()
+    return np.mean(P == Y)
 
 
 ###########################################################################
