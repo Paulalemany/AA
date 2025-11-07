@@ -1,5 +1,6 @@
 from utils import debugInitializeWeights, computeNumericalGradient
 from sklearn.metrics import accuracy_score
+from sklearn.neural_network import MLPClassifier
 import numpy as np
 
 """
@@ -59,3 +60,33 @@ def MLP_test_step(mlp_backprop_predict,alpha,X_train,y_train, X_test, y_test, la
     y_pred=mlp_backprop_predict(X_train,y_train,X_test,alpha,lambda_,num_ite,verbose)
     accu = accuracy_score(y_test, y_pred)
     print(f"Calculate accuracy for lambda = {(lambda_):1.5f} : {(accu):1.5f} expected accuracy is aprox: {(baseLineAccuracy):1.5f}")
+   
+"""
+Checks SKLearn accuracy outputs
+""" 
+def SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite):
+    mlp_sklearn = MLPClassifier(
+        hidden_layer_sizes = (n_hidden_neurons,),
+        activation = 'logistic',   # sigmoidal
+        # solver='adam',
+        solver = 'sgd', # en vez de adam=???
+        alpha = lambda_,           # regularización L2 alfa como lambda
+        learning_rate_init = alpha,
+        max_iter = num_ite, # numero de iteraciones
+        random_state = 42, # aleatoriedad
+        # tol=0.0, # tolerancia minima (diferencia mínima entre el coste de la iteración anterior para que la optimización se detenga si no la supera tras 10 iteraciones)
+        verbose = False # si escribe por consola mensajes de debug
+    )
+    mlp_sklearn.fit(X_train, Y_train) #entrenamiento
+    Y_pred_sklearn = mlp_sklearn.predict(X_test) #prediccion
+    acc_sklearn = accuracy_score(Y_test, Y_pred_sklearn) #precision
+    print(f"SKLEARN: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+
+"""
+Checks MLP accuracy outputs (without baseline accuracy)
+"""
+def Our_test_step(mlp_backprop_predict, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite):
+    y_pred = mlp_backprop_predict(X_train, y_train_encoded, X_test, alpha, lambda_, num_ite, 0)
+    accu = accuracy_score(Y_test, y_pred)
+    print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(accu):1.5f}")
+    

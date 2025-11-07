@@ -1,6 +1,6 @@
 from MLP import MLP, target_gradient, costNN, MLP_backprop_predict
-from utils import load_data, load_weights,one_hot_encoding, accuracy
-from public_test import checkNNGradients,MLP_test_step
+from utils import load_data,load_weights,one_hot_encoding, accuracy
+from public_test import checkNNGradients,MLP_test_step,SKLearn_test_step,Our_test_step
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
@@ -32,79 +32,28 @@ def MLP_test(X_train,y_train, X_test, y_test):
 def SKLearn_test(X_train, Y_train, X_test, Y_test):
     n_hidden_neurons = 25 # numero de neuronas de la capa oculta
     lambda_ = 0.0
-    alpha = 1.0
+    alpha = 1.0 #tasa de aprendizaje
     num_ite = 2000 
-    mlp_sklearn = MLPClassifier(
-        hidden_layer_sizes = (n_hidden_neurons,),
-        activation = 'logistic',   # sigmoidal
-        # solver='adam',
-        solver = 'sgd', # en vez de adam=???
-        alpha = lambda_,           # regularización L2 alfa como lambda
-        learning_rate_init = alpha,
-        max_iter = num_ite, # numero de iteraciones
-        random_state = 42, # aleatoriedad
-        # tol=0.0, # tolerancia minima (diferencia mínima entre el coste de la iteración anterior para que la optimización se detenga si no la supera tras 10 iteraciones)
-        verbose = False # si escribe por consola mensajes de debug
-    )
-    mlp_sklearn.fit(X_train, Y_train)
-    Y_pred_sklearn = mlp_sklearn.predict(X_test)
-    acc_sklearn = accuracy_score(Y_test, Y_pred_sklearn)
-    print(f"SKLEARN: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+    SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite)
     
     lambda_ = 0.5
-    mlp_sklearn = MLPClassifier(
-        hidden_layer_sizes = (n_hidden_neurons,),
-        activation = 'logistic',  
-        # solver='adam',
-        solver = 'sgd', 
-        alpha = lambda_,           
-        learning_rate_init = alpha,
-        max_iter = num_ite, 
-        random_state = 42, 
-        # tol=0.0, 
-        verbose = False 
-    )
-    mlp_sklearn.fit(X_train, Y_train)
-    Y_pred_sklearn = mlp_sklearn.predict(X_test)
-    acc_sklearn = accuracy_score(Y_test, Y_pred_sklearn)
-    print(f"SKLEARN: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+    SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite)
     
     lambda_ = 1.0
-    mlp_sklearn = MLPClassifier(
-        hidden_layer_sizes = (n_hidden_neurons,),
-        activation = 'logistic',  
-        # solver='adam',
-        solver = 'sgd',
-        alpha = lambda_,           
-        learning_rate_init = alpha,
-        max_iter = num_ite, 
-        random_state = 42, 
-        # tol=0.0,
-        verbose = False
-    )
-    mlp_sklearn.fit(X_train, Y_train)
-    Y_pred_sklearn = mlp_sklearn.predict(X_test)
-    acc_sklearn = accuracy_score(Y_test, Y_pred_sklearn)
-    print(f"SKLEARN: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+    SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite)
+
 
 def Our_test(X_train, y_train_encoded, X_test, Y_test):
-    lambda_ = 0.0
     alpha = 1.0
     num_ite = 2000 
     lambda_ = 0.0
-    y_pred = MLP_backprop_predict(X_train, y_train_encoded, X_test, alpha, lambda_, num_ite, 0)
-    accu = accuracy_score(Y_test, y_pred)
-    print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(accu):1.5f}")
+    Our_test_step(MLP_backprop_predict, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
     
     lambda_ = 0.5
-    y_pred = MLP_backprop_predict(X_train, y_train_encoded, X_test, alpha, lambda_, num_ite, 0)
-    accu = accuracy_score(Y_test, y_pred)
-    print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(accu):1.5f}")
+    Our_test_step(MLP_backprop_predict, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
     
     lambda_ = 1.0
-    y_pred = MLP_backprop_predict(X_train, y_train_encoded, X_test, alpha, lambda_, num_ite, 0)
-    accu = accuracy_score(Y_test, y_pred)
-    print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(accu):1.5f}")
+    Our_test_step(MLP_backprop_predict, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
 
 
 def main():
