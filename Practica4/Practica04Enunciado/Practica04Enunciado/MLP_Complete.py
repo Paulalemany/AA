@@ -37,6 +37,8 @@ class MLP_Complete:
         self.outputLayer = outputLayer
         self.epsilom = epislom
         
+        # [] lo convierte a lista de un elemento
+        # list convierte el array a lista
         self.layer_sizes = [inputLayer] + list(hiddenLayers) + [outputLayer]
         self.num_layers = len(self.layer_sizes)
 
@@ -125,6 +127,8 @@ class MLP_Complete:
             z_list.append(z)
 
             # bias a todas menos la última capa
+            # en python -1 en una lista accede al ultimo elemento
+            # te libras de hacer la lenght - 1!!
             if theta is not self.thetas[-1]:
                 a = np.hstack([np.ones((self._size(a), 1)), a])
             a_list.append(a)
