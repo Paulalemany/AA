@@ -1,4 +1,5 @@
 from MLP import MLP, target_gradient, costNN, MLP_backprop_predict
+from MLP_Complete import MLP_Complete
 from utils import load_data,load_weights,one_hot_encoding, accuracy
 from public_test import checkNNGradients,MLP_test_step,SKLearn_test_step,Our_test_step
 from sklearn.model_selection import train_test_split
@@ -98,8 +99,17 @@ def main():
     # baseLineAccuracy = 0.92667
     # verbose = 2000/10
     
-    SKLearn_test(X_train, Y_train, X_test, Y_test)
+    # SKLearn_test(X_train, Y_train, X_test, Y_test)
     
-    # nuestra precisión
-    Our_test(X_train, y_train_encoded, X_test, Y_test)
+    # # nuestra precisión
+    # Our_test(X_train, y_train_encoded, X_test, Y_test)
+    
+    
+    
+    
+    
+    
+    # Ejercicio Opcional (WIP):
+    twilightsparkle = MLP_Complete(400,[100,50,25],10)
+    
 main()
