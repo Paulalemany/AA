@@ -1,7 +1,12 @@
 from MLP import MLP, target_gradient, costNN, MLP_backprop_predict
-from utils import load_data, load_weights,one_hot_encoding, accuracy
-from public_test import checkNNGradients,MLP_test_step
+from MLP_Complete import MLP_Complete
+from utils import load_data,load_weights,one_hot_encoding, accuracy
+from public_test import checkNNGradients,MLP_test_step,SKLearn_test_step,Our_test_step
 from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score
+import random
+import numpy as np
 
 
 
@@ -24,7 +29,32 @@ def MLP_test(X_train,y_train, X_test, y_test):
     MLP_test_step(MLP_backprop_predict,1,X_train,y_train,X_test,y_test,0.5,2000,0.92545,2000/10)
     print("Test 3 Calculando para lambda = 1")
     MLP_test_step(MLP_backprop_predict,1,X_train,y_train,X_test,y_test,1,2000,0.92667,2000/10)
+    
+def SKLearn_test(X_train, Y_train, X_test, Y_test):
+    n_hidden_neurons = 25 # numero de neuronas de la capa oculta
+    lambda_ = 0.0
+    alpha = 1.0 #tasa de aprendizaje
+    num_ite = 2000 
+    SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite)
+    
+    lambda_ = 0.5
+    SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite)
+    
+    lambda_ = 1.0
+    SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite)
 
+
+def Our_test(X_train, y_train_encoded, X_test, Y_test):
+    alpha = 1.0
+    num_ite = 2000 
+    lambda_ = 0.0
+    Our_test_step(MLP_backprop_predict, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
+    
+    lambda_ = 0.5
+    Our_test_step(MLP_backprop_predict, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
+    
+    lambda_ = 1.0
+    Our_test_step(MLP_backprop_predict, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
 
 
 def main():
@@ -41,7 +71,7 @@ def main():
 
     # Ejercicio 3
     # Cargamos los datos reales
-    X, Y = load_data('Practica04Enunciado/Practica04Enunciado/data/ex3data1.mat')
+    X, Y = load_data('./data/ex3data1.mat')
 
     # Hay que coger una parte aleatoria de los datos, preferiblemente aleatorio a una sección para evitar sesgos
     # Cogemos una muestra aleatoria de los datos para entrenamiento y para los test
@@ -53,11 +83,26 @@ def main():
     
     #Test 2
     # Pasamos el test
-    MLP_test(X_train, y_train_encoded, X_test, Y_test)
+    #MLP_test(X_train, y_train_encoded, X_test, Y_test)
 
-    #Ejercicio 4
-    #MLPClassifier
 
+    # Ejercicio 4: MLP de sklearn
+    # https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
     
-
+    # los test de MLP pasan con 3 lambas distintas (0, 0.5, 1) según estos parámetros, para lambda = 1:
+    # MLP_test_step(MLP_backprop_predict,1,X_train,y_train,X_test,y_test, lambda,2000,0.92667,2000/10)
+    # alfa = 1, 
+    # num_ite = 2000
+    # baseLineAccuracy = 0.92667
+    # verbose = 2000/10
+    
+    # SKLearn_test(X_train, Y_train, X_test, Y_test)
+    
+    # # nuestra precisión
+    # Our_test(X_train, y_train_encoded, X_test, Y_test)
+    
+    
+    # Ejercicio Opcional (WIP):
+    twilightsparkle = MLP_Complete(400,[100,50,25],10)
+    
 main()
