@@ -2,7 +2,6 @@ from MLP import MLP, target_gradient, costNN, MLP_backprop_predict
 from utils import load_data, load_weights,one_hot_encoding, accuracy
 from public_test import checkNNGradients,MLP_test_step
 from sklearn.model_selection import train_test_split
-import random
 
 
 
@@ -39,6 +38,8 @@ def main():
     #Test 1
     gradientTest()
 
+
+    # Ejercicio 3
     # Cargamos los datos reales
     X, Y = load_data('Practica04Enunciado/Practica04Enunciado/data/ex3data1.mat')
 
@@ -53,6 +54,9 @@ def main():
     #Test 2
     # Pasamos el test
     MLP_test(X_train, y_train_encoded, X_test, Y_test)
+
+    #Ejercicio 4
+    #MLPClassifier
 
     
 

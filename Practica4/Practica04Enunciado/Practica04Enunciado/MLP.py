@@ -89,6 +89,8 @@ class MLP:
 
         m = self._size(a2)
         X2s = np.hstack([np.ones((m, 1)), a2]) #Con los b
+
+        a2 = X2s
         z3 = X2s @ self.theta2.T
         a3 = self._sigmoid(z3)
         
@@ -147,13 +149,13 @@ class MLP:
         J = self.compute_cost(a3, y, lambda_)
 
         delta3 = a3 - y  # error de salida (m, outputLayer)
-        delta2 = (delta3 @ self.theta2[:, 1:]) * self._sigmoidPrime(self._sigmoid(z2))
+        delta2 = (delta3 @ self.theta2[:, 1:]) * self._sigmoidPrime(self._sigmoid(z2))  #Lo hacemos con z2 porque a2 tiene los b y así está el dato puro
 
-        Delta1 = delta2.T @ a1  # (hiddenLayer, inputLayer+1)
-        Delta2 = delta3.T @ np.hstack([np.ones((a2.shape[0], 1)), a2])  # (outputLayer, hiddenLayer+1)
+        Delta2 = delta2.T @ a1  # (hiddenLayer, inputLayer+1)
+        Delta3 = delta3.T @ a2  # (outputLayer, hiddenLayer+1)
 
-        grad1 = Delta1 / m
-        grad2 = Delta2 / m
+        grad1 = Delta2 / m
+        grad2 = Delta3 / m
 
         grad1 += self._regularizationL2Gradient(self.theta1, lambda_, m)
         grad2 += self._regularizationL2Gradient(self.theta2, lambda_, m)
