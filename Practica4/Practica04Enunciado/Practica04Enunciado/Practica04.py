@@ -33,7 +33,7 @@ def MLP_test(X_train,y_train, X_test, y_test):
 def SKLearn_test(X_train, Y_train, X_test, Y_test):
     n_hidden_neurons = 25 # numero de neuronas de la capa oculta
     lambda_ = 0.0
-    alpha = 1.0 #tasa de aprendizaje
+    alpha = 0.01 #tasa de aprendizaje
     num_ite = 2000 
     SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite)
     
@@ -42,8 +42,7 @@ def SKLearn_test(X_train, Y_train, X_test, Y_test):
     
     lambda_ = 1.0
     SKLearn_test_step(X_train, Y_train, X_test, Y_test, n_hidden_neurons, lambda_, alpha, num_ite)
-
-
+    
 def Our_test(X_train, y_train_encoded, X_test, Y_test):
     alpha = 1.0
     num_ite = 2000 
@@ -91,18 +90,18 @@ def main():
     
     # los test de MLP pasan con 3 lambas distintas (0, 0.5, 1) según estos parámetros, para lambda = 1:
     # MLP_test_step(MLP_backprop_predict,1,X_train,y_train,X_test,y_test, lambda,2000,0.92667,2000/10)
-    # alfa = 1, 
-    # num_ite = 2000
-    # baseLineAccuracy = 0.92667
-    # verbose = 2000/10
+    alfa = 1, 
+    num_ite = 2000
+    baseLineAccuracy = 0.92667
+    verbose = 2000/10
     
-    # SKLearn_test(X_train, Y_train, X_test, Y_test)
+    SKLearn_test(X_train, Y_train, X_test, Y_test)
     
-    # # nuestra precisión
-    # Our_test(X_train, y_train_encoded, X_test, Y_test)
-    
+    # nuestra precisión
+    Our_test(X_train, y_train_encoded, X_test, Y_test)
+
     
     # Ejercicio Opcional (WIP):
-    twilightsparkle = MLP_Complete(400,[100,50,25],10)
+    #twilightsparkle = MLP_Complete(400,[100,50,25],10)
     
 main()
