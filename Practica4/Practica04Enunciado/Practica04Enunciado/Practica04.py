@@ -70,7 +70,8 @@ def main():
 
     # Ejercicio 3
     # Cargamos los datos reales
-    X, Y = load_data('./data/ex3data1.mat')
+    X, Y = load_data('./Practica04Enunciado/Practica04Enunciado/data/ex3data1.mat')
+    #C:\Users\Paula\source\repos\AA\Practica4\Practica04Enunciado\Practica04Enunciado\data\ex3data1.mat
 
     # Hay que coger una parte aleatoria de los datos, preferiblemente aleatorio a una sección para evitar sesgos
     # Cogemos una muestra aleatoria de los datos para entrenamiento y para los test
@@ -95,13 +96,14 @@ def main():
     baseLineAccuracy = 0.92667
     verbose = 2000/10
     
-    SKLearn_test(X_train, Y_train, X_test, Y_test)
+    #SKLearn_test(X_train, Y_train, X_test, Y_test)
     
     # nuestra precisión
-    Our_test(X_train, y_train_encoded, X_test, Y_test)
+    #Our_test(X_train, y_train_encoded, X_test, Y_test)
 
     
     # Ejercicio Opcional (WIP):
-    #twilightsparkle = MLP_Complete(400,[100,50,25],10)
+    #La red que estamos creando tiene 3 capas ocultas de 100, 50 y 25 neuronas cada 1
+    twilightsparkle = MLP_Complete(400,[100,50,25],10)
     
 main()

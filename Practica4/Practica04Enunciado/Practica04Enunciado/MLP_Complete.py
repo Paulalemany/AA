@@ -8,6 +8,7 @@ class MLP_Complete:
 
     Args:
         inputLayer (int): size of input
+        hiddenLayers (array-like): number of layers and size of each layers.
         hiddenLayer (int): size of hidden layer.
         outputLayer (int): size of output layer
         seed (scalar): seed of the random numeric.
@@ -15,14 +16,8 @@ class MLP_Complete:
     """
 
     def __init__(self,inputLayer,hiddenLayers, outputLayer,seed=0, epislom = 0.12):
-        # np.random.seed(seed)
-
-        # self.inputLayer = inputLayer
-        # self.hidenLayer = hidenLayer
-        # self.outputLayer = outputLayer
-        # self.epsilon = epislom
         
-        # #Inicializamos los theta aleatoriamente e
+        # 
         # #con tamaño en función a lo que sabemos que debería tener por enunciado
         # theta1 = np.random.uniform(-epislom,epislom, (hidenLayer, inputLayer + 1))     
         # theta2 = np.random.uniform(-epislom,epislom, (outputLayer, hidenLayer + 1)) 
@@ -39,9 +34,15 @@ class MLP_Complete:
         
         # [] lo convierte a lista de un elemento
         # list convierte el array a lista
-        self.layer_sizes = [inputLayer] + list(hiddenLayers) + [outputLayer]
+        self.layer_sizes = [inputLayer]     # Ponemos la capa de input
+        for i in hiddenLayers:              # Ponemos todas las capas ocultas
+            self.layer_sizes += [i]
+        self.layer_sizes += [outputLayer]   # Ponemos la capa del output
+
         self.num_layers = len(self.layer_sizes)
 
+        # Inicializamos los theta aleatoriamente
+        # Habrá tantas thetas como capas haya - 1
         self.thetas = []
         self.new_trained(self.thetas, self.epsilom)
 
