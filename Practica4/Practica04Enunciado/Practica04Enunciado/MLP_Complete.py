@@ -17,14 +17,6 @@ class MLP_Complete:
 
     def __init__(self,inputLayer,hiddenLayers, outputLayer,seed=0, epislom = 0.12):
         
-        # 
-        # #con tamaño en función a lo que sabemos que debería tener por enunciado
-        # theta1 = np.random.uniform(-epislom,epislom, (hidenLayer, inputLayer + 1))     
-        # theta2 = np.random.uniform(-epislom,epislom, (outputLayer, hidenLayer + 1)) 
-
-        # self.new_trained(theta1, theta2)
-        
-        ###
         np.random.seed(seed)
         
         self.inputLayer = inputLayer
@@ -98,29 +90,16 @@ class MLP_Complete:
 
 	Return 
 	------
-	a1,a2,a3 (array_like): activation functions of each layers
+    a_list (array_like): activations functions of each layers
+    z_list (array_like): signal fuction of A - 1 layers
     z2,z3 (array_like): signal fuction of two last layers
     """
     def feedforward(self,x):
-        # m = self._size(x)
-        # X1s = np.hstack([np.ones((m, 1)), x]) #Con los b
-
-        # a1 = X1s
-        # z2 = a1 @ self.theta1.T
-        # a2 = self._sigmoid(z2)
-
-        # m = self._size(a2)
-        # X2s = np.hstack([np.ones((m, 1)), a2]) #Con los b
-        # z3 = X2s @ self.theta2.T
-        # a3 = self._sigmoid(z3)
-        
-        # return a1,a2,a3,z2,z3 # devolvemos a parte de las activaciones, los valores sin ejecutar la función de activación
-        m = self._size(x)
         
         a_list = []
         z_list = []
 
-        a_list.append(np.hstack([np.ones((m, 1)), x]))  # capa de entrada con bias
+        a_list.append(np.hstack([np.ones((self._size(x), 1)), x]))  # capa de entrada con bias
 
         for theta in self.thetas:
             z = a_list[-1] @ theta.T
