@@ -102,8 +102,8 @@ class MLP_Complete:
         a_list.append(np.hstack([np.ones((self._size(x), 1)), x]))  # capa de entrada con bias
 
         for theta in self.thetas:
-            z = a_list[-1] @ theta.T
-            a = self._sigmoid(z)
+            z = a_list[-1] @ theta.T    # signal fuction of the layer
+            a = self._sigmoid(z)        # activation fuction of the layer
             z_list.append(z)
 
             # bias a todas menos la última capa
@@ -164,24 +164,52 @@ class MLP_Complete:
     grad1, grad2: the gradient matrix (same shape than theta1 and theta2)
     """
     def compute_gradients(self, x, y, lambda_):
-        # m = x.shape[0]
-        # a1, a2, a3, z2, z3 = self.feedforward(x)
-        # J = self.compute_cost(a3, y, lambda_)
+        m = x.shape[0]
+        a_list, z_list = self.feedforward(x)
 
-        # delta3 = a3 - y  # error de salida (m, outputLayer)
-        # delta2 = (delta3 @ self.theta2[:, 1:]) * self._sigmoidPrime(self._sigmoid(z2))
+        # Antes lo haciamos pasandole a3 que era la última capa, 
+        # ahora la última capa es a_list[-1]
+        J = self.compute_cost(a_list[-1], y, lambda_)   
 
-        # Delta1 = delta2.T @ a1  # (hiddenLayer, inputLayer+1)
-        # Delta2 = delta3.T @ np.hstack([np.ones((a2.shape[0], 1)), a2])  # (outputLayer, hiddenLayer+1)
+        # Necesitamos una lista de deltas
+        # Hay una delta por cada capa pero como el input no tiene error esa la obviamos
+        delta_list = []
+        # Guardamos los gradientes
+        gradient_list = []
 
-        # grad1 = Delta1 / m
-        # grad2 = Delta2 / m
+        # Recordatorio de que tenemos self.num_layers para el número de capas totales
+        # Tambien tenemos self.layers_sizes que es la lista con todas las capas
 
-        # grad1 += self._regularizationL2Gradient(self.theta1, lambda_, m)
-        # grad2 += self._regularizationL2Gradient(self.theta2, lambda_, m)
+        # El delta de la última capa se calcula de manera diferente por lo que lo hacemos a parte
+        delta_list += [a_list[-1] - y]    # Error del output
 
-        # return (J, grad1, grad2)
-        return 0
+        Delta = delta_list[-1].T @ a_list[-2]  # Cogemos el penultimo elemento
+        gradO = Delta / m
+
+        gradO += self._regularizationL2Gradient(self.thetas[-1], lambda_, m)
+        gradient_list += [gradO]
+
+        # Para cada capa oculta hacemos lo siguiente
+        # Esto se hace por cada capa oculta
+        j = len(self.hiddenLayers) - 1  # Restamos 1 porque termina al llegar a 0
+        for i in range(j, -1, -1):
+
+            # Algunas cosas tienen que ir en orden creciente
+            a = j - i 
+
+            delta =  (delta_list[-1] @ self.thetas[i + 1][:,1:]) * self._sigmoidPrime(self._sigmoid(z_list[a]))
+
+            delta_list += [delta.T @ a_list[a]]
+            grad = delta_list[-1] / m
+
+            grad += self._regularizationL2Gradient(self.thetas[i], lambda_, m)
+            gradient_list += [grad]
+
+        # Le damos la vuelta a la lista de los gradientes para que vaya de izquierda a derecha
+        gradient_list.reverse()
+
+        
+        return J, gradient_list
     
     """
     Compute L2 regularization gradient

@@ -48,7 +48,7 @@ def test_gradient_descent(x_train, y_train):
 
 
 # w_train son los datos según el ejercicio opcional
-x_train, y_train, w_train = load_data_csv_multi_logistic("./Practica2/Enunciado/data/games-data.csv","score","critics","users","user score")
+x_train, y_train, w_train = load_data_csv_multi_logistic("./data/games-data.csv","score","critics","users","user score")
 x_train, mu, sigma = zscore_normalize_features(x_train)
 test_cost(x_train, y_train)
 test_gradient(x_train, y_train)

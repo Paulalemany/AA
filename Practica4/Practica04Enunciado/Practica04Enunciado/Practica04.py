@@ -65,7 +65,7 @@ def main():
     appleJack = MLP(400, 25, 10)
     
     #Test 1
-    gradientTest()
+    #gradientTest()
 
 
     # Ejercicio 3
@@ -91,19 +91,23 @@ def main():
     
     # los test de MLP pasan con 3 lambas distintas (0, 0.5, 1) según estos parámetros, para lambda = 1:
     # MLP_test_step(MLP_backprop_predict,1,X_train,y_train,X_test,y_test, lambda,2000,0.92667,2000/10)
-    alfa = 1, 
+    alfa = 0.01, 
     num_ite = 2000
     baseLineAccuracy = 0.92667
     verbose = 2000/10
     
-    #SKLearn_test(X_train, Y_train, X_test, Y_test)
+    # SKLearn_test(X_train, Y_train, X_test, Y_test)
     
     # nuestra precisión
-    #Our_test(X_train, y_train_encoded, X_test, Y_test)
+    # Our_test(X_train, y_train_encoded, X_test, Y_test)
 
     
     # Ejercicio Opcional (WIP):
-    #La red que estamos creando tiene 3 capas ocultas de 100, 50 y 25 neuronas cada 1
-    twilightsparkle = MLP_Complete(400,[100,50,25],10)
+    # La red que estamos creando tiene 3 capas ocultas de 100, 50 y 25 neuronas cada 1
+    # twilightsparkle = MLP_Complete(400,[100,50,25],10)
+    
+    twilightsparkle = MLP_Complete(400, [25], 10)
+    appleJack.backpropagation(X_train, y_train_encoded, alfa, 0, num_ite)
+    twilightsparkle.backpropagation(X_train, y_train_encoded, alfa, 0, num_ite)
     
 main()
