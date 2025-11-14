@@ -1,5 +1,5 @@
 from MLP import MLP, target_gradient, costNN, MLP_backprop_predict
-from MLP_Complete import MLP_Complete
+from MLP_Complete import MLP_Complete, MLP_backprop_predict_complete
 from utils import load_data,load_weights,one_hot_encoding, accuracy
 from public_test import checkNNGradients,MLP_test_step,SKLearn_test_step,Our_test_step
 from sklearn.model_selection import train_test_split
@@ -56,19 +56,36 @@ def Our_test(X_train, y_train_encoded, X_test, Y_test):
     Our_test_step(MLP_backprop_predict, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
 
 
+def Our_test_Complete(X_train, y_train_encoded, X_test, Y_test):
+    alpha = 1.0
+    num_ite = 2000 
+    lambda_ = 0.0
+    Our_test_step(MLP_backprop_predict_complete, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
+    
+    lambda_ = 0.5
+    Our_test_step(MLP_backprop_predict_complete, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
+    
+    lambda_ = 1.0
+    Our_test_step(MLP_backprop_predict_complete, X_train, y_train_encoded, X_test, Y_test, lambda_, alpha, num_ite)
+
+
 def main():
     print("Main program")
 
     # 400 es el tamaño del input (imagenes de 20 x 20 pixeles)
     # 25 es el tamaño de la capa oculta
     # 10 es el tamaño del output (Los 10 dígitos [0 - 9])
-    appleJack = MLP(400, 25, 10)
+
+    print("----- EJERCICIO 1 -----")
+    #appleJack = MLP(400, 25, 10)
     
     #Test 1
-    #gradientTest()
+    print("----- EJERCICIO 2 -----")
+    gradientTest()
 
 
     # Ejercicio 3
+    print("----- EJERCICIO 3 -----")
     # Cargamos los datos reales
     X, Y = load_data('./Practica04Enunciado/Practica04Enunciado/data/ex3data1.mat')
     #C:\Users\Paula\source\repos\AA\Practica4\Practica04Enunciado\Practica04Enunciado\data\ex3data1.mat
@@ -83,10 +100,11 @@ def main():
     
     #Test 2
     # Pasamos el test
-    #MLP_test(X_train, y_train_encoded, X_test, Y_test)
+    MLP_test(X_train, y_train_encoded, X_test, Y_test)
 
 
     # Ejercicio 4: MLP de sklearn
+    print("----- EJERCICIO 4 -----")
     # https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
     
     # los test de MLP pasan con 3 lambas distintas (0, 0.5, 1) según estos parámetros, para lambda = 1:
@@ -96,18 +114,21 @@ def main():
     baseLineAccuracy = 0.92667
     verbose = 2000/10
     
-    # SKLearn_test(X_train, Y_train, X_test, Y_test)
+    SKLearn_test(X_train, Y_train, X_test, Y_test)
     
     # nuestra precisión
-    # Our_test(X_train, y_train_encoded, X_test, Y_test)
+    Our_test(X_train, y_train_encoded, X_test, Y_test)
 
     
-    # Ejercicio Opcional (WIP):
+   
+    print("----- EJERCICIO 5 (OPCIONAL) -----")
     # La red que estamos creando tiene 3 capas ocultas de 100, 50 y 25 neuronas cada 1
     # twilightsparkle = MLP_Complete(400,[100,50,25],10)
     
-    twilightsparkle = MLP_Complete(400, [25], 10)
-    appleJack.backpropagation(X_train, y_train_encoded, alfa, 0, num_ite)
-    twilightsparkle.backpropagation(X_train, y_train_encoded, alfa, 0, num_ite)
+    #twilightsparkle = MLP_Complete(400, [25], 10)
+    
+    SKLearn_test(X_train, Y_train, X_test, Y_test)
+    Our_test_Complete(X_train, y_train_encoded, X_test, Y_test)
+    
     
 main()

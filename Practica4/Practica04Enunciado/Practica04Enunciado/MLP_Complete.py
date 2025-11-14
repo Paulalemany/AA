@@ -292,9 +292,10 @@ costNN funcitón of gradient test 1
 """
 mlp_backprop_predict 2 to be execute test 2
 """
-# def MLP_backprop_predict(X_train,y_train, X_test, alpha, lambda_, num_ite, verbose):
-#     mlp = MLP(X_train.shape[1],25,y_train.shape[1])
-#     Jhistory = mlp.backpropagation(X_train,y_train,alpha,lambda_,num_ite,verbose)
-#     a3= mlp.feedforward(X_test)[2]
-#     y_pred=mlp.predict(a3)
-#     return y_pred
+def MLP_backprop_predict_complete(X_train,y_train, X_test, alpha, lambda_, num_ite, verbose):
+     mlp = MLP_Complete(X_train.shape[1],[25],y_train.shape[1])
+     Jhistory = mlp.backpropagation(X_train,y_train,alpha,lambda_,num_ite,verbose)
+     a_list, z_list = mlp.feedforward(X_test)
+     a3 = a_list[-1]   # activación de la última capa
+     y_pred=mlp.predict(a3)
+     return y_pred
