@@ -34,9 +34,7 @@ stsc_columns = [
     "time"
 ]
 
-label_columns = [
-    "action"
-    ]
+label_column = "action"
 
 #https://www.educative.io/answers/the-fit-vs-fittransform-methods-in-scikit-learn
 # --- ONE-HOT ENCODING ---
@@ -62,9 +60,8 @@ df_clean[stsc_columns] = scaled_df
 
 
 # --- LABEL ENCODING ---
-# for col in label_columns:
-#     le = LabelEncoder()
-#     df_clean[col] = le.fit_transform(df_clean[col])
+encoder = LabelEncoder()
+df_clean[label_column] = encoder.fit_transform(df_clean[label_column])
 
 # --- GUARDAR ---
 df_clean.to_csv("./DatasetNormalizado.csv", index=False)
