@@ -3,7 +3,7 @@ import glob
 # https://docs.python.org/3/library/glob.html
 
 # todos los CSV que empiecen por "TankTraining"
-file_list = sorted(glob.glob("./Partidas Ganadas/*.csv"))
+file_list = sorted(glob.glob("./Partidas Ganadas/TankTraining*.csv"))
 
 # debug: calculo de lineas totales para contrastar
 total_lines = 0
@@ -14,9 +14,8 @@ for f in file_list:
 print("TOTAL DE LÍNEAS: ", total_lines)
 #las líneas esperadas son las totales menos:
 # una línea por archivo (la de win)
-# una línea por todos los archivos menos el primero (la de la cabecera)
-expected_rows = total_lines - len(file_list)
-expected_rows -= (len(file_list) - 1)
+# una línea por todos los archivos incluido el primero pq pandas ya la descarta al leerla (la de la cabecera)
+expected_rows = total_lines - len(file_list) * 2
 print("NUMERO ESPERADO DE LINEAS TRAS LIMPIEZA: ", expected_rows)
 
 
@@ -48,4 +47,4 @@ df_clean = df_clean.drop(columns=columns_to_drop)
 # Guardar CSV limpio
 df_clean.to_csv("./PartidasGanadas.csv", index=False)
 
-print("DATASET LIMPIO, número de filas: ", len(df_clean))
+print("DATASET LIMPIO, número de líneas: ", len(df_clean))
