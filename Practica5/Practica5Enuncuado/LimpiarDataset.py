@@ -10,6 +10,9 @@ for f in file_list:
         lines = file.readlines()
     total_lines += len(lines)
 print("TOTAL DE LÍNEAS: ", total_lines)
+#las líneas esperadas son las totales menos:
+# una línea por archivo (la de win)
+# una línea por todos los archivos menos el primero (la de la cabecera)
 expected_rows = total_lines - len(file_list) - (len(file_list) - 1)
 print("NUMERO ESPERADO DE LINEAS TRAS LIMPIEZA: ", expected_rows)
 
