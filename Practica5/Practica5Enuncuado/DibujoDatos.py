@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 
 # Cargamos el csv
-df = pd.read_csv("Partidas Ganadas/PartidasGanadas.csv")    # Leemos los datos que tenemos
+df = pd.read_csv("./PartidasGanadas.csv")    # Leemos los datos que tenemos
 
 # Dividimos las características y las etiquetas
 X = df.drop(columns=["action"])   # Coge la primera fila con todos los títulos (Atributos) y le decimos cual es la etiqueta
