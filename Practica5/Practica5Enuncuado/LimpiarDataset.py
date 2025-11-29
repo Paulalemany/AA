@@ -42,26 +42,7 @@ columns_to_drop = [
 df_clean = df_clean.drop(columns=columns_to_drop)
 
 # filtrar filas con valores incorrectos?
-#df_clean = df_clean[(df_clean["AGENT_1_X"] <= 50) & (df_clean["AGENT_2_X"] <= 50)]
-
-
-# !!! --- NORMALIZACIÓN --- !!!
-# ! ONEHOT ENCODIGNG -> NEIGHBOURGHS Y ACTION?
-# ! STANDARDSCALING AL RESTO DE ATRIBUTOS (NUMÉRICOS)
-# ! LABELENCODER -> ACTION ?
-
-ohe_columns = []
-stsc_columns = []
-laben_columns = []
-
-
-
-
-
-
-
-
-
+# df_clean = df_clean[(df_clean["AGENT_1_X"] <= 50) & (df_clean["AGENT_2_X"] <= 50)]
 
 # --- GUARDAR RESULTADO ---
 df_clean.to_csv("./PartidasGanadas.csv", index=False)
