@@ -2,7 +2,7 @@ import pandas as pd
 import glob
 
 # todos los CSV que empiecen por "TankTraining"
-file_list = sorted(glob.glob("./PartidasGanadas/TankTraining*.csv"))
+file_list = sorted(glob.glob("./Partidas Ganadas/*.csv"))
 df_list = []
 
 for i, f in enumerate(file_list):
@@ -18,13 +18,13 @@ for i, f in enumerate(file_list):
 
     df_list.append(temp_df)
 
-# Concatenar todos los CSV en un solo DataFrame
+# concatenacion
 df_clean = pd.concat(df_list, ignore_index=True)
 
 # eliminar columnas
 # MÁS LIMPIEZA AQUÍ
-columns_to_drop = ["COMMAND_CENTER_X", "COMMAND_CENTER_Y"]
-df_clean = df_clean.drop(columns=columns_to_drop)
+# columns_to_drop = ["COMMAND_CENTER_X", "COMMAND_CENTER_Y"]
+# df_clean = df_clean.drop(columns=columns_to_drop)
 
 # filtrar filas con valores incorrectos?
 #df_clean = df_clean[(df_clean["AGENT_1_X"] <= 50) & (df_clean["AGENT_2_X"] <= 50)]
