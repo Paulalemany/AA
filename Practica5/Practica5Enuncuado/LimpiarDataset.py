@@ -11,12 +11,13 @@ for f in file_list:
     with open(f, "r", encoding="utf-8") as file:
         lines = file.readlines()
         total_lines += len(lines)
-print("TOTAL DE LÍNEAS: ", total_lines)
+print("TOTAL DE LÍNEAS:\n", total_lines)
 #las líneas esperadas son las totales menos:
 # una línea por archivo (la de win)
 # una línea por todos los archivos incluido el primero pq pandas ya la descarta al leerla (la de la cabecera)
-expected_rows = total_lines - len(file_list) * 2
-print("NUMERO ESPERADO DE LINEAS TRAS LIMPIEZA: ", expected_rows)
+expected_rows = total_lines - len(file_list)
+expected_rows -= len(file_list) - 1;
+print("NUMERO ESPERADO DE LÍNEAS TRAS LIMPIEZA:\n", expected_rows)
 
 
 df_list = []
@@ -46,5 +47,13 @@ df_clean = df_clean.drop(columns=columns_to_drop)
 
 # Guardar CSV limpio
 df_clean.to_csv("./PartidasGanadas.csv", index=False)
+file_list = sorted(glob.glob("./PartidasGanadas.csv"))
+print("DATASET LIMPIO, número de líneas:\n", len(df_clean) + 1)  #esto no tiene en cuenta la de encabezado así que le sumamos una
 
-print("DATASET LIMPIO, número de líneas: ", len(df_clean))
+# con esto que es a mano da también lo mismo
+# total_lines = 0
+# for f in file_list:
+#     with open(f, "r", encoding="utf-8") as file:
+#         lines = file.readlines()
+#         total_lines += len(lines)
+# print("DATASET LIMPIO, número de líneas:\n", total_lines)
