@@ -30,6 +30,6 @@ df_clean = pd.concat(df_list, ignore_index=True)
 #df_clean = df_clean[(df_clean["AGENT_1_X"] <= 50) & (df_clean["AGENT_2_X"] <= 50)]
 
 # Guardar CSV limpio
-df_clean.to_csv("./Partidas Ganadas/PartidasGanadas.csv", index=False)
+df_clean.to_csv("./PartidasGanadas.csv", index=False)
 
 print("Dataset limpiado, número de filas: ", len(df_clean))
