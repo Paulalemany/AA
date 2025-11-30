@@ -11,7 +11,7 @@ from Utils import one_hot_encoding, accuracy
 
 df = pd.read_csv("./PartidasGanadas.csv")
 
-# NORMALIZAR
+#region --- NORMALIZAR ---
 ohe_columns = [
     "NEIGHBORHOOD_UP",
     "NEIGHBORHOOD_DOWN",
@@ -51,19 +51,20 @@ X = pd.concat([df_ohe, df_sc], axis=1) # TODOS LOS DATOS YA NORMALIZADOS
 # LABEL ENCODER
 le = LabelEncoder() 
 y = le.fit_transform(df["action"])
+#endregion 
 
 
 
-
-# DATOS!!!
+#region --- DATOS!!! ---
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=69, stratify=y)
 
 alpha = 1.0
 num_ite = 2000 
 lambda_ = 0.0
 n_hidden_neurons = 25
+#endregion
 
-# SKLEARN
+#region --- MLP SKLEARN ---
 mlp_skl = MLPClassifier(
     hidden_layer_sizes=(n_hidden_neurons,), 
     activation='logistic',
@@ -77,17 +78,37 @@ mlp_skl.fit(X_train, y_train)
 Y_pred_sklearn = mlp_skl.predict(X_test)
 acc_sklearn = accuracy_score(y_test, Y_pred_sklearn) #precision
 print(f"SKLEARN: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+#endregion
 
-# NOSOTRAS :-)
-y_train_encoded = one_hot_encoding(y_train)
-mlp_complete = MLP_Complete(
-    inputLayer=X_train.shape[1], 
-    hiddenLayers=[32, 16, 8], 
-    outputLayer=y_train_encoded.shape[1]
-    )
-Jhistory = mlp_complete.backpropagation(X_train,y_train_encoded,alpha,lambda_,num_ite)
-a_list, z_list = mlp_complete.feedforward(X_test)
-a3 = a_list[-1]   # activación de la última capa
-y_pred = mlp_complete.predict(a3)
-acc_complete = accuracy_score(y_test, y_pred) #precision¡
-print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+
+
+# region --- MLP NOSOTRAS :-) ---
+# y_train_encoded = one_hot_encoding(y_train)
+# mlp_complete = MLP_Complete(
+#     inputLayer=X_train.shape[1], 
+#     hiddenLayers=[32, 16, 8], 
+#     outputLayer=y_train_encoded.shape[1]
+#     )
+# Jhistory = mlp_complete.backpropagation(X_train,y_train_encoded,alpha,lambda_,num_ite)
+# a_list, z_list = mlp_complete.feedforward(X_test)
+# a3 = a_list[-1]   # activación de la última capa
+# y_pred = mlp_complete.predict(a3)
+# acc_complete = accuracy_score(y_test, y_pred) #precision¡
+# print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+#endregion
+
+
+#region --- KNN ---
+#endregion
+
+
+#region --- DECISION TREE ---
+#endregion
+
+
+#region --- RANDOM FOREST ---
+#endregion
+
+
+#region --- MATRICES DE CONFUSION / ACCURACY / MÉTRICAS ---
+#endregion
