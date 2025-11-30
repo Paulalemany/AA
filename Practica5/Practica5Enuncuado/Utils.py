@@ -1,4 +1,4 @@
-# from skl2onnx import to_onnx
+# from skl2onnx import to_onnx #esto me da error aunque he instalado los paquetes del enunciado
 # from onnx2json import convert
 import pickle
 import json
