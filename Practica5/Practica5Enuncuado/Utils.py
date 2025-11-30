@@ -1,8 +1,9 @@
-from skl2onnx import to_onnx
-from onnx2json import convert
+# from skl2onnx import to_onnx
+# from onnx2json import convert
 import pickle
 import json
-
+import numpy as np
+from sklearn.preprocessing import OneHotEncoder
 
 def ExportONNX_JSON_TO_Custom(onnx_json,mlp):
     graphDic = onnx_json["graph"]
@@ -41,3 +42,18 @@ def ExportAllformatsMLPSKlearn(mlp,X,picklefileName,onixFileName,jsonFileName,cu
     customFormat = ExportONNX_JSON_TO_Custom(onnx_json,mlp)
     with open(customFileName, 'w') as f:
         f.write(customFormat)
+
+
+def one_hot_encoding(Y):
+    Y = Y.reshape(-1, 1)
+    encoder = OneHotEncoder(sparse_output=False)
+    YEnc = encoder.fit_transform(Y)
+    return YEnc
+
+def accuracy(P,Y):
+    # TP = np.sum(P == Y)
+    # totalP = len(Y)
+    # return TP / totalP
+    P = np.array(P).flatten()
+    Y = np.array(Y).flatten()
+    return np.mean(P == Y)
