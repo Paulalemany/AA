@@ -61,21 +61,21 @@ y = le.fit_transform(df["action"])
 #region --- DATOS!!! ---
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=69, stratify=y)
 
-alpha = 0.01
-num_ite = 2000 
-lambda_ = 0.0
+alpha = 0.001
+num_ite = 500 
+lambda_ = 0
 n_hidden_neurons = 25
 #endregion
 
 #region --- MLP SKLEARN ---
 # https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
 mlp_skl = MLPClassifier(
-    hidden_layer_sizes=(n_hidden_neurons,), 
-    activation='logistic',
-    alpha=lambda_, 
+    hidden_layer_sizes=(128, 64, 32),
+    activation='logistic',           
+    alpha=lambda_,                   
     learning_rate_init=alpha,
-    max_iter=num_ite, 
-    random_state=420
+    max_iter=num_ite,                
+    random_state=69
     )
 
 mlp_skl.fit(X_train, y_train)
@@ -105,8 +105,11 @@ print(f"SKLEARN MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f
 #region --- KNN ---
 # https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
 knn = KNeighborsClassifier(
-    n_neighbors=5,    
-    weights='uniform'
+    n_neighbors=7,
+    weights='distance',
+    p=2,
+    metric='minkowski',
+    n_jobs=-1
 )
 knn.fit(X_train, y_train)
 y_pred_knn = knn.predict(X_test)
