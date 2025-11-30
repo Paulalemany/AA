@@ -9,11 +9,13 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 from Utils import one_hot_encoding, accuracy
+from imblearn.over_sampling import SMOTE
 import os
 os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
 
 df = pd.read_csv("./PartidasGanadas.csv")
-
+# print("VALORES: ", df["action"].value_counts())
+# print("CORRELACION:", df.corr())
 #region --- NORMALIZAR ---
 ohe_columns = [
     "NEIGHBORHOOD_UP",
@@ -61,16 +63,20 @@ y = le.fit_transform(df["action"])
 #region --- DATOS!!! ---
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=69, stratify=y)
 
+#balancearlos? lol estoy probando cosas
+sm = SMOTE(random_state=9)
+X_train, y_train = sm.fit_resample(X_train, y_train)
+
 alpha = 0.001
 num_ite = 500 
-lambda_ = 0
-n_hidden_neurons = 25
+lambda_ = 1e-4
+n_hidden_neurons = 32
 #endregion
 
 #region --- MLP SKLEARN ---
 # https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
 mlp_skl = MLPClassifier(
-    hidden_layer_sizes=(128, 64, 32),
+    hidden_layer_sizes=(256, 128, 64),
     activation='logistic',           
     alpha=lambda_,                   
     learning_rate_init=alpha,
@@ -81,9 +87,25 @@ mlp_skl = MLPClassifier(
 mlp_skl.fit(X_train, y_train)
 y_pred_sklearn = mlp_skl.predict(X_test)
 acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
-print(f"SKLEARN MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
 #endregion
 
+#region --- MLP SKLEARN CACHARREANDO ---
+# https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
+mlp_skl = MLPClassifier(
+    hidden_layer_sizes=(256, 128, 64),
+    activation='relu',           
+    alpha=lambda_,                   
+    learning_rate_init=alpha,
+    max_iter=num_ite,       
+    random_state=69
+    )
+
+mlp_skl.fit(X_train, y_train)
+y_pred_sklearn = mlp_skl.predict(X_test)
+acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
+print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+#endregion
 
 
 # region --- MLP NOSOTRAS :-) --- error en el compute cost ahora mismo
