@@ -194,9 +194,6 @@ class MLP_Complete:
         j = len(self.hiddenLayers) - 1  # Restamos 1 porque termina al llegar a 0
         for i in range(j, -1, -1):
 
-            # Algunas cosas tienen que ir en orden creciente
-     
-
             b = (delta_list[0] @ self.thetas[i + 1][:,1:])
 
             delta =   b * self._sigmoidPrime(self._sigmoid(z_list[i]))
