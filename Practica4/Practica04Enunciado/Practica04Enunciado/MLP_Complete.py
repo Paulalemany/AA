@@ -194,16 +194,17 @@ class MLP_Complete:
         j = len(self.hiddenLayers) - 1  # Restamos 1 porque termina al llegar a 0
         for i in range(j, -1, -1):
 
-            # Algunas cosas tienen que ir en orden creciente
-            a = j - i 
+            b = (delta_list[0] @ self.thetas[i + 1][:,1:])
 
-            b = (delta_list[-1] @ self.thetas[i + 1][:,1:])
-            delta =  b * self._sigmoidPrime(self._sigmoid(z_list[i]))
+            delta =   b * self._sigmoidPrime(self._sigmoid(z_list[i]))
 
-            delta_list += [delta.T @ a_list[i]]
-            grad = delta_list[-1] / m
+            delta_list.insert(0, delta) #El calculo del delta va hasta aqui, lo siguiente es el gradient
 
-            grad += self._regularizationL2Gradient(self.thetas[i], lambda_, m)
+            g = delta.T @ a_list[i]
+            grad = g / m
+
+            p = self._regularizationL2Gradient(self.thetas[i], lambda_, m)
+            grad += p
             gradient_list += [grad]
 
         # Le damos la vuelta a la lista de los gradientes para que vaya de izquierda a derecha
