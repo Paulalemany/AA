@@ -64,11 +64,11 @@ y = le.fit_transform(df["action"])
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=69, stratify=y)
 
 #balancearlos? lol estoy probando cosas
-sm = SMOTE(random_state=9)
-X_train, y_train = sm.fit_resample(X_train, y_train)
+# sm = SMOTE(random_state=9)
+# X_train, y_train = sm.fit_resample(X_train, y_train)
 
 alpha = 0.001
-num_ite = 500 
+num_ite = 2000 
 lambda_ = 1e-4
 n_hidden_neurons = 32
 #endregion
