@@ -67,60 +67,60 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # sm = SMOTE(random_state=9)
 # X_train, y_train = sm.fit_resample(X_train, y_train)
 
-alpha = 0.001
+alpha = 0.01
 num_ite = 2000 
 lambda_ = 1e-4
-n_hidden_neurons = 32
+n_hidden_neurons = 5
 #endregion
 
 #region --- MLP SKLEARN ---
 # https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
-mlp_skl = MLPClassifier(
-    hidden_layer_sizes=(256, 128, 64),
-    activation='logistic',           
-    alpha=lambda_,                   
-    learning_rate_init=alpha,
-    max_iter=num_ite,                
-    random_state=69
-    )
+#mlp_skl = MLPClassifier(
+#    hidden_layer_sizes=(256, 128, 64),
+#    activation='logistic',           
+#    alpha=lambda_,                   
+#    learning_rate_init=alpha,
+#    max_iter=num_ite,                
+#    random_state=69
+#    )
 
-mlp_skl.fit(X_train, y_train)
-y_pred_sklearn = mlp_skl.predict(X_test)
-acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
-print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+#mlp_skl.fit(X_train, y_train)
+#y_pred_sklearn = mlp_skl.predict(X_test)
+#acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
+#print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
 #endregion
 
 #region --- MLP SKLEARN CACHARREANDO ---
 # https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
-mlp_skl = MLPClassifier(
-    hidden_layer_sizes=(256, 128, 64),
-    activation='relu',           
-    alpha=lambda_,                   
-    learning_rate_init=alpha,
-    max_iter=num_ite,       
-    random_state=69
-    )
+#mlp_skl = MLPClassifier(
+#    hidden_layer_sizes=(256, 128, 64),
+#    activation='relu',           
+#    alpha=lambda_,                   
+#    learning_rate_init=alpha,
+#    max_iter=num_ite,       
+#    random_state=69
+#    )
 
-mlp_skl.fit(X_train, y_train)
-y_pred_sklearn = mlp_skl.predict(X_test)
-acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
-print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+#mlp_skl.fit(X_train, y_train)
+#y_pred_sklearn = mlp_skl.predict(X_test)
+#acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
+#print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
 #endregion
 
 
 # region --- MLP NOSOTRAS :-) --- error en el compute cost ahora mismo
-# y_train_encoded = one_hot_encoding(y_train)
-# mlp_complete = MLP_Complete(
-#     inputLayer=X_train.shape[1], 
-#     hiddenLayers=[32, 16, 8], 
-#     outputLayer=y_train_encoded.shape[1]
-#     )
-# Jhistory = mlp_complete.backpropagation(X_train,y_train_encoded,alpha,lambda_,num_ite)
-# a_list, z_list = mlp_complete.feedforward(X_test)
-# a3 = a_list[-1]   # activación de la última capa
-# y_pred = mlp_complete.predict(a3)
-# acc_complete = accuracy_score(y_test, y_pred) #precision¡
-# print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+y_train_encoded = one_hot_encoding(y_train)
+mlp_complete = MLP_Complete(
+    inputLayer=X_train.shape[1], 
+    hiddenLayers=[100, 50 ,25], 
+    outputLayer=y_train_encoded.shape[1]
+    )
+Jhistory = mlp_complete.backpropagation(X_train,y_train_encoded,alpha,lambda_,num_ite)
+a_list, z_list = mlp_complete.feedforward(X_test)
+a3 = a_list[-1]   # activación de la última capa
+y_pred = mlp_complete.predict(a3)
+acc_complete = accuracy_score(y_test, y_pred) #precision¡
+print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 #endregion
 
 
@@ -166,15 +166,15 @@ print(f"Random Forest accuracy: {acc_forest:.5f}")
 
 
 #region --- MATRICES DE CONFUSION MÉTRICAS ---
-cfm_mlp_sk = confusion_matrix(y_test, y_pred_sklearn);
+#cfm_mlp_sk = confusion_matrix(y_test, y_pred_sklearn)
 # cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
 cfm_knn = confusion_matrix(y_test, y_pred_knn)
 cfm_tree = confusion_matrix(y_test, y_pred_tree)
 cfm_forest = confusion_matrix(y_test, y_pred_forest)
 
-print("SKLEARN MLP Confusion Matrix:\n", cfm_mlp_sk)
+#print("SKLEARN MLP Confusion Matrix:\n", cfm_mlp_sk)
 # print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
-print("KNN Confusion Matrix:\n", cfm_knn)
-print("DECISION TREE Confusion Matrix:\n", cfm_tree)
-print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
+#print("KNN Confusion Matrix:\n", cfm_knn)
+#print("DECISION TREE Confusion Matrix:\n", cfm_tree)
+#print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
 #endregion

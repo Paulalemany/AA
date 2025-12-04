@@ -197,9 +197,10 @@ class MLP_Complete:
             # Algunas cosas tienen que ir en orden creciente
             a = j - i 
 
-            delta =  (delta_list[-1] @ self.thetas[i + 1][:,1:]) * self._sigmoidPrime(self._sigmoid(z_list[a]))
+            b = (delta_list[-1] @ self.thetas[i + 1][:,1:])
+            delta =  b * self._sigmoidPrime(self._sigmoid(z_list[i]))
 
-            delta_list += [delta.T @ a_list[a]]
+            delta_list += [delta.T @ a_list[i]]
             grad = delta_list[-1] / m
 
             grad += self._regularizationL2Gradient(self.thetas[i], lambda_, m)
@@ -293,7 +294,7 @@ costNN funcitón of gradient test 1
 mlp_backprop_predict 2 to be execute test 2
 """
 def MLP_backprop_predict_complete(X_train,y_train, X_test, alpha, lambda_, num_ite, verbose):
-     mlp = MLP_Complete(X_train.shape[1],[25],y_train.shape[1])
+     mlp = MLP_Complete(X_train.shape[1],[100, 50, 25],y_train.shape[1])
      Jhistory = mlp.backpropagation(X_train,y_train,alpha,lambda_,num_ite,verbose)
      a_list, z_list = mlp.feedforward(X_test)
      a3 = a_list[-1]   # activación de la última capa

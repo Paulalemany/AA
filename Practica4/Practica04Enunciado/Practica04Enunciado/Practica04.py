@@ -87,7 +87,7 @@ def main():
     # Ejercicio 3
     print("----- EJERCICIO 3 -----")
     # Cargamos los datos reales
-    X, Y = load_data('./Practica04Enunciado/Practica04Enunciado/data/ex3data1.mat')
+    X, Y = load_data('data\ex3data1.mat')
     #C:\Users\Paula\source\repos\AA\Practica4\Practica04Enunciado\Practica04Enunciado\data\ex3data1.mat
 
     # Hay que coger una parte aleatoria de los datos, preferiblemente aleatorio a una sección para evitar sesgos
@@ -100,7 +100,7 @@ def main():
     
     #Test 2
     # Pasamos el test
-    MLP_test(X_train, y_train_encoded, X_test, Y_test)
+    #MLP_test(X_train, y_train_encoded, X_test, Y_test)
 
 
     # Ejercicio 4: MLP de sklearn
@@ -114,10 +114,10 @@ def main():
     baseLineAccuracy = 0.92667
     verbose = 2000/10
     
-    SKLearn_test(X_train, Y_train, X_test, Y_test)
+    #SKLearn_test(X_train, Y_train, X_test, Y_test)
     
     # nuestra precisión
-    Our_test(X_train, y_train_encoded, X_test, Y_test)
+    #Our_test(X_train, y_train_encoded, X_test, Y_test)
 
     
    
@@ -127,8 +127,9 @@ def main():
     
     #twilightsparkle = MLP_Complete(400, [25], 10)
     
-    SKLearn_test(X_train, Y_train, X_test, Y_test)
+    #SKLearn_test(X_train, Y_train, X_test, Y_test)
     Our_test_Complete(X_train, y_train_encoded, X_test, Y_test)
+
     
     
 main()

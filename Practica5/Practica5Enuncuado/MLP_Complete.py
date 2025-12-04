@@ -195,14 +195,19 @@ class MLP_Complete:
         for i in range(j, -1, -1):
 
             # Algunas cosas tienen que ir en orden creciente
-            a = j - i 
+     
 
-            delta =  (delta_list[-1] @ self.thetas[i + 1][:,1:]) * self._sigmoidPrime(self._sigmoid(z_list[a]))
+            b = (delta_list[0] @ self.thetas[i + 1][:,1:])
 
-            delta_list += [delta.T @ a_list[a]]
-            grad = delta_list[-1] / m
+            delta =   b * self._sigmoidPrime(self._sigmoid(z_list[i]))
 
-            grad += self._regularizationL2Gradient(self.thetas[i], lambda_, m)
+            delta_list.insert(0, delta) #El calculo del delta va hasta aqui, lo siguiente es el gradient
+
+            g = delta.T @ a_list[i]
+            grad = g / m
+
+            p = self._regularizationL2Gradient(self.thetas[i], lambda_, m)
+            grad += p
             gradient_list += [grad]
 
         # Le damos la vuelta a la lista de los gradientes para que vaya de izquierda a derecha
