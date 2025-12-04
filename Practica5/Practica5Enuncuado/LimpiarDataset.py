@@ -17,7 +17,7 @@ print("TOTAL DE LÍNEAS:\n", total_lines)
 # una línea por archivo (la de win)
 # una línea por todos los archivos incluido el primero pq pandas ya la descarta al leerla (la de la cabecera)
 expected_rows = total_lines - len(file_list)
-expected_rows -= len(file_list) - 1;
+expected_rows -= len(file_list) - 1
 print("NUMERO ESPERADO DE LÍNEAS TRAS LIMPIEZA:\n", expected_rows)
 
 # --- JUNTAR TODOS LOS DATOS ---
@@ -47,7 +47,7 @@ df_clean = df_clean.drop(columns=columns_to_drop)
 # --- GUARDAR RESULTADO ---
 df_clean.to_csv("./PartidasGanadas.csv", index=False)
 print("DATASET LIMPIO, número de líneas:\n", len(df_clean) + 1)  #esto no tiene en cuenta la de encabezado así que le sumamos una
-
+#df_clean = pd.read_csv("Practica5Enuncuado/preprocessedData.csv")  #Prueba con los datos de inés
 
 # !!! --- NORMALIZACIÓN --- !!!
 # ! ONEHOT ENCODIGNG -> NEIGHBOURGHS 
@@ -57,6 +57,7 @@ print("DATASET LIMPIO, número de líneas:\n", len(df_clean) + 1)  #esto no tien
 # https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
 # https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
 
+# Variables categóricas
 ohe_columns = [
     "NEIGHBORHOOD_UP",
     "NEIGHBORHOOD_DOWN",
@@ -87,7 +88,7 @@ ohe_df = pd.DataFrame(
     columns=encoder.get_feature_names_out(ohe_columns), # esto hace una columna con cada posibilidad de cada atributo para que quepa todo al hacer OHE
     index=df_clean.index
 )
-# df_clean[ohe_columns] = ohe_df esto ya no se puede hacer pq ahora hay más columnas
+# df_clean[ohe_columns] = ohe_df # esto ya no se puede hacer pq ahora hay más columnas
 df_sin_ohe = df_clean.drop(columns=ohe_columns); #quitamos los atributos orignales
 df_clean = pd.concat([df_sin_ohe, ohe_df], axis=1) #los volvemos a concatenar al final ahora que están OHE
 

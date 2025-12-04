@@ -4,7 +4,9 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 
 # Cargamos el csv
-df = pd.read_csv("./PartidasGanadas.csv")    # Leemos los datos que tenemos
+df = pd.read_csv("DatasetNormalizado.csv")    # Leemos los datos que tenemos
+#df = pd.read_csv("Practica5Enuncuado/preprocessedData.csv")    # datos limpios de ines
+#df = pd.read_csv("PartidasGanadas.csv")  
 
 # Dividimos las características y las etiquetas
 X = df.drop(columns=["action"])   # Coge la primera fila con todos los títulos (Atributos) y le decimos cual es la etiqueta
@@ -21,11 +23,15 @@ x = principal.fit_transform(X_scaled)
 # Pintado de los datos
 plt.figure(figsize=(8,6))   # Los números son el tamaño de la imagen que va a generar en pulgadas
 
+
 scatter = plt.scatter(      # Esto es lo que realmente pinta
     x[:, 0],
     x[:, 1],
     c = y.astype(int),                  # Cada clase tiene un color diferente (c -> color, le asignamos la y para que sea diferente cada vez)
-    cmap = "tab10",         # Paleta de colores a la hora de pintar
+    #cmap = "tab10",         # Paleta de colores a la hora de pintar
+    #cmap = "Purples",
+    #cmap = "pink",
+    cmap = "twilight",
     alpha = 0.7             # Transparencia de los puntos
 )
 
