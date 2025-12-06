@@ -13,7 +13,7 @@ from imblearn.over_sampling import SMOTE
 import os
 os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
 
-df = pd.read_csv("./PartidasGanadas.csv")
+df = pd.read_csv("Practica5/PartidasGanadas.csv")
 # print("VALORES: ", df["action"].value_counts())
 # print("CORRELACION:", df.corr())
 #region --- NORMALIZAR ---
