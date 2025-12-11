@@ -75,6 +75,8 @@ lambda_ = 0
 n_hidden_neurons = 5
 #endregion
 
+print(f"________Empezamos________" )
+
 #region --- MLP SKLEARN ---
 # https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html
 """
