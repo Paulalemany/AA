@@ -15,9 +15,11 @@ os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el k
 
 df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv") # Datos de inés
 #df = pd.read_csv("Practica5/PartidasGanadas.csv")                      # Datos nuestros
+#df = pd.read_csv("Practica5/dementia_dataset.csv")
 # print("VALORES: ", df["action"].value_counts())
 # print("CORRELACION:", df.corr())
 #region --- NORMALIZAR ---
+
 ohe_columns = [
     "NEIGHBORHOOD_UP",
     "NEIGHBORHOOD_DOWN",
@@ -37,6 +39,7 @@ sc_columns = [
     "EXIT_Y",
     "time"
     ]
+
 
 
 # ! X !
@@ -87,6 +90,7 @@ print(f"________Empezamos________" )
     hidden_layers_sizes = (90, 120, 40)
     Da un accuracy de 0.86618
 """
+"""
 mlp_skl = MLPClassifier(
      hidden_layer_sizes=(90, 120, 40),
 
@@ -101,6 +105,8 @@ mlp_skl.fit(X_train, y_train)
 y_pred_sklearn = mlp_skl.predict(X_test)
 acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
 print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+"""
+
 #endregion
 
 #region --- MLP SKLEARN CACHARREANDO ---
@@ -112,6 +118,8 @@ print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_skle
     lambda_ = 0
     hidden_layers_sizes = (260, 128, 64)
     Da un accuracy de 0.85302
+"""
+
 """
 mlp_skl = MLPClassifier(
     hidden_layer_sizes=(260, 128, 64),
@@ -126,6 +134,8 @@ mlp_skl.fit(X_train, y_train)
 y_pred_sklearn = mlp_skl.predict(X_test)
 acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
 print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+"""
+
 #endregion
 
 
@@ -145,15 +155,22 @@ X_test_np = X_test.to_numpy()
 
 mlp_complete = MLP_Complete(
     inputLayer=X_train_np.shape[1], 
-    hiddenLayers=[55, 90], 
+    hiddenLayers=[260, 128, 64], 
     outputLayer=y_train_encoded.shape[1]
     )
-Jhistory = mlp_complete.backpropagation(X_train_np,y_train_encoded,2.5,lambda_,5000)
+Jhistory = mlp_complete.backpropagation(X_train_np,y_train_encoded,0.1,lambda_,2000, verbose=100)
 a_list, z_list = mlp_complete.feedforward(X_test_np)
+a_list_train, h_list_train = mlp_complete.feedforward(X_train_np)
+a3_train = a_list_train[-1]
 a3 = a_list[-1]   # activación de la última capa
 y_pred = mlp_complete.predict(a3)
+y_train_pred = mlp_complete.predict(a3_train)
+print("predict test: ", y_pred)
+print("predict train: ", y_train_pred)
 acc_complete = accuracy_score(y_test, y_pred) #precision¡
-print(f"OURS: Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+acc_complete_train = accuracy_score(y_test, y_train_pred)
+print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+print(f"OURS: (Train) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete_train):1.5f}")
 #endregion
 
 
