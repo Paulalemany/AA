@@ -8,13 +8,13 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
-from Utils import one_hot_encoding, accuracy
+from Utils import one_hot_encoding, accuracy, ExportAllformatsMLPSKlearn, WriteStandardScaler
 from imblearn.over_sampling import SMOTE
 import os
-os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
+# os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
 
 df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv") # Datos de inés
-#df = pd.read_csv("PartidasGanadas.csv")                      # Datos nuestros
+#df = pd.read_csv("Practica5/PartidasGanadasFacil.csv")                      # Datos nuestros
 #df = pd.read_csv("Practica5/dementia_dataset.csv")
 # print("VALORES: ", df["action"].value_counts())
 # print("CORRELACION:", df.corr())

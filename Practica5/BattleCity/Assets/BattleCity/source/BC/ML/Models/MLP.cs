@@ -68,7 +68,28 @@ public class MLPModel
         //TODO: implement feedworward.
         //the size of the output layer depends on what actions you have performed in the game.
         //By default it is 7 (number of possible actions) but some actions may not have been performed and therefore the model has assumed that they do not exist.
-        return new float[5];
+        float[] activation = input;
+
+        for (int l = 0; l < numLayers - 1; l++)
+        {
+            int outSize = intercepts[l].Length;
+            float[] z = new float[outSize];
+
+            for (int i = 0; i < outSize; i++)
+            {
+                float sum = intercepts[l][i];
+                for (int j = 0; j < activation.Length; j++)
+                {
+                    sum += coefficients[l][i, j] * activation[j];
+                }
+                z[i] = sigmoid(sum);
+            }
+
+            activation = z;
+        }
+
+        return SoftMax(activation);
+        // return new float[5];
     }
 
     /// <summary>
@@ -78,8 +99,7 @@ public class MLPModel
     /// <returns></returns>
     private float sigmoid(float z)
     {
-        //TODO implementar
-        return 0f;
+        return 1f / (1f + Mathf.Exp(-z));
     }
 
 
@@ -91,8 +111,22 @@ public class MLPModel
     /// <returns></returns>
     public float[] SoftMax(float[] zArr)
     {
-        //TODO implementar
-        return zArr;
+        float max = zArr.Max();
+        float sum = 0f;
+        float[] exp = new float[zArr.Length];
+
+        for (int i = 0; i < zArr.Length; i++)
+        {
+            exp[i] = Mathf.Exp(zArr[i] - max);
+            sum += exp[i];
+        }
+
+        for (int i = 0; i < exp.Length; i++)
+        {
+            exp[i] /= sum;
+        }
+
+        return exp;
     }
 
     /// <summary>
@@ -117,7 +151,16 @@ public class MLPModel
     {
         max = output[0];
         int index = 0;
-        //TODO impleemntar.
+
+        for (int i = 1; i < output.Length; i++)
+        {
+            if (output[i] > max)
+            {
+                max = output[i];
+                index = i;
+            }
+        }
+        
         return index;
     }
 }

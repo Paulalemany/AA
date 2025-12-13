@@ -100,7 +100,7 @@ public class MLAgent : MonoBehaviour
         {
             _time += Time.deltaTime;
             PerceptionBase.ACTION_TYPE actions = PerceptionBase.ACTION_TYPE.MOVE_UP;
-            if (_time > 1f) // Tiempo para evitar la condición de parada inicial del agente.
+            if (_time > 1f) // Tiempo para evitar la condiciï¿½n de parada inicial del agente.
             {
                 actions = AgentInput();
             }
@@ -138,7 +138,7 @@ public class MLAgent : MonoBehaviour
 
     /// <summary>
     /// Motodo que debe llamar al modelo MLP leer de los parametros de perception y hacer las conversiones necesarias para poder ejecutar el
-    /// método Runfeedforward que ejecuta la red neuronal
+    /// mï¿½todo Runfeedforward que ejecuta la red neuronal
     /// </summary>
     /// <returns></returns>
     public PerceptionBase.ACTION_TYPE AgentInput()
@@ -148,11 +148,13 @@ public class MLAgent : MonoBehaviour
         {
             case ModelType.MLP:
                 action = 0;
-                //TODO leer de los parámetros de la percepción.
+                //TODO leer de los parï¿½metros de la percepciï¿½n.
                 //Debe respetar el mismo orden que los datos.
+                // ?????????
                 //TODO Llamar a RunFeedForward
                 //guardar la toma de decisiones y despues validar si son correctas.
-                recorder.AIRecord(action);
+                // ?????
+                
                 break;
         }
         PerceptionBase.ACTION_TYPE input = Record.ConvertLabelToInput(action);
@@ -166,9 +168,9 @@ public class MLAgent : MonoBehaviour
     /// <returns></returns>
     public float[] RunFeedForward(float[] modelInput)
     {
-        //permite eliminar columnas de la percepción si las habeis eliminado en el modelo.
+        //permite eliminar columnas de la percepciï¿½n si las habeis eliminado en el modelo.
         modelInput = modelInput.Where((value, index) => !indicesToRemove.Contains(index)).ToArray();
-        //TODO Hacer las transformaciónes necesarias para ejecutar el modelo
+        //TODO Hacer las transformaciï¿½nes necesarias para ejecutar el modelo
 
         //Guardamos el model input con las trasformaciones para poder ejecutarlo desde paython y comporbar si funciona.
         recorder.AIRecord(modelInput);

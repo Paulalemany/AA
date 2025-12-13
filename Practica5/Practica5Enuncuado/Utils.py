@@ -57,3 +57,14 @@ def accuracy(P,Y):
     P = np.array(P).flatten()
     Y = np.array(Y).flatten()
     return np.mean(P == Y)
+
+def WriteStandardScaler(file,mean,var):
+    line = ""
+    for i in range(0,len(mean)-1):
+        line = line + str(mean[i]) + ","
+    line = line + str(mean[len(mean)-1])+ "\n"
+    for i in range(0,len(var)-1):
+        line = line + str(var[i]) + ","
+    line = line + str(var[len(var)-1])+ "\n"
+    with open(file, 'w') as f:
+        f.write(line)
