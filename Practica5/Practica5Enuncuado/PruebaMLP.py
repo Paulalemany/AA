@@ -13,8 +13,8 @@ from imblearn.over_sampling import SMOTE
 import os
 # os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
 
-df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv") # Datos de inés
-#df = pd.read_csv("Practica5/PartidasGanadasFacil.csv")                      # Datos nuestros
+#df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv") # Datos de inés
+df = pd.read_csv("PartidasGanadasFacil.csv")                      # Datos nuestros
 #df = pd.read_csv("Practica5/dementia_dataset.csv")
 # print("VALORES: ", df["action"].value_counts())
 # print("CORRELACION:", df.corr())
@@ -90,7 +90,6 @@ print(f"________Empezamos________" )
     hidden_layers_sizes = (90, 120, 40)
     Da un accuracy de 0.86618
 """
-"""
 mlp_skl = MLPClassifier(
      hidden_layer_sizes=(90, 120, 40),
 
@@ -105,7 +104,6 @@ mlp_skl.fit(X_train, y_train)
 y_pred_sklearn = mlp_skl.predict(X_test)
 acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
 print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
-"""
 
 #endregion
 
@@ -120,7 +118,7 @@ print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_skle
     Da un accuracy de 0.85302
 """
 
-"""
+
 mlp_skl = MLPClassifier(
     hidden_layer_sizes=(260, 128, 64),
     activation='relu',           
@@ -134,7 +132,7 @@ mlp_skl.fit(X_train, y_train)
 y_pred_sklearn = mlp_skl.predict(X_test)
 acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
 print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
-"""
+
 
 #endregion
 
@@ -160,7 +158,7 @@ mlp_complete = MLP_Complete(
     outputLayer=y_train_encoded.shape[1]
     )
 lambda_ = 0
-Jhistory = mlp_complete.backpropagation(X_train_np,y_train_encoded,0.6,lambda_,6000, verbose=100)
+Jhistory = mlp_complete.backpropagation(X_train_np,y_train_encoded,0.5,lambda_,4000, verbose=100)
 a_list, z_list = mlp_complete.feedforward(X_test_np)
 a3 = a_list[-1]   # activación de la última capa
 y_pred = mlp_complete.predict(a3)
@@ -168,69 +166,72 @@ print("predict test: ", y_pred)
 acc_complete = accuracy_score(y_test, y_pred) #precision¡
 
 # Para comprobar si hay overfitting
+"""
 a_list_train, h_list_train = mlp_complete.feedforward(X_train_np)
 a3_train = a_list_train[-1]
 y_train_pred = mlp_complete.predict(a3_train)
 print("predict train: ", y_train_pred)
 acc_complete_train = accuracy_score(y_train, y_train_pred)
 
-print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 print(f"OURS: (Train) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete_train):1.5f}")
+
+"""
+print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 
 #endregion
 
 
 #region --- KNN ---
 # https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
-#knn = KNeighborsClassifier(
-#    n_neighbors=7,
-#    weights='distance',
-#    p=2,
-#    metric='minkowski',
-#    n_jobs=-1
-#)
-#knn.fit(X_train, y_train)
-#y_pred_knn = knn.predict(X_test)
-#accuracy = accuracy_score(y_test, y_pred_knn)
-#print(f"KNN Accuracy: {accuracy:.5f}")
+knn = KNeighborsClassifier(
+    n_neighbors=7,
+    weights='distance',
+    p=2,
+    metric='minkowski',
+    n_jobs=-1
+)
+knn.fit(X_train, y_train)
+y_pred_knn = knn.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred_knn)
+print(f"KNN Accuracy: {accuracy:.5f}")
 #endregion
 
 
 #region --- DECISION TREE ---
 # https://scikit-learn.org/stable/modules/tree.html
-#tree = DecisionTreeClassifier(
-#    random_state=69
-#)
-#tree.fit(X_train, y_train)
-#y_pred_tree = tree.predict(X_test)
-#acc_tree = accuracy_score(y_test, y_pred_tree)
-#print(f"Decision Tree accuracy: {acc_tree:.5f}")
+tree = DecisionTreeClassifier(
+    random_state=69
+)
+tree.fit(X_train, y_train)
+y_pred_tree = tree.predict(X_test)
+acc_tree = accuracy_score(y_test, y_pred_tree)
+print(f"Decision Tree accuracy: {acc_tree:.5f}")
 #endregion
 
 
 #region --- RANDOM FOREST ---
 # https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
-#forest = RandomForestClassifier(
-#    random_state=420,
-#    n_jobs=-1              # usar todos los cores disponibles
-#)
-#forest.fit(X_train, y_train)
-#y_pred_forest = forest.predict(X_test)
-#acc_forest = accuracy_score(y_test, y_pred_forest)
-#print(f"Random Forest accuracy: {acc_forest:.5f}")
+forest = RandomForestClassifier(
+    random_state=420,
+    n_jobs=-1              # usar todos los cores disponibles
+)
+forest.fit(X_train, y_train)
+y_pred_forest = forest.predict(X_test)
+acc_forest = accuracy_score(y_test, y_pred_forest)
+print(f"Random Forest accuracy: {acc_forest:.5f}")
 #endregion
 
 
 #region --- MATRICES DE CONFUSION MÉTRICAS ---
-#cfm_mlp_sk = confusion_matrix(y_test, y_pred_sklearn)
-#cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
-#cfm_knn = confusion_matrix(y_test, y_pred_knn)
-#cfm_tree = confusion_matrix(y_test, y_pred_tree)
-#cfm_forest = confusion_matrix(y_test, y_pred_forest)
+cfm_mlp_sk = confusion_matrix(y_test, y_pred_sklearn)
+cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
+cfm_knn = confusion_matrix(y_test, y_pred_knn)
+cfm_tree = confusion_matrix(y_test, y_pred_tree)
+cfm_forest = confusion_matrix(y_test, y_pred_forest)
 
-#print("SKLEARN MLP Confusion Matrix:\n", cfm_mlp_sk)
-#print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
-#print("KNN Confusion Matrix:\n", cfm_knn)
-#print("DECISION TREE Confusion Matrix:\n", cfm_tree)
-#print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
+print("SKLEARN MLP Confusion Matrix:\n", cfm_mlp_sk)
+print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
+print("KNN Confusion Matrix:\n", cfm_knn)
+print("DECISION TREE Confusion Matrix:\n", cfm_tree)
+print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
 #endregion
