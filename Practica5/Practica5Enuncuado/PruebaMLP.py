@@ -11,7 +11,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from Utils import one_hot_encoding, accuracy
 from imblearn.over_sampling import SMOTE
 import os
-os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
+# os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
 
 df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv") # Datos de inés
 #df = pd.read_csv("Practica5/PartidasGanadasFacil.csv")                      # Datos nuestros
