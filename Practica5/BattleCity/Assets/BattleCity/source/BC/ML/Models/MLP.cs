@@ -68,7 +68,28 @@ public class MLPModel
         //TODO: implement feedworward.
         //the size of the output layer depends on what actions you have performed in the game.
         //By default it is 7 (number of possible actions) but some actions may not have been performed and therefore the model has assumed that they do not exist.
-        return new float[5];
+        float[] activation = input;
+
+        for (int l = 0; l < numLayers - 1; l++)
+        {
+            int outSize = intercepts[l].Length;
+            float[] z = new float[outSize];
+
+            for (int i = 0; i < outSize; i++)
+            {
+                float sum = intercepts[l][i];
+                for (int j = 0; j < activation.Length; j++)
+                {
+                    sum += coefficients[l][i, j] * activation[j];
+                }
+                z[i] = sigmoid(sum);
+            }
+
+            activation = z;
+        }
+
+        return SoftMax(activation);
+        // return new float[5];
     }
 
     /// <summary>
