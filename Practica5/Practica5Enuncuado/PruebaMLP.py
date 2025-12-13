@@ -140,12 +140,13 @@ print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn
 # region --- MLP NOSOTRAS :-) 
 """
     Mejor combinacion encontrada para el modelo:
-    alpha = 2.5
-    num_ite = 5000
+    alpha = 0.5
+    num_ite = 4000
     lambda_ = 0
-    hidden_layers_sizes = (55, 90)
-    [260, 128, 64
-    Da un accuracy de 0.80294
+    hidden_layers_sizes = (55, 107)
+    Da un accuracy de 0.80476
+
+    (Subir el alpha y las iteraciones sube el accuracy)
 """
 y_train_encoded = one_hot_encoding(y_train)
 
