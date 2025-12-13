@@ -4,8 +4,9 @@ import glob
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
 
 # --- LECTURA --- 
+dificultad = "Normal"
 # todos los CSV que empiecen por "TankTraining"
-file_list = sorted(glob.glob("./Partidas Ganadas/TankTraining*.csv"))
+file_list = sorted(glob.glob("./Practica5/Practica5Enuncuado/Partidas Ganadas " + dificultad + "/TankTraining*.csv"))
 
 #  --- CÁLCULOS PRE LIMPIEZA ---
 total_lines = 0
@@ -45,68 +46,68 @@ df_clean = df_clean.drop(columns=columns_to_drop)
 # df_clean = df_clean[(df_clean["AGENT_1_X"] <= 50) & (df_clean["AGENT_2_X"] <= 50)]
 
 # --- GUARDAR RESULTADO ---
-df_clean.to_csv("./PartidasGanadas.csv", index=False)
-print("DATASET LIMPIO, número de líneas:\n", len(df_clean) + 1)  #esto no tiene en cuenta la de encabezado así que le sumamos una
+df_clean.to_csv("./Practica5/Practica5Enuncuado/PartidasGanadas" + dificultad + ".csv", index=False)
+print("DATASET LIMPIO ("+dificultad+"), número de líneas:\n", len(df_clean) + 1)  #esto no tiene en cuenta la de encabezado así que le sumamos una
 #df_clean = pd.read_csv("Practica5Enuncuado/preprocessedData.csv")  #Prueba con los datos de inés
 
-# !!! --- NORMALIZACIÓN --- !!!
-# ! ONEHOT ENCODIGNG -> NEIGHBOURGHS 
-# ! STANDARDSCALING AL RESTO DE ATRIBUTOS (NUMÉRICOS CONTINUOS)
-# ! LABELENCODER -> ACTION ?
-# https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html
-# https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
-# https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
+# # !!! --- NORMALIZACIÓN --- !!!
+# # ! ONEHOT ENCODIGNG -> NEIGHBOURGHS 
+# # ! STANDARDSCALING AL RESTO DE ATRIBUTOS (NUMÉRICOS CONTINUOS)
+# # ! LABELENCODER -> ACTION ?
+# # https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html
+# # https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html
+# # https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html
 
-# Variables categóricas
-ohe_columns = [
-    "NEIGHBORHOOD_UP",
-    "NEIGHBORHOOD_DOWN",
-    "NEIGHBORHOOD_RIGHT",
-    "NEIGHBORHOOD_LEFT"
-]
+# # Variables categóricas
+# ohe_columns = [
+#     "NEIGHBORHOOD_UP",
+#     "NEIGHBORHOOD_DOWN",
+#     "NEIGHBORHOOD_RIGHT",
+#     "NEIGHBORHOOD_LEFT"
+# ]
 
-stsc_columns = [
-    "NEIGHBORHOOD_DIST_UP",
-    "NEIGHBORHOOD_DIST_DOWN",
-    "NEIGHBORHOOD_DIST_RIGHT",
-    "NEIGHBORHOOD_DIST_LEFT",
-    "AGENT_1_X", "AGENT_1_Y",
-    "AGENT_2_X", "AGENT_2_Y",
-    "EXIT_X", "EXIT_Y",
-    "time"
-]
+# stsc_columns = [
+#     "NEIGHBORHOOD_DIST_UP",
+#     "NEIGHBORHOOD_DIST_DOWN",
+#     "NEIGHBORHOOD_DIST_RIGHT",
+#     "NEIGHBORHOOD_DIST_LEFT",
+#     "AGENT_1_X", "AGENT_1_Y",
+#     "AGENT_2_X", "AGENT_2_Y",
+#     "EXIT_X", "EXIT_Y",
+#     "time"
+# ]
 
-label_column = "action"
+# label_column = "action"
 
-#https://www.educative.io/answers/the-fit-vs-fittransform-methods-in-scikit-learn
-# --- ONE-HOT ENCODING ---
-encoder = OneHotEncoder(sparse_output=False)
-ohe_data = encoder.fit_transform(df_clean[ohe_columns])
+# #https://www.educative.io/answers/the-fit-vs-fittransform-methods-in-scikit-learn
+# # --- ONE-HOT ENCODING ---
+# encoder = OneHotEncoder(sparse_output=False)
+# ohe_data = encoder.fit_transform(df_clean[ohe_columns])
 
-ohe_df = pd.DataFrame(
-    ohe_data,
-    columns=encoder.get_feature_names_out(ohe_columns), # esto hace una columna con cada posibilidad de cada atributo para que quepa todo al hacer OHE
-    index=df_clean.index
-)
-# df_clean[ohe_columns] = ohe_df # esto ya no se puede hacer pq ahora hay más columnas
-df_sin_ohe = df_clean.drop(columns=ohe_columns); #quitamos los atributos orignales
-df_clean = pd.concat([df_sin_ohe, ohe_df], axis=1) #los volvemos a concatenar al final ahora que están OHE
-
-
-# --- STANDARD SCALING ---
-scaler = StandardScaler()
-scaled_data = scaler.fit_transform(df_clean[stsc_columns])
-scaled_df = pd.DataFrame(
-    scaled_data,
-    columns=stsc_columns,
-    index=df_clean.index
-)
-df_clean[stsc_columns] = scaled_df
+# ohe_df = pd.DataFrame(
+#     ohe_data,
+#     columns=encoder.get_feature_names_out(ohe_columns), # esto hace una columna con cada posibilidad de cada atributo para que quepa todo al hacer OHE
+#     index=df_clean.index
+# )
+# # df_clean[ohe_columns] = ohe_df # esto ya no se puede hacer pq ahora hay más columnas
+# df_sin_ohe = df_clean.drop(columns=ohe_columns); #quitamos los atributos orignales
+# df_clean = pd.concat([df_sin_ohe, ohe_df], axis=1) #los volvemos a concatenar al final ahora que están OHE
 
 
-# --- LABEL ENCODING ---
-encoder = LabelEncoder()
-df_clean[label_column] = encoder.fit_transform(df_clean[label_column])
+# # --- STANDARD SCALING ---
+# scaler = StandardScaler()
+# scaled_data = scaler.fit_transform(df_clean[stsc_columns])
+# scaled_df = pd.DataFrame(
+#     scaled_data,
+#     columns=stsc_columns,
+#     index=df_clean.index
+# )
+# df_clean[stsc_columns] = scaled_df
 
-# --- GUARDAR --- lo hago por ver enel datawrangler si lo he hecho bien
-df_clean.to_csv("./DatasetNormalizado.csv", index=False)
+
+# # --- LABEL ENCODING ---
+# encoder = LabelEncoder()
+# df_clean[label_column] = encoder.fit_transform(df_clean[label_column])
+
+# # --- GUARDAR --- lo hago por ver enel datawrangler si lo he hecho bien
+# df_clean.to_csv("./DatasetNormalizado.csv", index=False)
