@@ -150,12 +150,11 @@ public class MLAgent : MonoBehaviour
                 action = 0;
                 //TODO leer de los par�metros de la percepci�n.
                 //Debe respetar el mismo orden que los datos.
-                float[] input = perception.GetPerception(); // ???
+                // ?????????
                 //TODO Llamar a RunFeedForward
                 //guardar la toma de decisiones y despues validar si son correctas.
-                float[] output = RunFeedForward(input);
-                action = mlpModel.GetIndexMaxValue(output, out _); //??????????????
-                recorder.AIRecord(action);
+                // ?????
+                
                 break;
         }
         PerceptionBase.ACTION_TYPE input = Record.ConvertLabelToInput(action);
