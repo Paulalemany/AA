@@ -5,7 +5,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
 
 # --- LECTURA --- 
 # todos los CSV que empiecen por "TankTraining"
-file_list = sorted(glob.glob("./Partidas Ganadas/TankTraining*.csv"))
+file_list = sorted(glob.glob("./Practica5/Partidas Ganadas/TankTraining*.csv"))
 
 #  --- CÁLCULOS PRE LIMPIEZA ---
 total_lines = 0

@@ -14,7 +14,7 @@ import os
 os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
 
 df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv") # Datos de inés
-#df = pd.read_csv("Practica5/PartidasGanadas.csv")                      # Datos nuestros
+#df = pd.read_csv("PartidasGanadas.csv")                      # Datos nuestros
 #df = pd.read_csv("Practica5/dementia_dataset.csv")
 # print("VALORES: ", df["action"].value_counts())
 # print("CORRELACION:", df.corr())
@@ -146,6 +146,7 @@ print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn
     num_ite = 5000
     lambda_ = 0
     hidden_layers_sizes = (55, 90)
+    [260, 128, 64
     Da un accuracy de 0.80294
 """
 y_train_encoded = one_hot_encoding(y_train)
@@ -155,22 +156,27 @@ X_test_np = X_test.to_numpy()
 
 mlp_complete = MLP_Complete(
     inputLayer=X_train_np.shape[1], 
-    hiddenLayers=[260, 128, 64], 
+    hiddenLayers=[55, 107], 
     outputLayer=y_train_encoded.shape[1]
     )
-Jhistory = mlp_complete.backpropagation(X_train_np,y_train_encoded,0.1,lambda_,2000, verbose=100)
+lambda_ = 0
+Jhistory = mlp_complete.backpropagation(X_train_np,y_train_encoded,0.6,lambda_,6000, verbose=100)
 a_list, z_list = mlp_complete.feedforward(X_test_np)
-a_list_train, h_list_train = mlp_complete.feedforward(X_train_np)
-a3_train = a_list_train[-1]
 a3 = a_list[-1]   # activación de la última capa
 y_pred = mlp_complete.predict(a3)
-y_train_pred = mlp_complete.predict(a3_train)
 print("predict test: ", y_pred)
-print("predict train: ", y_train_pred)
 acc_complete = accuracy_score(y_test, y_pred) #precision¡
-acc_complete_train = accuracy_score(y_test, y_train_pred)
+
+# Para comprobar si hay overfitting
+a_list_train, h_list_train = mlp_complete.feedforward(X_train_np)
+a3_train = a_list_train[-1]
+y_train_pred = mlp_complete.predict(a3_train)
+print("predict train: ", y_train_pred)
+acc_complete_train = accuracy_score(y_train, y_train_pred)
+
 print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 print(f"OURS: (Train) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete_train):1.5f}")
+
 #endregion
 
 
