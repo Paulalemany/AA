@@ -90,8 +90,22 @@ public class MLPModel
     /// <returns></returns>
     public float[] SoftMax(float[] zArr)
     {
-        //TODO implementar
-        return zArr;
+        float max = zArr.Max();
+        float sum = 0f;
+        float[] exp = new float[zArr.Length];
+
+        for (int i = 0; i < zArr.Length; i++)
+        {
+            exp[i] = Mathf.Exp(zArr[i] - max);
+            sum += exp[i];
+        }
+
+        for (int i = 0; i < exp.Length; i++)
+        {
+            exp[i] /= sum;
+        }
+
+        return exp;
     }
 
     /// <summary>
