@@ -116,7 +116,16 @@ public class MLPModel
     {
         max = output[0];
         int index = 0;
-        //TODO impleemntar.
+
+        for (int i = 1; i < output.Length; i++)
+        {
+            if (output[i] > max)
+            {
+                max = output[i];
+                index = i;
+            }
+        }
+        
         return index;
     }
 }
