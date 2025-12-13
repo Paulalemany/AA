@@ -78,8 +78,7 @@ public class MLPModel
     /// <returns></returns>
     private float sigmoid(float z)
     {
-        //TODO implementar
-        return 0f;
+        return 1f / (1f + Mathf.Exp(-z));
     }
 
 
