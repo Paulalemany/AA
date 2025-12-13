@@ -6,8 +6,9 @@ import matplotlib.pyplot as plt
 import matplotlib
 
 # Cargamos el csv
-#df = pd.read_csv("DatasetNormalizado.csv")    # Leemos los datos que tenemos
-df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv")    # datos limpios de ines
+df = pd.read_csv("DatasetNormalizado.csv")    # Leemos los datos que tenemos
+#df = pd.read_csv("PartidasGanadasNormal.csv")    # Leemos los datos que tenemos
+#df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv")    # datos limpios de ines
 
 # Dividimos las características y las etiquetas
 X = df.drop(columns=["action"])   # Coge la primera fila con todos los títulos (Atributos) y le decimos cual es la etiqueta
@@ -59,5 +60,3 @@ plt.title("PCA de trazas del juego")
 
 plt.legend()
 plt.show()
-
-
