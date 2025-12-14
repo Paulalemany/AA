@@ -24,6 +24,10 @@ Nuestra entrega consiste en:
 
 &nbsp;	ohe\_categories.json -> JSon con los headers de las categorías que son OHE para configuar con él el componente MLAgent.
 
+&nbsp;	PartidasGanadasFacil.csv -> Nuestro dataset pasado por LimpiarDataset.py versión fácil
+
+&nbsp;	PartidasGanadasNormal.csv -> Nuestro dataset pasado por LimpiarDataset.py versión normal
+
 
 
 **Carpetas:**
@@ -38,7 +42,35 @@ Nuestra entrega consiste en:
 
 **Repositorio:**
 
-&nbsp;	Hemos implementado los métodos necesarios en MLAgent, OHE, MLP etc y configurado el componente MLAgent en la escena para que use nuestro modelo, los índices que quitamos, las  
+&nbsp;	Hemos implementado los métodos necesarios en MLAgent, OHE, MLP etc y configurado el componente MLAgent en la escena para que use nuestro modelo, los índices que quitamos etc. 
+
+
+
+
+
+
+
+En el ejercicio 4, las precisiones que nos ha dado cada modelo han sido:
+
+
+
+SKLearn Logistic: 0.86680
+
+SKLearn Reluc y cacharreando: 0.85946
+
+Nuestro MLP: 0.80476
+
+KNN: 0.85845
+
+Decision Tree: 0.87617
+
+Random Forest: 0.89820
+
+
+
+El que mayor precisión nos ha dado es el Random Forest siempre a lo largo de todo el desarrollo de la práctica y tiene sentido porque nuestro volumen de datos (200 partidas) no es gran cosa y las acciones no están balanceadas, además de que es un modelo que está pensado específicamente para datos heterogéneos, así que tendría sentido probar a implementarlo :-)
+
+
 
 
 
