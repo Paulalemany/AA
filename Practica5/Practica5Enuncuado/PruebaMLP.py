@@ -9,8 +9,8 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 from Utils import one_hot_encoding, accuracy, ExportAllformatsMLPSKlearn, WriteStandardScaler
-from imblearn.over_sampling import SMOTE
-import os
+# from imblearn.over_sampling import SMOTE
+# import os
 # os.environ["LOKY_MAX_CPU_COUNT"] = "4" # para que no me salga un warning en el knn loool
 
 #df = pd.read_csv("Practica5/Practica5Enuncuado/preprocessedData.csv") # Datos de inés
@@ -102,7 +102,7 @@ mlp_skl_log = MLPClassifier(
 
 mlp_skl_log.fit(X_train, y_train)
 y_pred_sklearn_log = mlp_skl_log.predict(X_test)
-acc_sklearn_log = accuracy_score(y_test, y_pred_sklearn) #precision
+acc_sklearn_log = accuracy_score(y_test, y_pred_sklearn_log) #precision
 print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn_log):1.5f}")
 
 #endregion
@@ -130,7 +130,7 @@ mlp_skl_relu = MLPClassifier(
 
 mlp_skl_relu.fit(X_train, y_train)
 y_pred_sklearn_relu = mlp_skl_relu.predict(X_test)
-acc_sklearn_relu = accuracy_score(y_test, y_pred_sklearn) #precision
+acc_sklearn_relu = accuracy_score(y_test, y_pred_sklearn_relu) #precision
 print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn_relu):1.5f}")
 
 
@@ -242,5 +242,20 @@ print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
 
 
 #region --- EXPORTAR PARA UNITY ---
-# TODO
+ExportAllformatsMLPSKlearn(
+    mlp_skl_log,
+    X_train.to_numpy(),         
+    "mlp_sklearn.pkl",
+    "mlp_sklearn.onnx",
+    "mlp_sklearn.json",
+    "mlp_sklearn.custom"
+)
+
+WriteStandardScaler(
+    "standard_scaler.txt",
+    scaler.mean_,
+    scaler.var_
+)
+
+print(">>MLP SKLearn Logistic EXPORTED TO UNITY <<")
 #endregion
