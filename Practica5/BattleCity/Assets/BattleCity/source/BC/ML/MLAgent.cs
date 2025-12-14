@@ -27,6 +27,7 @@ public class MLAgent : MonoBehaviour
     public float accuracyTarget;
     public float accuracyThreshold;
     public float aceptThreshold;
+    public TextAsset ohe_categories;
     public List<OHE_Elements> oHE_Elements;
     public Record recorder;
 
@@ -58,7 +59,7 @@ public class MLAgent : MonoBehaviour
             perception = GetComponent<PlayerPerception>();
             tankMove = GetComponent<TankMove>();
             tankFire = GetComponent<TankFire>();
-            oneHotEncoding = new OneHotEncoding(oHE_Elements);
+            oneHotEncoding = new OneHotEncoding(oHE_Elements, ohe_categories);
             standarScaler = new StandarScaler(_standarScaler.text);
             recorder.ResetInGame();
             if (runTest)
@@ -160,7 +161,6 @@ public class MLAgent : MonoBehaviour
                 //guardar la toma de decisiones y despues validar si son correctas.
                 float[] outp = RunFeedForward(inp);
 
-                Debug.Log("Hola?");
                 action = mlpModel.Predict(outp);
 
                 //La ejecución no llega aqui??

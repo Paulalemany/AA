@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -57,6 +58,17 @@ public class MLPModel
         mlpParameters = p;
     }
 
+
+    //Funcion auxiliar para añadir el bias
+    private float[] AddBias(float[] x)
+    {
+        float[] withBias = new float[x.Length + 1];
+        withBias[0] = 1f;
+        for (int i = 0; i < x.Length; i++)
+            withBias[i + 1] = x[i];
+        return withBias;
+    }
+
     /// <summary>
     /// Parameters required for model input. By default it will be perception, kart position and time, 
     /// but depending on the data cleaning and data acquisition modificiations made by each one, the input will need more parameters.
@@ -68,30 +80,45 @@ public class MLPModel
         //TODO: implement feedworward.
         //the size of the output layer depends on what actions you have performed in the game.
         //By default it is 7 (number of possible actions) but some actions may not have been performed and therefore the model has assumed that they do not exist.
-        List<float[,]> coefficients = mlpParameters.GetCoeff();
-        List<float[]> intercepts = mlpParameters.GetInter();
+        List<float[,]> Thetas = mlpParameters.GetCoeff();   //Matrices theta
+        List<float[]> biases = mlpParameters.GetInter();      //Bias
 
-        float[] activation = input;
+        List<float[]> a_list = new List<float[]>();    //Activaciones de la capa
+        List<float[]> z_list = new List<float[]>();    //Activaciones de la capa a - 1
 
-        for (int l = 0; l < coefficients.Count; l++)
+        //Le añadimos el bias
+        float[] a = input;
+        a_list.Add(a);
+
+        for (int l = 0; l < Thetas.Count; l++)
         {
-            int outSize = intercepts[l].Length;
+            //En python usamos un foreach pero
+            //aqui no podemos porque el bias está separado
+            //asi que hacemos esto en su lugar
+            float[,] theta = Thetas[l]; //Matriz theta actual
+            float[] bias = biases[l];   //Bias de la matriz theta actual
+          
+            int outSize = bias.Length;
             float[] z = new float[outSize];
 
             for (int i = 0; i < outSize; i++)
             {
-                float sum = intercepts[l][i];
-                for (int j = 0; j < activation.Length; j++)
+                float sum = bias[i];
+                for (int j = 0; j < a.Length; j++)
                 {
-                    sum += coefficients[l][i, j] * activation[j];
+                    sum += theta[j, i] * a[j];  //Hacemos theta j, i porque en Python tenemos la matriz traspuesta
                 }
-                z[i] = sigmoid(sum);
+                z[i] = sum;
             }
 
-            activation = z;
+            z_list.Add(z);
+            float[] a_next = sigmoid(z);
+
+            a_list.Add(a_next);
+            a = a_next;
         }
 
-        return SoftMax(activation);
+        return a_list[a_list.Count - 1];    //Devolvemos la activación de la ultima capa
         // return new float[5];
     }
 
@@ -100,9 +127,14 @@ public class MLPModel
     /// </summary>
     /// <param name="z"></param>
     /// <returns></returns>
-    private float sigmoid(float z)
+    private float[] sigmoid(float[] z)
     {
-        return 1f / (1f + Mathf.Exp(-z));
+        float[] result = new float[z.Length];
+        for (int i = 0; i < z.Length; i++)
+        {
+            result[i] = 1f / (1f + Mathf.Exp(-z[i]));
+        }
+        return result;
     }
 
 

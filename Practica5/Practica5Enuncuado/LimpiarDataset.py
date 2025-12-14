@@ -1,5 +1,6 @@
 import pandas as pd
 import glob
+import json
 # https://docs.python.org/3/library/glob.html
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
 
@@ -83,6 +84,14 @@ label_column = "action"
 # # --- ONE-HOT ENCODING ---
 encoder = OneHotEncoder(sparse_output=False)
 ohe_data = encoder.fit_transform(df_clean[ohe_columns])
+
+# Para guardar las categorias y que el encoder sea identico en Unity
+categories = [cat.tolist() for cat in encoder.categories_]
+
+with open("ohe_categories.json", "w") as f:
+    json.dump(categories, f)
+
+print("Categorías OHE exportadas")
 
 ohe_df = pd.DataFrame(
     ohe_data,
