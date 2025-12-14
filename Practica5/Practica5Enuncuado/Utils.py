@@ -1,5 +1,5 @@
-from skl2onnx import to_onnx # type: ignore #esto me da error aunque he instalado los paquetes del enunciado
-from onnx2json import convert # type: ignore
+from skl2onnx import to_onnx #esto me da error aunque he instalado los paquetes del enunciado
+from onnx2json import convert 
 import pickle
 import json
 import numpy as np
