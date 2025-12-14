@@ -119,19 +119,19 @@ print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_skle
 """
 
 
-mlp_skl_relu = MLPClassifier(
-    hidden_layer_sizes=(260, 128, 64),
-    activation='relu',           
-    alpha=lambda_,                   
-    learning_rate_init=alpha,
-    max_iter=num_ite,       
-    random_state=69
-    )
+# mlp_skl_relu = MLPClassifier(
+#     hidden_layer_sizes=(260, 128, 64),
+#     activation='relu',           
+#     alpha=lambda_,                   
+#     learning_rate_init=alpha,
+#     max_iter=num_ite,       
+#     random_state=69
+#     )
 
-mlp_skl_relu.fit(X_train, y_train)
-y_pred_sklearn_relu = mlp_skl_relu.predict(X_test)
-acc_sklearn_relu = accuracy_score(y_test, y_pred_sklearn_relu) #precision
-print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn_relu):1.5f}")
+# mlp_skl_relu.fit(X_train, y_train)
+# y_pred_sklearn_relu = mlp_skl_relu.predict(X_test)
+# acc_sklearn_relu = accuracy_score(y_test, y_pred_sklearn_relu) #precision
+# print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn_relu):1.5f}")
 
 
 #endregion
@@ -148,23 +148,23 @@ print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn
 
     (Subir el alpha y las iteraciones sube el accuracy)
 """
-y_train_encoded = one_hot_encoding(y_train)
+# y_train_encoded = one_hot_encoding(y_train)
 
-X_train_np = X_train.to_numpy()
-X_test_np = X_test.to_numpy()
+# X_train_np = X_train.to_numpy()
+# X_test_np = X_test.to_numpy()
 
-mlp_complete = MLP_Complete(
-    inputLayer=X_train_np.shape[1], 
-    hiddenLayers=[55, 107], 
-    outputLayer=y_train_encoded.shape[1]
-    )
-lambda_ = 0
-Jhistory = mlp_complete.backpropagation(X_train_np,y_train_encoded,0.5,lambda_,4000, verbose=100)
-a_list, z_list = mlp_complete.feedforward(X_test_np)
-a3 = a_list[-1]   # activación de la última capa
-y_pred = mlp_complete.predict(a3)
-print("predict test: ", y_pred)
-acc_complete = accuracy_score(y_test, y_pred) #precision¡
+# mlp_complete = MLP_Complete(
+#     inputLayer=X_train_np.shape[1], 
+#     hiddenLayers=[55, 107], 
+#     outputLayer=y_train_encoded.shape[1]
+#     )
+# lambda_ = 0
+# Jhistory = mlp_complete.backpropagation(X_train_np,y_train_encoded,0.5,lambda_,4000, verbose=100)
+# a_list, z_list = mlp_complete.feedforward(X_test_np)
+# a3 = a_list[-1]   # activación de la última capa
+# y_pred = mlp_complete.predict(a3)
+# print("predict test: ", y_pred)
+# acc_complete = accuracy_score(y_test, y_pred) #precision¡
 
 # Para comprobar si hay overfitting
 """
@@ -177,7 +177,7 @@ acc_complete_train = accuracy_score(y_train, y_train_pred)
 print(f"OURS: (Train) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete_train):1.5f}")
 
 """
-print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+# print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 
 #endregion
 
@@ -225,15 +225,15 @@ print(f"Random Forest accuracy: {acc_forest:.5f}")
 
 #region --- MATRICES DE CONFUSION MÉTRICAS ---
 cfm_mlp_sk_logi = confusion_matrix(y_test, y_pred_sklearn_log)
-cfm_mlp_sk_relu = confusion_matrix(y_test, y_pred_sklearn_relu)
-cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
+# cfm_mlp_sk_relu = confusion_matrix(y_test, y_pred_sklearn_relu)
+# cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
 cfm_knn = confusion_matrix(y_test, y_pred_knn)
 cfm_tree = confusion_matrix(y_test, y_pred_tree)
 cfm_forest = confusion_matrix(y_test, y_pred_forest)
 
 print("SKLEARN MLP LOGISTIC Confusion Matrix:\n", cfm_mlp_sk_logi)
-print("SKLEARN MLP RELUC Confusion Matrix:\n", cfm_mlp_sk_relu)
-print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
+# print("SKLEARN MLP RELUC Confusion Matrix:\n", cfm_mlp_sk_relu)
+# print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
 print("KNN Confusion Matrix:\n", cfm_knn)
 print("DECISION TREE Confusion Matrix:\n", cfm_tree)
 print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
@@ -256,6 +256,12 @@ WriteStandardScaler(
     scaler.mean_,
     scaler.var_
 )
+
+v1 = X_train.shape[1]
+v2 = mlp_skl_log.coefs_[0].shape[0];
+print("Input size:", v1)
+print("MLP input layer size:", v2)
+assert(v1 == v2);
 
 print(">>MLP SKLearn Logistic EXPORTED TO UNITY <<")
 #endregion

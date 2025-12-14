@@ -5,7 +5,7 @@ import json
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
-def ExportONNX_JSON_TO_Custom(onnx_json,mlp):
+def ExportONNX_JSON_TO_Custom(onnx_json,mlp,verbose=False):
     graphDic = onnx_json["graph"]
     initializer = graphDic["initializer"]
     s= "num_layers:"+str(mlp.n_layers_)+"\n"
@@ -13,15 +13,15 @@ def ExportONNX_JSON_TO_Custom(onnx_json,mlp):
     parameterIndex = 0;
     for parameter in initializer:
         name = parameter["name"]
-        print("Capa ",name)
+        if (verbose): print("Capa ",name)
         if name != "classes" and name != "shape_tensor":
-            print("procesando ",name)
+            if (verbose): print("procesando ",name)
             s += "parameter:"+str(parameterIndex)+"\n"
-            print(parameter["dims"])
+            if (verbose): print(parameter["dims"])
             s += "dims:"+str(parameter["dims"])+"\n"
-            print(parameter["name"])
+            if (verbose): print(parameter["name"])
             s += "name:"+str(parameter["name"])+"\n"
-            print(parameter["doubleData"])
+            if (verbose): print(parameter["doubleData"])
             s += "values:"+str(parameter["doubleData"])+"\n"
             index = index + 1
             parameterIndex = index // 2
@@ -29,7 +29,7 @@ def ExportONNX_JSON_TO_Custom(onnx_json,mlp):
             print("Esta capa no es interesante ",name)
     return s
 
-def ExportAllformatsMLPSKlearn(mlp,X,picklefileName,onixFileName,jsonFileName,customFileName):
+def ExportAllformatsMLPSKlearn(mlp,X,picklefileName,onixFileName,jsonFileName,customFileName, verbose = False):
     with open(picklefileName,'wb') as f:
         pickle.dump(mlp,f)
     
