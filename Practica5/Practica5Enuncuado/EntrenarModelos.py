@@ -148,6 +148,7 @@ print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn
 
     (Subir el alpha y las iteraciones sube el accuracy)
 """
+"""
 y_train_encoded = one_hot_encoding(y_train)
 
 X_train_np = X_train.to_numpy()
@@ -168,16 +169,18 @@ acc_complete = accuracy_score(y_test, y_pred) #precision¡
 
 # Para comprobar si hay overfitting
 """
-a_list_train, h_list_train = mlp_complete.feedforward(X_train_np)
-a3_train = a_list_train[-1]
-y_train_pred = mlp_complete.predict(a3_train)
-print("predict train: ", y_train_pred)
-acc_complete_train = accuracy_score(y_train, y_train_pred)
+#a_list_train, h_list_train = mlp_complete.feedforward(X_train_np)
+#a3_train = a_list_train[-1]
+#y_train_pred = mlp_complete.predict(a3_train)
+#print("predict train: ", y_train_pred)
+#acc_complete_train = accuracy_score(y_train, y_train_pred)
 
-print(f"OURS: (Train) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete_train):1.5f}")
+#print(f"OURS: (Train) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete_train):1.5f}")
 
 """
 print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+
+"""
 
 #endregion
 
@@ -226,14 +229,14 @@ print(f"Random Forest accuracy: {acc_forest:.5f}")
 #region --- MATRICES DE CONFUSION MÉTRICAS ---
 cfm_mlp_sk_logi = confusion_matrix(y_test, y_pred_sklearn_log)
 cfm_mlp_sk_relu = confusion_matrix(y_test, y_pred_sklearn_relu)
-cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
+#cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
 cfm_knn = confusion_matrix(y_test, y_pred_knn)
 cfm_tree = confusion_matrix(y_test, y_pred_tree)
 cfm_forest = confusion_matrix(y_test, y_pred_forest)
 
 print("SKLEARN MLP LOGISTIC Confusion Matrix:\n", cfm_mlp_sk_logi)
 print("SKLEARN MLP RELUC Confusion Matrix:\n", cfm_mlp_sk_relu)
-print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
+#print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
 print("KNN Confusion Matrix:\n", cfm_knn)
 print("DECISION TREE Confusion Matrix:\n", cfm_tree)
 print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
@@ -258,10 +261,10 @@ WriteStandardScaler(
 )
 
 v1 = X_train.shape[1]
-v2 = mlp_skl_log.coefs_[0].shape[0];
+v2 = mlp_skl_log.coefs_[0].shape[0]
 print("Input size:", v1)
 print("MLP input layer size:", v2)
-assert(v1 == v2);
+assert(v1 == v2)
 
 print(">>MLP SKLearn Logistic EXPORTED TO UNITY <<")
 #endregion
