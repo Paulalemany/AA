@@ -68,9 +68,12 @@ public class MLPModel
         //TODO: implement feedworward.
         //the size of the output layer depends on what actions you have performed in the game.
         //By default it is 7 (number of possible actions) but some actions may not have been performed and therefore the model has assumed that they do not exist.
+        List<float[,]> coefficients = mlpParameters.GetCoeff();
+        List<float[]> intercepts = mlpParameters.GetInter();
+
         float[] activation = input;
 
-        for (int l = 0; l < numLayers - 1; l++)
+        for (int l = 0; l < coefficients.Count; l++)
         {
             int outSize = intercepts[l].Length;
             float[] z = new float[outSize];
@@ -111,7 +114,13 @@ public class MLPModel
     /// <returns></returns>
     public float[] SoftMax(float[] zArr)
     {
-        float max = zArr.Max();
+        float max = zArr[0];
+        for (int i = 1; i < zArr.Length; i++)
+        {
+            if (zArr[i] > max)
+                max = zArr[i];
+        }
+
         float sum = 0f;
         float[] exp = new float[zArr.Length];
 
@@ -142,7 +151,7 @@ public class MLPModel
     }
 
     /// <summary>
-    /// Obtiene el índice de mayor valor.
+    /// Obtiene el ï¿½ndice de mayor valor.
     /// </summary>
     /// <param name="output"></param>
     /// <param name="max"></param>
