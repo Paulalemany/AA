@@ -6,6 +6,7 @@ using System.Text;
 using Unity.XR.Oculus.Input;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Windows;
 
 
 
@@ -57,8 +58,8 @@ public class MLAgent : MonoBehaviour
             perception = GetComponent<PlayerPerception>();
             tankMove = GetComponent<TankMove>();
             tankFire = GetComponent<TankFire>();
-            standarScaler = new StandarScaler(_standarScaler.text);
             oneHotEncoding = new OneHotEncoding(oHE_Elements);
+            standarScaler = new StandarScaler(_standarScaler.text);
             recorder.ResetInGame();
             if (runTest)
             {
@@ -188,16 +189,41 @@ public class MLAgent : MonoBehaviour
         //permite eliminar columnas de la percepcion si las habeis eliminado en el modelo.
         modelInput = modelInput.Where((value, index) => !indicesToRemove.Contains(index)).ToArray();
 
+        // Separamos los datos a los que aplicamos OHE y SS
+        // Igual que hacemos en Python
+        List<float> ohe_columns = new List<float>();
+        List<float> stsc_columns = new List<float>();
 
-        Debug.Log("____MODELINPUT____\n");
-        foreach (float value in modelInput) {
-            Debug.Log(value);
+        for (int i = 0; i < modelInput.Length; i++)
+        {
+            if (oneHotEncoding.IsOHEIndex(i))
+                ohe_columns.Add(modelInput[i]);
+            else
+                stsc_columns.Add(modelInput[i]);
         }
-        
 
-        //TODO Hacer las transformaci�nes necesarias para ejecutar el modelo
-        modelInput = oneHotEncoding.Transform(modelInput);
-        modelInput = standarScaler.Transform(modelInput);
+        //Los pasamos a array para que lo acepte el transform
+        float[] ohe_array = new float[ohe_columns.Count];
+        float[] stsc_array = new float[stsc_columns.Count];
+
+        //Y lo rellenamos
+        for (int i = 0; i <  ohe_columns.Count; i++)
+        {
+            ohe_array[i] = ohe_columns[i];
+        }
+
+        for (int i = 0; i < stsc_columns.Count; i++)
+        {
+            stsc_array[i] = stsc_columns[i];
+        }
+
+        //Hacer las transformaciones necesarias para ejecutar el modelo
+        ohe_array = oneHotEncoding.Transform(ohe_array);
+        stsc_array = standarScaler.Transform(stsc_array);
+
+        //Guardamos la concatenacion en el model input
+        modelInput = ohe_array.Concat(stsc_array).ToArray();
+
 
         //Guardamos el model input con las trasformaciones para poder ejecutarlo desde paython y comporbar si funciona.
         recorder.AIRecord(modelInput);

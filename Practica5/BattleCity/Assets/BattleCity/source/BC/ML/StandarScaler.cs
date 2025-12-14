@@ -30,8 +30,9 @@ public class StandarScaler
     /// <returns></returns>
     public float[] Transform(float[] a_input)
     {
+        //Lo tiene que hacer solo de los que NO tienen el OHE
         float[] scaled = new float[a_input.Length];
-           
+
         for (int i = 0; i < a_input.Length; i++)
         { // x_scaled = (x - media) / deviacion
             scaled[i] = (a_input[i] - mean[i]) / Mathf.Sqrt(std[i]);
