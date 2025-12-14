@@ -150,11 +150,22 @@ public class MLAgent : MonoBehaviour
                 action = 0;
                 //TODO leer de los par�metros de la percepci�n.
                 //Debe respetar el mismo orden que los datos.
-                // ?????????
+                MLGym.Parameters p = perception.Parameters;
+                float[] inp = p.ConvertToFloatArray();
+                
                 //TODO Llamar a RunFeedForward
                 //guardar la toma de decisiones y despues validar si son correctas.
-                // ?????
+                float[] outp = RunFeedForward(inp);
+                action = mlpModel.Predict(outp);
                 
+                // inpt = inpt
+                //     .Where((value, index) => !indicesToRemove.Contains(index))
+                //     .ToArray();
+
+                // inpt = oneHotEncoding.Transform(inpt);
+                // inpt = standarScaler.Transform(inpt);
+                // float[] output = mlpModel.FeedForward(inpt);
+                // action = mlpModel.Predict(output);
                 break;
         }
         PerceptionBase.ACTION_TYPE input = Record.ConvertLabelToInput(action);
@@ -171,6 +182,8 @@ public class MLAgent : MonoBehaviour
         //permite eliminar columnas de la percepci�n si las habeis eliminado en el modelo.
         modelInput = modelInput.Where((value, index) => !indicesToRemove.Contains(index)).ToArray();
         //TODO Hacer las transformaci�nes necesarias para ejecutar el modelo
+        modelInput = oneHotEncoding.Transform(modelInput);
+        modelInput = standarScaler.Transform(modelInput);
 
         //Guardamos el model input con las trasformaciones para poder ejecutarlo desde paython y comporbar si funciona.
         recorder.AIRecord(modelInput);
