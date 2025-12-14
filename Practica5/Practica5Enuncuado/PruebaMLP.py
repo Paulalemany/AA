@@ -90,7 +90,7 @@ print(f"________Empezamos________" )
     hidden_layers_sizes = (90, 120, 40)
     Da un accuracy de 0.86618
 """
-mlp_skl = MLPClassifier(
+mlp_skl_log = MLPClassifier(
      hidden_layer_sizes=(90, 120, 40),
 
      activation='logistic',           
@@ -100,10 +100,10 @@ mlp_skl = MLPClassifier(
     random_state=69
     )
 
-mlp_skl.fit(X_train, y_train)
-y_pred_sklearn = mlp_skl.predict(X_test)
-acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
-print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+mlp_skl_log.fit(X_train, y_train)
+y_pred_sklearn_log = mlp_skl_log.predict(X_test)
+acc_sklearn_log = accuracy_score(y_test, y_pred_sklearn) #precision
+print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn_log):1.5f}")
 
 #endregion
 
@@ -119,7 +119,7 @@ print(f"SKLEARN LOGISTIC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_skle
 """
 
 
-mlp_skl = MLPClassifier(
+mlp_skl_relu = MLPClassifier(
     hidden_layer_sizes=(260, 128, 64),
     activation='relu',           
     alpha=lambda_,                   
@@ -128,10 +128,10 @@ mlp_skl = MLPClassifier(
     random_state=69
     )
 
-mlp_skl.fit(X_train, y_train)
-y_pred_sklearn = mlp_skl.predict(X_test)
-acc_sklearn = accuracy_score(y_test, y_pred_sklearn) #precision
-print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn):1.5f}")
+mlp_skl_relu.fit(X_train, y_train)
+y_pred_sklearn_relu = mlp_skl_relu.predict(X_test)
+acc_sklearn_relu = accuracy_score(y_test, y_pred_sklearn) #precision
+print(f"SKLEARN RELUC MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_sklearn_relu):1.5f}")
 
 
 #endregion
@@ -224,15 +224,23 @@ print(f"Random Forest accuracy: {acc_forest:.5f}")
 
 
 #region --- MATRICES DE CONFUSION MÉTRICAS ---
-cfm_mlp_sk = confusion_matrix(y_test, y_pred_sklearn)
+cfm_mlp_sk_logi = confusion_matrix(y_test, y_pred_sklearn_log)
+cfm_mlp_sk_relu = confusion_matrix(y_test, y_pred_sklearn_relu)
 cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
 cfm_knn = confusion_matrix(y_test, y_pred_knn)
 cfm_tree = confusion_matrix(y_test, y_pred_tree)
 cfm_forest = confusion_matrix(y_test, y_pred_forest)
 
-print("SKLEARN MLP Confusion Matrix:\n", cfm_mlp_sk)
+print("SKLEARN MLP LOGISTIC Confusion Matrix:\n", cfm_mlp_sk_logi)
+print("SKLEARN MLP RELUC Confusion Matrix:\n", cfm_mlp_sk_relu)
 print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
 print("KNN Confusion Matrix:\n", cfm_knn)
 print("DECISION TREE Confusion Matrix:\n", cfm_tree)
 print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
+#endregion
+
+
+
+#region --- EXPORTAR PARA UNITY ---
+# TODO
 #endregion
