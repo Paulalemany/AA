@@ -163,8 +163,6 @@ public class MLAgent : MonoBehaviour
 
                 action = mlpModel.Predict(outp);
 
-                //La ejecución no llega aqui??
-
                 // inpt = inpt
                 //     .Where((value, index) => !indicesToRemove.Contains(index))
                 //     .ToArray();
@@ -176,6 +174,7 @@ public class MLAgent : MonoBehaviour
                 break;
         }
         PerceptionBase.ACTION_TYPE input = Record.ConvertLabelToInput(action);
+        Debug.Log(input);
         return input;
     }
 

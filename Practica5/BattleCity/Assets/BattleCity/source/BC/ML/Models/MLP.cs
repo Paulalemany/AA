@@ -86,7 +86,6 @@ public class MLPModel
         List<float[]> a_list = new List<float[]>();    //Activaciones de la capa
         List<float[]> z_list = new List<float[]>();    //Activaciones de la capa a - 1
 
-        //Le añadimos el bias
         float[] a = input;
         a_list.Add(a);
 
@@ -118,8 +117,7 @@ public class MLPModel
             a = a_next;
         }
 
-        return a_list[a_list.Count - 1];    //Devolvemos la activación de la ultima capa
-        // return new float[5];
+        return SoftMax(a_list[a_list.Count - 1]);   //Devolvemos la activación de la ultima capa
     }
 
     /// <summary>
