@@ -148,16 +148,22 @@ public class MLAgent : MonoBehaviour
         {
             case ModelType.MLP:
                 action = 0;
-                //TODO leer de los par�metros de la percepci�n.
+
+                //leer de los parametros de la percepci�n.
                 //Debe respetar el mismo orden que los datos.
                 MLGym.Parameters p = perception.Parameters;
                 float[] inp = p.ConvertToFloatArray();
-                
+
+
                 //TODO Llamar a RunFeedForward
                 //guardar la toma de decisiones y despues validar si son correctas.
                 float[] outp = RunFeedForward(inp);
+
+                Debug.Log("Hola?");
                 action = mlpModel.Predict(outp);
-                
+
+                //La ejecución no llega aqui??
+
                 // inpt = inpt
                 //     .Where((value, index) => !indicesToRemove.Contains(index))
                 //     .ToArray();
@@ -179,8 +185,16 @@ public class MLAgent : MonoBehaviour
     /// <returns></returns>
     public float[] RunFeedForward(float[] modelInput)
     {
-        //permite eliminar columnas de la percepci�n si las habeis eliminado en el modelo.
+        //permite eliminar columnas de la percepcion si las habeis eliminado en el modelo.
         modelInput = modelInput.Where((value, index) => !indicesToRemove.Contains(index)).ToArray();
+
+
+        Debug.Log("____MODELINPUT____\n");
+        foreach (float value in modelInput) {
+            Debug.Log(value);
+        }
+        
+
         //TODO Hacer las transformaci�nes necesarias para ejecutar el modelo
         modelInput = oneHotEncoding.Transform(modelInput);
         modelInput = standarScaler.Transform(modelInput);

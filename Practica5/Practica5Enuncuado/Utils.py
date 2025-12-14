@@ -1,5 +1,5 @@
-from skl2onnx import to_onnx #esto me da error aunque he instalado los paquetes del enunciado
-from onnx2json import convert
+#from skl2onnx import to_onnx # type: ignore #esto me da error aunque he instalado los paquetes del enunciado
+#from onnx2json import convert # type: ignore
 import pickle
 import json
 import numpy as np
@@ -10,7 +10,7 @@ def ExportONNX_JSON_TO_Custom(onnx_json,mlp,verbose=False):
     initializer = graphDic["initializer"]
     s= "num_layers:"+str(mlp.n_layers_)+"\n"
     index = 0
-    parameterIndex = 0;
+    parameterIndex = 0
     for parameter in initializer:
         name = parameter["name"]
         if (verbose): print("Capa ",name)
