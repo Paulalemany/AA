@@ -90,7 +90,10 @@ print(">>SKLearn Decision Tree EXPORTED TO UNITY <<")
 
 
 print(f"________Orden de Columnas________" )
-print(list(X.columns))
+print("X shape", X.shape)
+print("tree features", len(tree.tree_.feature))
+print("tree max features", max(tree.tree_.feature))
+print("X column list", list(X.columns))
 print(f"// GUARDANDO ORDEN DE COLUMNAS EN column_order.txt //")
 with open("columns_order.txt", "w") as f:
     for c in X.columns:
