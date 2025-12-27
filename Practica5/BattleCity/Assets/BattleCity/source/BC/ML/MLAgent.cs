@@ -164,12 +164,6 @@ public class MLAgent : MonoBehaviour
     public PerceptionBase.ACTION_TYPE AgentInput()
     {
         int action = -1;
-
-        //lectura y procesado común
-        MLGym.Parameters p = perception.Parameters;
-        float[] rawInput = p.ConvertToFloatArray();
-        float[] processedInput = RunFeedForward(rawInput);
-
         switch (model)
         {
             case ModelType.MLP:
@@ -177,29 +171,21 @@ public class MLAgent : MonoBehaviour
 
                 //leer de los parametros de la percepci�n.
                 //Debe respetar el mismo orden que los datos.
-                // MLGym.Parameters p = perception.Parameters;
-                // float[] inp = p.ConvertToFloatArray();
+                MLGym.Parameters p = perception.Parameters;
+                float[] inp = p.ConvertToFloatArray();
+                //TODO Llamar a RunFeedForward
+                //guardar la toma de decisiones y despues validar si son correctas.
+                float[] outp = RunFeedForward(inp);
 
-
-                // //TODO Llamar a RunFeedForward
-                // //guardar la toma de decisiones y despues validar si son correctas.
-                // float[] outp = RunFeedForward(inp);
-
-                // action = mlpModel.Predict(outp);
-
-                // inpt = inpt
-                //     .Where((value, index) => !indicesToRemove.Contains(index))
-                //     .ToArray();
-
-                // inpt = oneHotEncoding.Transform(inpt);
-                // inpt = standarScaler.Transform(inpt);
-                // float[] output = mlpModel.FeedForward(inpt);
-                // action = mlpModel.Predict(output);
-                float[] outp = mlpModel.FeedForward(processedInput);
                 action = mlpModel.Predict(outp);
                 break;
             case ModelType.DECISION_TREE:
-                action = dtModel.Predict(processedInput);
+                action = 0;
+                //lectura y procesado común
+                MLGym.Parameters p2 = perception.Parameters;
+                float[] inp2 = p2.ConvertToFloatArray();
+                float[] processedInput2 = RunFeedForward(inp2);
+                action = dtModel.Predict(processedInput2);
                 break;
         }
         PerceptionBase.ACTION_TYPE input = Record.ConvertLabelToInput(action);
