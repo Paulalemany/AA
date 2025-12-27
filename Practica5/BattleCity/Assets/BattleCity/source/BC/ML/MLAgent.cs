@@ -15,7 +15,7 @@ using UnityEngine.Windows;
 
 public class MLAgent : MonoBehaviour
 {
-    public enum ModelType { MLP = 0 }
+    public enum ModelType { MLP = 0, DECISION_TREE = 1, RANDOM_FOREST = 2 }
     public TextAsset text;
     public ModelType model;
     public bool agentEnable;
@@ -43,17 +43,35 @@ public class MLAgent : MonoBehaviour
     private float _time;
 
 
+
+    // DECISION TREE
+    public TextAsset decisionTreeJson;
+    private DecisionTreeModel dtModel;
+
+
     // Start is called before the first frame update
     void Start()
     {
         if (agentEnable)
         {
             string file = text.text;
-            if (model == ModelType.MLP)
+
+            switch (model)
             {
-                mlpParameters = LoadParameters(file);
-                mlpModel = new MLPModel(mlpParameters);
+                case ModelType.MLP:
+                    mlpParameters = LoadParameters(file);
+                    mlpModel = new MLPModel(mlpParameters);
+                break;
+                case ModelType.DECISION_TREE:
+                    dtModel = DecisionTreeLoader.Load(decisionTreeJson);
+                    Debug.Log(">>>>>>>>>Decision Tree loaded");
+                break;
+                case ModelType.RANDOM_FOREST:
+                break;
+                default:
+                break;
             }
+
             _time = 0f;
             Debug.Log("Parameters loaded " + mlpParameters);
             perception = GetComponent<PlayerPerception>();

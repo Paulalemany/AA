@@ -83,3 +83,16 @@ def ExportRandomForest(rf, output_file):
     
     with open(output_file, "w") as f:
         json.dump(forest, f)
+        
+def ExportDecisionTree(dt, output_file):
+    t = dt.tree_
+    tree_json = {
+        "feature": t.feature.tolist(),
+        "threshold": t.threshold.tolist(),
+        "children_left": t.children_left.tolist(),
+        "children_right": t.children_right.tolist(),
+        "value": t.value.squeeze(axis=1).tolist()
+    }
+
+    with open(output_file, "w") as f:
+        json.dump(tree_json, f)
