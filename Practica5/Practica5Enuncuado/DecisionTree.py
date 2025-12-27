@@ -87,3 +87,11 @@ print(f"________Exportamos________" )
 
 ExportDecisionTree(tree, "decision_tree.json")
 print(">>SKLearn Decision Tree EXPORTED TO UNITY <<")
+
+
+print(f"________Orden de Columnas________" )
+print(list(X.columns))
+print(f"// GUARDANDO ORDEN DE COLUMNAS EN column_order.txt //")
+with open("columns_order.txt", "w") as f:
+    for c in X.columns:
+        f.write(c + "\n")
