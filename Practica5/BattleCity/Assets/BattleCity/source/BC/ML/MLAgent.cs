@@ -230,36 +230,55 @@ public class MLAgent : MonoBehaviour
                 stsc_columns.Add(modelInput[i]);
         }
 
-        //Los pasamos a array para que lo acepte el transform
-        float[] ohe_array = new float[ohe_columns.Count];
-        float[] stsc_array = new float[stsc_columns.Count];
-
-        //Y lo rellenamos
-        for (int i = 0; i <  ohe_columns.Count; i++)
+        if (model == ModelType.MLP)
         {
-            ohe_array[i] = ohe_columns[i];
-        }
+            //Los pasamos a array para que lo acepte el transform
+            float[] ohe_array = new float[ohe_columns.Count];
+            float[] stsc_array = new float[stsc_columns.Count];
 
-        for (int i = 0; i < stsc_columns.Count; i++)
+            //Y lo rellenamos
+            for (int i = 0; i <  ohe_columns.Count; i++)
+            {
+                ohe_array[i] = ohe_columns[i];
+            }
+
+            for (int i = 0; i < stsc_columns.Count; i++)
+            {
+                stsc_array[i] = stsc_columns[i];
+            }
+
+            //Hacer las transformaciones necesarias para ejecutar el modelo
+            ohe_array = oneHotEncoding.Transform(ohe_array);
+            stsc_array = standarScaler.Transform(stsc_array);
+
+            //Guardamos la concatenacion en el model input
+            modelInput = ohe_array.Concat(stsc_array).ToArray();
+
+
+            //Guardamos el model input con las trasformaciones para poder ejecutarlo desde paython y comporbar si funciona.
+            recorder.AIRecord(modelInput);
+            
+            float[] outputs = this.mlpModel.FeedForward(modelInput);
+
+            // Debug.Log("¡¡¡ LAS COLUMNAS TIENEN EL SIGUIENTE ORDEN !!!");
+            // Debug.Log(string.Join(", ", outputs));
+            return outputs;
+        }
+        else if (model == ModelType.DECISION_TREE)
         {
-            stsc_array[i] = stsc_columns[i];
+            float[] ohe_array = oneHotEncoding.Transform(ohe_columns.ToArray());
+            float[] stsc_array = standarScaler.Transform(stsc_columns.ToArray());
+
+            float[] output = ohe_array.Concat(stsc_array).ToArray();
+
+            recorder.AIRecord(output);
+
+            Debug.Log("¡¡¡ LAS COLUMNAS TIENEN EL SIGUIENTE ORDEN !!!");
+            Debug.Log(string.Join(", ", output));
+
+            return output;
         }
-
-        //Hacer las transformaciones necesarias para ejecutar el modelo
-        ohe_array = oneHotEncoding.Transform(ohe_array);
-        stsc_array = standarScaler.Transform(stsc_array);
-
-        //Guardamos la concatenacion en el model input
-        modelInput = ohe_array.Concat(stsc_array).ToArray();
-
-
-        //Guardamos el model input con las trasformaciones para poder ejecutarlo desde paython y comporbar si funciona.
-        recorder.AIRecord(modelInput);
-        float[] outputs = this.mlpModel.FeedForward(modelInput);
-
-        Debug.Log("¡¡¡ LAS COLUMNAS TIENEN EL SIGUIENTE ORDEN !!!");
-        Debug.Log(string.Join(", ", modelInput));
-        return outputs;
+        return null;
     }
 
 
