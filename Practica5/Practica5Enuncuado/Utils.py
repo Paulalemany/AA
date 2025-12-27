@@ -67,3 +67,19 @@ def accuracy(P,Y):
     P = np.array(P).flatten()
     Y = np.array(Y).flatten()
     return np.mean(P == Y)
+
+def ExportRandomForest(rf, output_file):
+    forest = []
+    
+    for tree in rf.estimators_:
+        t = tree.tree_
+        forest.append({
+            "children_left": t.children_left.tolist(),
+            "children_right": t.children_right.tolist(),
+            "feature": t.feature.tolist(),
+            "threshold": t.threshold.tolist(),
+            "value": t.value.squeeze(axis=1).tolist()
+        })
+    
+    with open(output_file, "w") as f:
+        json.dump(forest, f)
