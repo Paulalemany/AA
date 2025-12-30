@@ -63,17 +63,9 @@ plt.xlabel("PCA Component 1")
 plt.ylabel("PCA Component 2")
 plt.title("PCA Demencia")
 plt.legend()
-# plt.show()
+plt.show()
 
 
-lda = LinearDiscriminantAnalysis(n_components=2)
-x_lda = lda.fit_transform(x_scaled, y)
-
-df_lda = pd.DataFrame({
-    "LD1": x_lda[:, 0],
-    "LD2": x_lda[:, 1],
-    "Group": y
-})
 
 
 #region PREPROCESADO:
