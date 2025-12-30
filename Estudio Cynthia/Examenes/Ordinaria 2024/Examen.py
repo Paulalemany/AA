@@ -6,6 +6,13 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import matplotlib
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
+from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, confusion_matrix
+import time
+from sklearn.tree import DecisionTreeClassifier
 
 #LECTURA
 df = pd.read_csv("./Examenes/Ordinaria 2024/dementia_dataset.csv")                      
@@ -18,8 +25,8 @@ columns_to_drop = [
     ]
 df = df.drop(columns=columns_to_drop)
 
-for col in df.columns:
-    print(repr(col)) #colunnas despues de la limpieza
+# for col in df.columns:
+#     print(repr(col)) #colunnas despues de la limpieza
     
 #ej 2: DIBUJADO
 clase = "Group"
@@ -38,7 +45,7 @@ df_pca = pd.DataFrame({
 })
 
 grupos = sorted(df_pca[clase].unique())
-colormap = matplotlib.colormaps.get_cmap("twilight")
+colormap = matplotlib.colormaps.get_cmap("prism")
 colors = colormap(np.linspace(0, 1, len(grupos)))
 
 fig = plt.figure(figsize=(8,6)) 
@@ -55,4 +62,105 @@ plt.xlabel("PCA Component 1")
 plt.ylabel("PCA Component 2")
 plt.title("PCA Demencia")
 plt.legend()
-plt.show()
+# plt.show()
+
+
+lda = LinearDiscriminantAnalysis(n_components=2)
+x_lda = lda.fit_transform(x_scaled, y)
+
+df_lda = pd.DataFrame({
+    "LD1": x_lda[:, 0],
+    "LD2": x_lda[:, 1],
+    "Group": y
+})
+
+
+#region PREPROCESADO:
+ohe_columns = ["M/F"]
+sc_columns = df.drop(columns=ohe_columns + [clase]).columns
+# print("OHE:", ohe_columns)
+# print("Scaled:", sc_columns.tolist())
+
+# OHE:
+ohe = OneHotEncoder(sparse_output=False)
+ohe_data = ohe.fit_transform(df[ohe_columns])
+ohe_feature_names = ohe.get_feature_names_out(ohe_columns)
+df_ohe = pd.DataFrame(ohe_data, columns=ohe_feature_names, index=df.index)
+
+# STANDARD SCALER
+scaler = StandardScaler()
+sc_data = scaler.fit_transform(df[sc_columns])
+df_sc = pd.DataFrame(sc_data, columns=sc_columns, index=df.index)
+
+x = pd.concat([df_ohe, df_sc], axis=1) 
+
+# LABEL ENCODER
+le = LabelEncoder() 
+y = le.fit_transform(df[clase])
+
+# DATOS!!!
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=69)
+                                                    #, stratify=y)
+
+
+alpha = 0.01
+num_ite = 2000 
+lambda_ = 1e-4
+n_hidden_neurons = 5
+#endregion
+
+
+
+#ej 3: MLP
+# """
+# print(f"________ENTRENAMOS MLP________" )
+# start = time.time()
+# y_train_encoded = one_hot_encoding(y_train)
+
+# x_train_np = x_train.to_numpy()
+# x_test_np = x_test.to_numpy()
+
+# mlp_complete = MLP_Complete(
+#     inputLayer=x_train_np.shape[1], 
+#     hiddenLayers=[55, 107], 
+#     outputLayer=y_train_encoded.shape[1]
+#     )
+# Jhistory = mlp_complete.backpropagation(x_train_np,y_train_encoded,alpha,lambda_,num_ite, verbose=100)
+# a_list, z_list = mlp_complete.feedforward(x_test_np)
+# a3 = a_list[-1]   # activación de la última capa
+# y_pred = mlp_complete.predict(a3)
+# print("predict test: ", y_pred)
+# acc_complete = accuracy_score(y_test, y_pred) #precision¡
+# print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+# print(f"________FIN DE ENTRENAMIENTO DE MLP________" )
+# end = time.time()
+# print('________Duración:', end - start, 's________')
+# """
+
+
+#ej 4: Decision Tree
+print(f"________ENTRENAMOS DECISION TREE________" )
+start = time.time()
+tree = DecisionTreeClassifier(
+    random_state=42,
+    max_depth=8,
+    min_samples_leaf=16
+)
+tree.fit(x_train, y_train)
+y_pred_tree = tree.predict(x_test)
+acc_tree = accuracy_score(y_test, y_pred_tree)
+print(f"Decision Tree accuracy: {acc_tree:.5f}")
+cfm_tree = confusion_matrix(y_test, y_pred_tree)
+print("DECISION TREE Confusion Matrix:\n", cfm_tree)
+print(f"________FIN DE ENTRENAMIENTO DE DECISON TREE________" )
+end = time.time()
+print("________Duración:", end - start, "s________")
+
+#ej 6:
+df[clase] = df[clase].replace("Converted", "Demented")
+
+# print(f"________ENTRENAMOS MLP________" )
+# start = time.time()
+# print(f"________FIN DE ENTRENAMIENTO DE MLP________" )
+# end = time.time()
+# print("________Duración:", end - start, "s________")
