@@ -1,0 +1,41 @@
+Ejercicio 1:
+Este problema es el típico del aprendizaje no supervisado y por tanto lo suyo sería decidir cómo gestionar la selección de atributos. 
+Lo más simple sería reducir la dimensionalidad de los datos, pero nos interesa también saber qué datos importan más; necesitamos hacer ranking, clustering y selección de los
+atributos más importantes y reducir la dimensionalidad para descubrir la estructura interna de los datos.
+
+El ejemplo que vimos en clase lo realizaba tal que:
+1. Usamos sklearn
+2. Utilizamos cluster jerárquico aglomerativo y k-means
+3. Detección del codo
+4. Métrica siluette.
+
+Dependiendo de lo que queramos hacer también podemos usar auto-encoders o PCA para reducir la dimensión.
+
+Ejercicio 2:
+Para empezar podemos deducir que aunque han sido entrenados con los mismos datos, no han sido probados con los mismos datos.
+El primero tiene muy buena accuracy y solo ha tenido 3 FP y 1 FN. No pinta que tenga overfitting.
+El segundo no se ha equivocado nada y es bastante sospechoso, tiene pinta de tener overfitting.
+El primero aun con menos precisión parece más generalizable y fiable, habría que ver la regularización que se le ha aplicado a cada uno, 
+el segundo tiene pinta de alto lambda
+
+Ejercicio 3:
+Lo primero sería hacer Data Augmentation a los datos, dependiendo de qué tipo de datos sean: distorsionar imágenes, rudio en sonidos... para poder contar con 
+la mayor cantidad de samples de base posibles.
+
+Luego, a la hora de entrenar habría que emplear K-Fold Cross Validation para sacarle provecho al máximo, dividiéndo los datos en k subgrupos y
+utilizar para el entrenamiento k-1 de ellos y para la validación durante el entrenamiento el restante.
+
+También se podría emplear Transfer Learning desarrollando distintos sistemas para ciertas tareas y encadenarlos unos con otros para resolver otras tareas distintas.
+
+Ejercicio 4:
+Usaríamos un auto-encoder, que está especialmente pensado para imágenes. Es un modelo de aprendizaje no supervisado de Deep Learning que entrenaríamos con
+representaciones los sprites para luego intentar reconstruirlos, intentando minimizar el coste.
+
+Ejercicio 5:
+En concreto usaría CBR:
+1.	Razona a partir de casos previos reales.
+2.	Se pueden añadir nuevos casos sin reentrenar el sistema completo.
+3.	Buen rendimiento en dominios donde existen casos históricos similares.
+4.	Puede adaptarse fácilmente a cambios en el dominio.
+5.	Las soluciones pueden justificarse mostrando casos similares usados.
+
