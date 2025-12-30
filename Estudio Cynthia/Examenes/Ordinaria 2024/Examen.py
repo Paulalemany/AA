@@ -13,6 +13,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
 import time
 from sklearn.tree import DecisionTreeClassifier
+from Ejemplos.Utils.UtilsP3 import one_hot_encoding
 
 #LECTURA
 df = pd.read_csv("./Examenes/Ordinaria 2024/dementia_dataset.csv")                      
@@ -113,28 +114,28 @@ n_hidden_neurons = 5
 
 #ej 3: MLP
 # """
-# print(f"________ENTRENAMOS MLP________" )
-# start = time.time()
-# y_train_encoded = one_hot_encoding(y_train)
+print(f"________ENTRENAMOS MLP________" )
+start = time.time()
+y_train_encoded = one_hot_encoding(y_train)
 
-# x_train_np = x_train.to_numpy()
-# x_test_np = x_test.to_numpy()
+x_train_np = x_train.to_numpy()
+x_test_np = x_test.to_numpy()
 
-# mlp_complete = MLP_Complete(
-#     inputLayer=x_train_np.shape[1], 
-#     hiddenLayers=[55, 107], 
-#     outputLayer=y_train_encoded.shape[1]
-#     )
-# Jhistory = mlp_complete.backpropagation(x_train_np,y_train_encoded,alpha,lambda_,num_ite, verbose=100)
-# a_list, z_list = mlp_complete.feedforward(x_test_np)
-# a3 = a_list[-1]   # activación de la última capa
-# y_pred = mlp_complete.predict(a3)
-# print("predict test: ", y_pred)
-# acc_complete = accuracy_score(y_test, y_pred) #precision¡
-# print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
-# print(f"________FIN DE ENTRENAMIENTO DE MLP________" )
-# end = time.time()
-# print('________Duración:', end - start, 's________')
+mlp_complete = MLP_Complete(
+    inputLayer=x_train_np.shape[1], 
+    hiddenLayers=[55, 107], 
+    outputLayer=y_train_encoded.shape[1]
+    )
+Jhistory = mlp_complete.backpropagation(x_train_np,y_train_encoded,alpha,lambda_,num_ite, verbose=100)
+a_list, z_list = mlp_complete.feedforward(x_test_np)
+a3 = a_list[-1]   # activación de la última capa
+y_pred = mlp_complete.predict(a3)
+print("predict test: ", y_pred)
+acc_complete = accuracy_score(y_test, y_pred) #precision¡
+print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+print(f"________FIN DE ENTRENAMIENTO DE MLP________" )
+end = time.time()
+print('________Duración:', end - start, 's________')
 # """
 
 

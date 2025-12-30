@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, StandardScaler, LabelEncoder
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.tree import DecisionTreeClassifier
-from Utils import ExportDecisionTree
+from Ejemplos.Utils.UtilsP5 import ExportDecisionTree
 
 df = pd.read_csv("PartidasGanadasFacil.csv")                      # Datos nuestros
 #df = pd.read_csv("Practica5/dementia_dataset.csv")

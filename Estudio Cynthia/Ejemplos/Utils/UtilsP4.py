@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import pyplot
 from scipy.io import loadmat
 from sklearn.preprocessing import OneHotEncoder
 
