@@ -191,21 +191,6 @@ print(f"\n\tDuración {(end - start):1.5f} s\n")
 #region ej 6:
 print(f"________MLP BINARIO________" )
 df[clase] = df[clase].replace("Converted", "Demented")
-
-# ohe_columns = ["M/F"]
-# sc_columns = df.drop(columns=ohe_columns + [clase]).columns
-
-# ohe = OneHotEncoder(sparse_output=False)
-# ohe_data = ohe.fit_transform(df[ohe_columns])
-# ohe_feature_names = ohe.get_feature_names_out(ohe_columns)
-# df_ohe = pd.DataFrame(ohe_data, columns=ohe_feature_names, index=df.index)
-
-# scaler = StandardScaler()
-# sc_data = scaler.fit_transform(df[sc_columns])
-# df_sc = pd.DataFrame(sc_data, columns=sc_columns, index=df.index)
-
-# x = pd.concat([df_ohe, df_sc], axis=1) 
-# le = LabelEncoder() 
 y = le.fit_transform(df[clase])
 x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=69)
 
