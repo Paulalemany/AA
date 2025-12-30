@@ -112,8 +112,6 @@ plt.legend()
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0, test_size=0.25)
 
 #region EJERCICIO 3
-print(f"________MLP 3 CAPAS________" )
-start = time.time()
 y_train_encoded = one_hot_encoding(y_train)
 
 x_train_np = X_train.to_numpy()
@@ -122,6 +120,8 @@ x_test_np = X_test.to_numpy()
 alpha = 0.5
 num_ite = 2000 
 lambda_ = 0.5
+print(f"________MLP 3 CAPAS________" )
+start = time.time()
 mlp_complete = MLP_Complete(
     inputLayer=x_train_np.shape[1], 
     hiddenLayers=[128, 64, 32], 
@@ -135,6 +135,27 @@ y_pred = mlp_complete.predict(a3)
 acc_complete = accuracy_score(y_test, y_pred) #precision¡
 print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 print(f"________FIN MLP 3 CAPAS________" )
+end = time.time()
+print(f"\n\tDuración {(end - start):1.5f} s\n")
+
+alpha = 0.5
+num_ite = 2000 
+lambda_ = 0.5
+print(f"________MLP 1 CAPA________" )
+start = time.time()
+mlp_complete = MLP_Complete(
+    inputLayer=x_train_np.shape[1], 
+    hiddenLayers=[256], 
+    outputLayer=y_train_encoded.shape[1]
+    )
+Jhistory = mlp_complete.backpropagation(x_train_np,y_train_encoded,alpha,lambda_,num_ite, verbose=100)
+a_list, z_list = mlp_complete.feedforward(x_test_np)
+a3 = a_list[-1]   # activación de la última capa
+y_pred = mlp_complete.predict(a3)
+
+acc_complete = accuracy_score(y_test, y_pred) #precision¡
+print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+print(f"________FIN MLP 1 CAPA________" )
 end = time.time()
 print(f"\n\tDuración {(end - start):1.5f} s\n")
 #endregion
@@ -197,4 +218,25 @@ print("RANDOM FOREST Confusion Matrix:\n", cfm_forest)
 #endregion
 
 #region EJERCICIO 8
+alpha = 0.5
+num_ite = 2000 
+lambda_ = 0.5
+print(f"________MLP SOFTMAX________" )
+start = time.time()
+mlp_complete = MLP_Complete(
+    inputLayer=x_train_np.shape[1], 
+    hiddenLayers=[256], 
+    outputLayer=y_train_encoded.shape[1],
+    output="softmax"
+    )
+Jhistory = mlp_complete.backpropagation(x_train_np,y_train_encoded,alpha,lambda_,num_ite, verbose=100)
+a_list, z_list = mlp_complete.feedforward(x_test_np)
+a3 = a_list[-1]   # activación de la última capa
+y_pred = mlp_complete.predict(a3)
+
+acc_complete = accuracy_score(y_test, y_pred) #precision¡
+print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+print(f"________FIN SOFTMAX________" )
+end = time.time()
+print(f"\n\tDuración {(end - start):1.5f} s\n")
 #endregion

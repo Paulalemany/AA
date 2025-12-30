@@ -15,7 +15,11 @@ class MLP_Complete:
         epislom (scalar) : random initialization range. e.j: 1 = [-1..1], 2 = [-2,2]...
     """
 
-    def __init__(self,inputLayer,hiddenLayers, outputLayer,seed=0, epislom = 0.12):
+    def __init__(self,
+                 inputLayer,hiddenLayers,outputLayer,
+                 hidden_function = "sigmoid",
+                 output="logistic",
+                 seed=0, epislom = 0.12):
         
         np.random.seed(seed)
         
@@ -23,6 +27,8 @@ class MLP_Complete:
         self.hiddenLayers = hiddenLayers
         self.outputLayer = outputLayer
         self.epsilom = epislom
+        self.hidden_function = hidden_function
+        self.output_activation = output
         
         # [] lo convierte a lista de un elemento
         # list convierte el array a lista
@@ -82,6 +88,19 @@ class MLP_Complete:
     def _sigmoidPrime(self,a):
         return a * (1 - a)
 
+    def _relu(self, z):
+        return np.maximum(0, z)
+
+    def _reluPrime(self, z):
+        return (z > 0).astype(float)
+
+    """
+    """
+    def _softmax(self, z):
+        z = z - np.max(z, axis=1, keepdims=True) 
+        exp_z = np.exp(z)
+        return exp_z / np.sum(exp_z, axis=1, keepdims=True)
+
     """
     Run the feedwordwar neural network step
 
@@ -103,7 +122,11 @@ class MLP_Complete:
 
         for theta in self.thetas:
             z = a_list[-1] @ theta.T    # signal fuction of the layer
-            a = self._sigmoid(z)        # activation fuction of the layer
+            
+            if theta is self.thetas[-1] and self.output_activation == "softmax": # si es la última capa y tiene que ser softmax
+                a = self._softmax(z)
+            else:
+                a = self._sigmoid(z)        # activation fuction of the layer
             z_list.append(z)
 
             # bias a todas menos la última capa
@@ -131,7 +154,10 @@ class MLP_Complete:
     """
     def compute_cost(self, yPrime, y, lambda_):
         m = y.shape[0]  
-        J = (-1 / m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
+        if self.output_activation == "softmax":
+            J = (-1 / m) * np.sum(y * np.log(yPrime))
+        else:
+            J = (-1 / m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
         return J + self._regularizationL2Cost(m, lambda_)
     
 
