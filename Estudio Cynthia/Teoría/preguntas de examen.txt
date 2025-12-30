@@ -1,0 +1,69 @@
+diapo 16 k fold
+típica pregunta de examen de teoría
+
+si os doy este tipo de error de validación o de test, qué harías para mejorarlo?
+cambiar los parámetros NO
+decisión lógica
+diferentes situaciones:
+diapositiva 19
+
+underlift no va a pasar y si pasa 
+coste ES inverso a la precisión
+J es coste
+puede preguntar lo mismo pero al revés
+si la precisión es baja / baja; alta alta; alta, baja
+
+error de entrenamiento alto y error de valciación más bajo -> sesgo de validación, con datos neuvos NO uede ser mejor que lo que estás entrenando
+
+el año pasado cayó diapo 23 pero al revés, era una gráfica del coste y el preguntó por una gráfica de la precisión
+
+
+si yo os doy un problema ddonde te doy una red de neuronas y un arbol de decisiono
+tienen un performance parecido, con cual te quedas
+
+arbol explicabilidad
+
+más allá del predict
+si hay riesgo de falsos positivos en algo sbore salud tocate la polla no!
+
+no va a haber preguntas del estilo de prceptron mutlicaba que es
+
+tenemos los apuntes en el examen
+
+
+APLICAR VARIOS ALGORITMOS A ESTE DATASET Y CON CUAL TE QUQEDAS
+
+
+
+
+
+
+
+
+
+
+
+
+4 11 25
+con KERNEL LINEAL (pregunta de examen) hiperplano nosequé
+naive bayes (nuevo este año)
+
+
+
+
+
+
+
+11/11/2025
+DIME CUAL ES EL ATRIBUTO/S MÁS RELEVANTESS DE UN ARBOL DE DECISIONES (N ATRIBUTOS)
+dependiendo del arbol de decision un poco antes looool los n con entropía más baja
+pregunta utilidad mostrar datos de diapositiva 21 
+
+
+
+
+
+
+25/11/2025
+diaposiitva 42 cambiar nuestro perceptron a ehhh red de elman oa lgo (VA A CAEER XDDXDXDDX) en lugar de la sigmoidal hay que cambiar la derivada VA A CAER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
