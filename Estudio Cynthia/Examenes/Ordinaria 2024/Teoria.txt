@@ -1,0 +1,17 @@
+Ejercicio 1:
+Data Augmentation para contar con más samples pero sobre aplicar CNN, ya que está pensado para esto mismo.
+
+Ejercicio 2:
+Ninguno de los anteriores. 
+Los árboles de decisión son lineales.
+La red de neuronas si sólo tiene capas ocultas convolucionales y la última capa lineal también es lineal.
+El perceptrón tiene una función lineal.
+
+Ejercicio 3:
+La red sufre de over fitting, está sobreentrenada y no es capaz de generalizar con otros datos -> hay que parametrizar la regularización mejor (lambda distinto). También necesitamos más datos
+
+Ejercicio 4:
+La clase de salida sería la acción, por lo que la salida tendría un tamaño de 4, las acciones disponibles (moverse a la izquierda, a la derecha, disparar o saltar). 
+El tamaño de la entrada debería ser, como mínimo:
+posición jugador + posición enemigo i * cantidad de enemigos + 8 casillas adyacentes * 4 valores categóricos que pueden tomar = 
+1 + 1 * n + 32 = 33 + n 
