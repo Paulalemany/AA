@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, confusion_matrix
 import time
 from sklearn.tree import DecisionTreeClassifier
-from Ejemplos.Utils.UtilsP3 import one_hot_encoding
+from Utils import one_hot_encoding
 
 #LECTURA
 df = pd.read_csv("./Examenes/Ordinaria 2024/dementia_dataset.csv")                      
@@ -104,9 +104,9 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=69)
                                                     #, stratify=y)
 
 
-alpha = 0.01
+alpha = 0.5
 num_ite = 2000 
-lambda_ = 1e-4
+lambda_ = 0.5
 n_hidden_neurons = 5
 #endregion
 
@@ -123,19 +123,20 @@ x_test_np = x_test.to_numpy()
 
 mlp_complete = MLP_Complete(
     inputLayer=x_train_np.shape[1], 
-    hiddenLayers=[55, 107], 
+    hiddenLayers=[128, 64], 
     outputLayer=y_train_encoded.shape[1]
     )
 Jhistory = mlp_complete.backpropagation(x_train_np,y_train_encoded,alpha,lambda_,num_ite, verbose=100)
 a_list, z_list = mlp_complete.feedforward(x_test_np)
 a3 = a_list[-1]   # activación de la última capa
 y_pred = mlp_complete.predict(a3)
-print("predict test: ", y_pred)
+
 acc_complete = accuracy_score(y_test, y_pred) #precision¡
-print(f"OURS: (Test) Calculated accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+print(f"MLP accuracy for lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 print(f"________FIN DE ENTRENAMIENTO DE MLP________" )
 end = time.time()
-print('________Duración:', end - start, 's________')
+print(f"\n\tDuración {(end - start):1.5f} s\n")
+
 # """
 
 
@@ -153,9 +154,9 @@ acc_tree = accuracy_score(y_test, y_pred_tree)
 print(f"Decision Tree accuracy: {acc_tree:.5f}")
 cfm_tree = confusion_matrix(y_test, y_pred_tree)
 print("DECISION TREE Confusion Matrix:\n", cfm_tree)
-print(f"________FIN DE ENTRENAMIENTO DE DECISON TREE________" )
+print(f"________FIN DE DECISON TREE________" )
 end = time.time()
-print("________Duración:", end - start, "s________")
+print(f"\n\tDuración {(end - start):1.5f} s\n")
 
 #ej 6:
 df[clase] = df[clase].replace("Converted", "Demented")
