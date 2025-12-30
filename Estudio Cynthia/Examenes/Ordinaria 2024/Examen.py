@@ -225,7 +225,7 @@ mlp_complete = MLP_Complete(
 Jhistory = mlp_complete.backpropagation(x_train_np,y_train_bin,alpha,lambda_,num_ite, verbose=100)
 a_list, z_list = mlp_complete.feedforward(x_test_np)
 a3 = a_list[-1]   # activación de la última capa
-y_pred = mlp_complete.predict(a3)
+y_pred = mlp_complete.predict_binary(a3)
 
 acc_complete = accuracy_score(y_test_bin, y_pred) #precision¡
 print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
