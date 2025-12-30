@@ -134,6 +134,8 @@ y_pred = mlp_complete.predict(a3)
 
 acc_complete = accuracy_score(y_test, y_pred) #precision¡
 print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
+print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
 print(f"________FIN MLP 3 CAPAS________" )
 end = time.time()
 print(f"\n\tDuración {(end - start):1.5f} s\n")
@@ -155,6 +157,8 @@ y_pred = mlp_complete.predict(a3)
 
 acc_complete = accuracy_score(y_test, y_pred) #precision¡
 print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
+print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
 print(f"________FIN MLP 1 CAPA________" )
 end = time.time()
 print(f"\n\tDuración {(end - start):1.5f} s\n")
