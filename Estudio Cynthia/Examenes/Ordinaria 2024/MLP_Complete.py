@@ -145,7 +145,7 @@ class MLP_Complete:
 	------
 	p (scalar): the class index with the highest activation value.
     """
-    def predict(self,a3):
+    def predict(self,a3,threshold = 0.5):
         p = np.argmax(a3, axis=1)
         return p
     
