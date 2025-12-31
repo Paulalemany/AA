@@ -17,7 +17,7 @@ class MLP_Complete:
 
     def __init__(self,
                  inputLayer,hiddenLayers,outputLayer,
-                 hidden_function = "sigmoid",
+                 hidden_function = "logistic",
                  output="logistic",
                  seed=0, epislom = 0.12):
         
@@ -104,9 +104,11 @@ class MLP_Complete:
         match self.hidden_function:
             case "logistic":
                 return self._sigmoid(z)
-            case "relu":
-                return self._tanh(z)
+            case "sigmoid":
+                return self._sigmoid(z)
             case "tanh":
+                return self._tanh(z)
+            case "relu":
                 return self._relu(z)
             case _:
                 self.hidden_function = "logistic"
@@ -116,10 +118,12 @@ class MLP_Complete:
         match self.hidden_function:
             case "logistic":
                 return self._sigmoidPrime(self._sigmoid(z))
-            case "relu":
-                return self._reluPrime(z)
+            case "sigmoid":
+                return self._sigmoidPrime(self._sigmoid(z))
             case "tanh":
                 return self._tanhPrime(z) 
+            case "relu":
+                return self._reluPrime(z)
             case _:
                 self.hidden_function = "logistic"
                 return self._activationFunctionPrime(z)  
@@ -188,10 +192,11 @@ class MLP_Complete:
     """
     def compute_cost(self, yPrime, y, lambda_):
         m = y.shape[0]  
+        eps = 1e-9 #para evitar 0 en relu
         if self.output_activation == "softmax":
-            J = (-1 / m) * np.sum(y * np.log(yPrime))
+            J = (-1 / m) * np.sum(y * np.log(yPrime + eps))
         else:
-            J = (-1 / m) * np.sum(y * np.log(yPrime) + (1 - y) * np.log(1 - yPrime))
+            J = (-1 / m) * np.sum(y * np.log(yPrime + eps) + (1 - y) * np.log(1 - yPrime + eps))
         return J + self._regularizationL2Cost(m, lambda_)
     
 
@@ -268,8 +273,8 @@ class MLP_Complete:
 
             b = (delta_list[0] @ self.thetas[i + 1][:,1:])
             
-            yPrime = self._activationFunctionPrime(z_list[i])
-            delta =   b * yPrime
+            activation_prime = self._activationFunctionPrime(z_list[i])
+            delta =   b * activation_prime
             # delta =   b * self._sigmoidPrime(self._sigmoid(z_list[i]))
 
             delta_list.insert(0, delta) #El calculo del delta va hasta aqui, lo siguiente es el gradient

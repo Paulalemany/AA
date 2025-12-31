@@ -140,6 +140,48 @@ print(f"________FIN MLP 3 CAPAS________" )
 end = time.time()
 print(f"\n\tDuración {(end - start):1.5f} s\n")
 
+print(f"________MLP 3 CAPAS________" )
+start = time.time()
+mlp_complete = MLP_Complete(
+    inputLayer=x_train_np.shape[1], 
+    hiddenLayers=[128, 64, 32], 
+    outputLayer=y_train_encoded.shape[1],
+    hidden_function="tanh"
+    )
+Jhistory = mlp_complete.backpropagation(x_train_np,y_train_encoded,alpha,lambda_,num_ite, verbose=100)
+a_list, z_list = mlp_complete.feedforward(x_test_np)
+a3 = a_list[-1]   # activación de la última capa
+y_pred = mlp_complete.predict(a3)
+
+acc_complete = accuracy_score(y_test, y_pred) #precision¡
+print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
+print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
+print(f"________FIN MLP 3 CAPAS________" )
+end = time.time()
+print(f"\n\tDuración {(end - start):1.5f} s\n")
+
+print(f"________MLP 3 CAPAS________" )
+start = time.time()
+mlp_complete = MLP_Complete(
+    inputLayer=x_train_np.shape[1], 
+    hiddenLayers=[128, 64, 32], 
+    outputLayer=y_train_encoded.shape[1],
+    hidden_function="relu"
+    )
+Jhistory = mlp_complete.backpropagation(x_train_np,y_train_encoded,alpha,lambda_,num_ite, verbose=100)
+a_list, z_list = mlp_complete.feedforward(x_test_np)
+a3 = a_list[-1]   # activación de la última capa
+y_pred = mlp_complete.predict(a3)
+
+acc_complete = accuracy_score(y_test, y_pred) #precision¡
+print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
+cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
+print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
+print(f"________FIN MLP 3 CAPAS________" )
+end = time.time()
+print(f"\n\tDuración {(end - start):1.5f} s\n")
+
 alpha = 0.5
 num_ite = 2000 
 lambda_ = 0.5
