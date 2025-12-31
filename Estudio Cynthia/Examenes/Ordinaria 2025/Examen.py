@@ -120,7 +120,7 @@ x_test_np = X_test.to_numpy()
 alpha = 0.5
 num_ite = 2000 
 lambda_ = 0.5
-print(f"________MLP 3 CAPAS________" )
+print(f"________MLP LOGISTIC 3 CAPAS________" )
 start = time.time()
 mlp_complete = MLP_Complete(
     inputLayer=x_train_np.shape[1], 
@@ -136,11 +136,11 @@ acc_complete = accuracy_score(y_test, y_pred) #precision¡
 print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
 print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
-print(f"________FIN MLP 3 CAPAS________" )
+print(f"________FIN________" )
 end = time.time()
 print(f"\n\tDuración {(end - start):1.5f} s\n")
 
-print(f"________MLP 3 CAPAS________" )
+print(f"________MLP TANH 3 CAPAS________" )
 start = time.time()
 mlp_complete = MLP_Complete(
     inputLayer=x_train_np.shape[1], 
@@ -157,11 +157,11 @@ acc_complete = accuracy_score(y_test, y_pred) #precision¡
 print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
 print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
-print(f"________FIN MLP 3 CAPAS________" )
+print(f"________FIN________" )
 end = time.time()
 print(f"\n\tDuración {(end - start):1.5f} s\n")
 
-print(f"________MLP 3 CAPAS________" )
+print(f"________MLP RELU 3 CAPAS________" )
 start = time.time()
 mlp_complete = MLP_Complete(
     inputLayer=x_train_np.shape[1], 
@@ -178,7 +178,7 @@ acc_complete = accuracy_score(y_test, y_pred) #precision¡
 print(f"MLP Accuracy for Lambda = {(lambda_):1.5f} : {(acc_complete):1.5f}")
 cfm_mlp_complete = confusion_matrix(y_test, y_pred) # la nuestra
 print("MLP COMPLETE Confusion Matrix:\n", cfm_mlp_complete)
-print(f"________FIN MLP 3 CAPAS________" )
+print(f"________FIN________" )
 end = time.time()
 print(f"\n\tDuración {(end - start):1.5f} s\n")
 
