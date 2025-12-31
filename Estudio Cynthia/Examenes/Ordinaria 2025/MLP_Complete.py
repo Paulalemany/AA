@@ -93,6 +93,36 @@ class MLP_Complete:
 
     def _reluPrime(self, z):
         return (z > 0).astype(float)
+    
+    def _tanh(self, z):
+        return np.tanh(z)
+
+    def _tanhPrime(self, z):
+        return 1 - np.tanh(z) ** 2
+
+    def _activationFunction(self, z):
+        match self.hidden_function:
+            case "logistic":
+                return self._sigmoid(z)
+            case "relu":
+                return self._tanh(z)
+            case "tanh":
+                return self._relu(z)
+            case _:
+                self.hidden_function = "logistic"
+                return self._activationFunction(z)
+        
+    def _activationFunctionPrime(self, z):
+        match self.hidden_function:
+            case "logistic":
+                return self._sigmoidPrime(self._sigmoid(z))
+            case "relu":
+                return self._reluPrime(z)
+            case "tanh":
+                return self._tanhPrime(z) 
+            case _:
+                self.hidden_function = "logistic"
+                return self._activationFunctionPrime(z)  
 
     """
     """
@@ -123,10 +153,14 @@ class MLP_Complete:
         for theta in self.thetas:
             z = a_list[-1] @ theta.T    # signal fuction of the layer
             
-            if theta is self.thetas[-1] and self.output_activation == "softmax": # si es la última capa y tiene que ser softmax
-                a = self._softmax(z)
+            if theta is self.thetas[-1]:
+                if self.output_activation == "softmax": # si es la última capa y tiene que ser softmax
+                    a = self._softmax(z)
+                else:
+                    a = self._sigmoid(z)
             else:
-                a = self._sigmoid(z)        # activation fuction of the layer
+                a = self._activationFunction(z)
+                # a = self._sigmoid(z)        # activation fuction of the layer
             z_list.append(z)
 
             # bias a todas menos la última capa
@@ -233,8 +267,10 @@ class MLP_Complete:
         for i in range(j, -1, -1):
 
             b = (delta_list[0] @ self.thetas[i + 1][:,1:])
-
-            delta =   b * self._sigmoidPrime(self._sigmoid(z_list[i]))
+            
+            yPrime = self._activationFunctionPrime(z_list[i])
+            delta =   b * yPrime
+            # delta =   b * self._sigmoidPrime(self._sigmoid(z_list[i]))
 
             delta_list.insert(0, delta) #El calculo del delta va hasta aqui, lo siguiente es el gradient
 
